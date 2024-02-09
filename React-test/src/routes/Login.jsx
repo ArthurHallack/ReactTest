@@ -1,30 +1,35 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-
-
-
-function Login ({loginCadastro, senhaCadastro}) {
-
+function Login() {
     const Ref1 = useRef()
     const Ref2 = useRef()
-    const navegate = useNavigate()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+
+        const loginCadastro = localStorage.getItem("loginCadastro")
+        const senhaCadastro = localStorage.getItem("senhaCadastro")
+        if (loginCadastro && senhaCadastro) {
+            console.log(senhaCadastro)
+        }
+    }, [])
 
     const Cadastrar = (e) => {
         e.preventDefault()
-        navegate('/Cadastro')
+        navigate('/Cadastro')
     }
     
-    const Validation = (e)=>{
-        
-        e.preventDefault()
+    const Validation = (e) => {
+        e.preventDefault();
         const valueLogin = Ref1.current.value
-        const valorSenha = Ref2.current.value
-        
-    }
+        const valueSenha = Ref2.current.value
 
+        console.log("Login:", valueLogin)
+        console.log("Senha:", valueSenha)
+    };
 
-    return(
+    return (
         <div id="Container-Login">
             <form id="Form-Login">
                 <h1 id="H1Login">Login</h1>
