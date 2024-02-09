@@ -1,28 +1,28 @@
-import React, { useRef, useState, useHistory } from "react";
-import Modal from "../modals/ModalLogin";
+import React, { useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 
-function Login () {
+
+function Login ({loginCadastro, senhaCadastro}) {
 
     const Ref1 = useRef()
     const Ref2 = useRef()
-    const [ModalOpen, setModalOpen] = useState (false)
-    const [UserName, setUserName]= useState ("")
-    const [Senha, setSenha]= useState ("")
+    const navegate = useNavigate()
 
+    const Cadastrar = (e) => {
+        e.preventDefault()
+        navegate('/Cadastro')
+    }
+    
     const Validation = (e)=>{
         
         e.preventDefault()
         const valueLogin = Ref1.current.value
         const valorSenha = Ref2.current.value
-        console.log (UserName)
-        console.log(Senha)
+        
     }
 
-    const OpenModal = ()=>{
-        setModalOpen(true)
-    }
 
     return(
         <div id="Container-Login">
@@ -33,9 +33,8 @@ function Login () {
                 <label className="LabelLogin">Senha</label>
                 <input type="password" className="InputLogin" ref={Ref2}/>
                 <button type="submit" className="LoginBTN" onClick={Validation}>Login</button>
-                <button type="button" className="LoginBTN" id="CadastroBTN" onClick={OpenModal}>Cadastrar</button>
-            </form>
-            <Modal display={ModalOpen ? "flex" : "none"} /> 
+                <button type="button" className="LoginBTN" id="CadastroBTN" onClick={Cadastrar}>Cadastre-se</button>
+            </form> 
         </div>
     )
 }
