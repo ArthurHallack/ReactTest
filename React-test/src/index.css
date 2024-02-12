@@ -13,6 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+*{
+  margin: 0%;
+  padding: 0%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -23,9 +28,11 @@ a:hover {
 }
 
 body {
-  margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #646cff, #8d53f2 );
   min-width: 320px;
   min-height: 100vh;
 }
@@ -67,3 +74,61 @@ button:focus-visible {
   }
 }
 
+/*Estyle-LOGIN*/
+
+#Tela-Login{
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  padding: 0%;
+}
+
+#Form-Login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff6a;
+  border-radius: 5px;
+  width: 60rem;
+  height: 28rem;
+}
+
+#Conteudo-Form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 0 5px 5px 0;
+  height: 100%;
+  width: 20rem;
+}
+
+#Conteudo-Form2{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.InputLogin{
+  border-radius: 10px;
+  border: double;
+  border-color: #cccccc;
+  width: 12rem;
+  height: 1.2rem;
+}
+
+#DivBTN-Login {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem ;
+}
+
+#LOGINBTN {
+  width: 6rem;
+  background: #8d53f2;
+  color: #ffffff;
+}
