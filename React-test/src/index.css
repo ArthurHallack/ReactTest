@@ -105,12 +105,21 @@ button:focus-visible {
   width: 20rem;
 }
 
+#img-Login{
+  margin-left: 4rem;
+}
+
 #Conteudo-Form2{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
+}
+
+#H1Login{
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 .InputLogin{
@@ -119,16 +128,66 @@ button:focus-visible {
   border-color: #cccccc;
   width: 12rem;
   height: 1.2rem;
+  margin-top: -0.5rem;
 }
 
 #DivBTN-Login {
   display: flex;
   flex-direction: row;
   gap: 1.5rem ;
+  margin-top: 2rem;
+}
+
+.LoginBTN{
+  border-radius: 25px;
 }
 
 #LOGINBTN {
   width: 6rem;
   background: #8d53f2;
   color: #ffffff;
+}
+
+
+/*Style CADASTRO*/
+
+#Form-Cadastro{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff6a;
+  border-radius: 5px;
+  width: 60rem;
+  height: 28rem;
+}
+
+#Conteudo-Cadastro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 0 5px 5px 0;
+  height: 100%;
+  width: 20rem;
+  gap: 1rem;
+}
+
+.inputCadastro{
+  border-radius: 10px;
+  border: double;
+  border-color: #cccccc;
+  width: 12rem;
+  height: 1.2rem;
+  margin-top: -0.5rem;
+}
+
+#IMG-cadastro{
+  margin-left: 8rem;
+}
+
+#cadastroBTN{
+  width: 7rem;
+  border-radius: 25px;
 }

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import cataventoImg from "../img/catavento.png"
 
 function Login() {
     const Ref1 = useRef()
@@ -36,7 +37,7 @@ function Login() {
     return (
         <div id="Tela-Login">
             <form id="Form-Login">
-                <img src="" alt="" id="img-Login"/>
+                <img src={cataventoImg} alt="" id="img-Login"/>
                 <div id="Conteudo-Form">
                     <div id="Conteudo-Form2">
                     <h1 id="H1Login">Login</h1>
