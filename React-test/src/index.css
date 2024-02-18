@@ -16,6 +16,7 @@
 *{
   margin: 0%;
   padding: 0%;
+  list-style: none;
 }
 
 a {
@@ -30,8 +31,6 @@ a:hover {
 body {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background: linear-gradient(to right, #646cff, #8d53f2 );
   min-width: 320px;
   min-height: 100vh;
@@ -77,10 +76,12 @@ button:focus-visible {
 /*Estyle-LOGIN*/
 
 #Tela-Login{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100%;
-  margin: 0%;
-  padding: 0%;
+  min-height: 45rem;
 }
 
 #Form-Login {
@@ -151,6 +152,15 @@ button:focus-visible {
 
 /*Style CADASTRO*/
 
+#Tela-Cadastro{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 45rem;
+}
+
 #Form-Cadastro{
   display: flex;
   flex-direction: row;
@@ -190,4 +200,66 @@ button:focus-visible {
 #cadastroBTN{
   width: 7rem;
   border-radius: 25px;
+}
+
+/*style componentes*/
+/*navBar*/
+#nav-bar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ffffff6a;
+  width: 100%;
+  height: 4rem;
+}
+
+#Titulo-Container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: -3rem;
+}
+
+#H1-Nav{
+  font-size: 2rem;
+}
+
+#NavList{
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+}
+
+/*Menu*/
+
+#Menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20rem;
+  color: #ffffff;
+  background-color: #1a1a1a;
+  gap: 2rem;
+}
+
+#Container-H1Menu{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+#H1Menu{
+  font-size: 2rem;
+}
+
+#MenuList{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
