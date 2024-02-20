@@ -14,7 +14,7 @@ function NavBar () {
             </div>
            <ul id="NavList">
             <li>Home</li>
-            <li>LogIn</li>
+            <li>Usuario</li>
             <li>Projeto</li>
             <li>Financeiro</li>
             <li>Sistema</li>
