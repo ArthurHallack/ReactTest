@@ -1,8 +1,15 @@
 import React from "react";
 import cataventoImg from "../img/catavento.png"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMoon } from "@fortawesome/free-solid-svg-icons"
+
 
 const StyleNav = {
     width: "3rem"
+}
+
+const StyleMoon = {
+    cursor: 'pointer'
 }
 
 function NavBar () {
@@ -13,13 +20,13 @@ function NavBar () {
                 <img src={cataventoImg} alt="iconCatavento" style={StyleNav} />
             </div>
            <ul id="NavList">
-            <li>Home</li>
-            <li>Usuario</li>
-            <li>Projeto</li>
-            <li>Financeiro</li>
-            <li>Sistema</li>
+            <li className="LiNav">Home</li>
+            <li className="LiNav">Usuario</li>
+            <li className="LiNav">Projeto</li>
+            <li className="LiNav">Financeiro</li>
+            <li className="LiNav">Sistema</li>
            </ul>
-           <input type="range" />
+           <FontAwesomeIcon icon={faMoon} style={StyleMoon} />
         </nav>
     )
 }

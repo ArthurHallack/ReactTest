@@ -277,6 +277,10 @@ button:focus-visible {
   gap: 2.5rem;
 }
 
+.LiNav{
+  cursor: pointer;
+}
+
 
 /*Menu*/
 
@@ -317,4 +321,5 @@ button:focus-visible {
 
 .LiMenu{
   font-size: 1rem;
+  cursor: pointer;
 }

@@ -2,9 +2,11 @@ import React from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
 
+
 const StyleIcon = {
     width: '0.8rem',
-    marginLeft: '8.3rem'
+    marginLeft: '8.3rem',
+    cursor: 'pointer'
 }
 
 function Menu () {
