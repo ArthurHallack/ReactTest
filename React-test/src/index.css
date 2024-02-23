@@ -323,3 +323,62 @@ button:focus-visible {
   font-size: 1rem;
   cursor: pointer;
 }
+
+
+
+/*PAIS*/
+
+#Tela-Pais{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+#Form-Pais-ADD {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  background-color: #ffffff6a;
+  width: 80rem;
+  min-width: 90%;
+  max-width: 90%;
+  height: 13rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+#Form-Pais-ADD2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 2px double;
+}
+
+#FormPais {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
+  border: 2px inset;
+}
+
+.Fieldset-Pais-Form{
+  display: flex;
+  flex-direction: column;
+}
+
+#Div-Form-Pais-Conteudo{
+  
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 92%;
+  height: 50vh;
+  background-color: #ffffff6a;
+}
