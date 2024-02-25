@@ -382,3 +382,31 @@ button:focus-visible {
   height: 50vh;
   background-color: #ffffff6a;
 }
+
+#Conteudo-Pais-Container {
+  background-color: #ffffff;
+}
+
+#Pais-Hud {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #1a1a1a;
+  color: #ffffff;
+
+}
+
+.H1-hud {
+  font-size: 1.5rem;
+}
+
+.Td-List {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #1a1a1a;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
