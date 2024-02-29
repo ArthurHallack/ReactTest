@@ -326,7 +326,7 @@ button:focus-visible {
 
 
 
-/*PAIS*/
+/*////////PAIS////////*/
 
 #Tela-Pais{
   display: flex;
@@ -348,13 +348,14 @@ button:focus-visible {
   height: 13rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  padding-bottom: 1rem;
+  border-radius: 5px;
 }
 
 #Form-Pais-ADD2{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: 2px double;
 }
 
 #FormPais {
@@ -362,12 +363,24 @@ button:focus-visible {
   flex-direction: row;
   justify-content: center;
   gap: 1.5rem;
-  border: 2px inset;
 }
 
 .Fieldset-Pais-Form{
   display: flex;
   flex-direction: column;
+  border: none;
+}
+
+/*INPUTS FORM PAIS*/
+
+.InputsFormPais{
+  border: none;
+  border-radius: 2px;
+  height: 1.5rem;
+}
+
+#InputSigla{
+  width: 2.5rem;
 }
 
 #Div-Form-Pais-Conteudo{

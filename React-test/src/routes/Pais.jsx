@@ -23,6 +23,7 @@ function PaisCrud() {
     const Ref4 = useRef()
     //ESTADOS DOS INPUTS//
     const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
+    const [inputValue, setInputValue] = useState('');
     const [PaisValue , setPaisValue] = useState ('')
     const [SiglaValue , setSiglaValue] = useState('')
     const [NacionalidadeValue , setNacionalidadeValue] = useState('')
@@ -30,6 +31,15 @@ function PaisCrud() {
     const [DDIValue , setDDIValue] = useState('')
     const [SituacaoValue , setSituacaoValue] = useState(false)
     //Funções//
+    const converterParaMaiusculo = (ref)=>{
+        return function (e) {
+            const novoValor = e.target.value.toUpperCase()
+            setInputValue(novoValor)
+            if (ref.current){
+                ref.current.value = novoValor
+            }
+        }
+    }
     const Save = () => {
         const newData = {
             "id":0,
@@ -75,19 +85,19 @@ function PaisCrud() {
                     <form action="" method="post" id="FormPais">
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Pais</label>
-                            <input type="text" ref={Ref1}/>
+                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1)} maxlength="12"/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Sigla</label>
-                            <input type="text" ref={Ref2}/>
+                            <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2)} maxlength="3"/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Nacionalidade</label>
-                            <input type="text" ref={Ref3}/>
+                            <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3)} maxlength="20"/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Bacen</label>
-                            <input type="text" ref={Ref4}/>
+                            <input type="text" ref={Ref4} className="InputsFormPais" onChange={converterParaMaiusculo(Ref4)} maxlength="10"/>
                         </fieldset>
                     </form>
                     <button type="submit" onClick={Save}>Salvar</button>
