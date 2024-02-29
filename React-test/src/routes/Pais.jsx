@@ -6,7 +6,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 
 function PaisCrud() {
-    const APIGrava = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
+
     const Dados = {
         "ID": 0,
         "Pais": "",
@@ -21,9 +21,8 @@ function PaisCrud() {
     const Ref2 = useRef()
     const Ref3 = useRef()
     const Ref4 = useRef()
-    const Ref5 = useRef()
-    const Ref6 = useRef()
     //ESTADOS DOS INPUTS//
+    const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
     const [PaisValue , setPaisValue] = useState ('')
     const [SiglaValue , setSiglaValue] = useState('')
     const [NacionalidadeValue , setNacionalidadeValue] = useState('')
@@ -34,22 +33,26 @@ function PaisCrud() {
     const Save = () => {
         const newData = {
             "id":0,
-            "Pais": Ref1.current.value,
-            "Sigla": Ref2.current.value,
-            "Nacionalidade": Ref3.current.value,
-            "Bacen": Ref4.current.value,
-            "DDI": Ref5.current.value,
-            "Situação": Ref6.current.value
+            "pais": Ref1.current.value,
+            "sigla": Ref2.current.value,
+            "nacionalidade": Ref3.current.value,
+            "bacen": Ref4.current.value
         }
+        
+        const Username = 'INTEGRASIS';
+        const PassWord = '32P@&sB@rr0S';
+        const BasicAuth = 'Basic ' + btoa(Username + ':' + PassWord)
 
-        fetch(APIGrava, {
+        fetch(APIEndpoint, {
             method: 'PUT',
             headers: {
-                'content-type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': BasicAuth
             },
             body: JSON.stringify(newData)
         })
         .then(res=> {
+            console.log(res)
             if(!res.ok){
                 throw new Error('Erro ao enviar dados para a API');
             }
@@ -57,12 +60,10 @@ function PaisCrud() {
             console.error('Erro:', error)
         })
 
-            setPaisValue(newData.Pais)
-            setSiglaValue(newData.Sigla)
-            setNacionalidadeValue(newData.Nacionalidade)
-            setBacenValue(newData.Bacen)
-            setDDIValue(newData.DDI)
-            setSituacaoValue(newData.Situação)
+            setPaisValue(newData.pais)
+            setSiglaValue(newData.sigla)
+            setNacionalidadeValue(newData.nacionalidade)
+            setBacenValue(newData.bacen)
         }
 
     return (
@@ -87,14 +88,6 @@ function PaisCrud() {
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Bacen</label>
                             <input type="text" ref={Ref4}/>
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">DDI</label>
-                            <input type="number" ref={Ref5}/>
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">Situação</label>
-                            <input type="checkbox" ref={Ref6}/> Ativo
                         </fieldset>
                     </form>
                     <button type="submit" onClick={Save}>Salvar</button>
