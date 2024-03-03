@@ -1,13 +1,12 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { GetPais } from "../functions/ReadPais";
 
 function PaisCrud() {
     // APIS
-    const [idEndPoint, setidEndPoint] = useState('1');
     const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA';
-    const ApiGetPais = `http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/FICHA/${idEndPoint}`;
-
+    
     // Values INPUTS
     const Ref1 = useRef();
     const Ref2 = useRef();
@@ -34,28 +33,7 @@ function PaisCrud() {
     };
 
     async function TestGet() {
-        const Username = 'INTEGRASIS';
-        const PassWord = '32P@&sB@rr0S';
-        const BasicAuth = 'Basic ' + btoa(Username + ':' + PassWord);
-
-        try {
-            const dados = await fetch(ApiGetPais, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': BasicAuth
-                },
-            });
-
-            if (!dados.ok) {
-                throw new Error('Erro ao enviar dados para a API');
-            }
-
-            const dadosJson = await dados.json();
-            console.log(dadosJson);
-        } catch (error) {
-            console.error('Erro:', error);
-        }
+        GetPais()
     }
 
     const Save = () => {
