@@ -7,22 +7,18 @@ import { faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 
 function PaisCrud() {
 
-    const Dados = {
-        "ID": 0,
-        "Pais": "",
-        "Sigla": "",
-        "Nacionalidade": "",
-        "Bacen": "",
-        "DDI": "",
-        "Situação": ""
-    }
+    //APIS//
+    const [idEndPoint, setidEndPoint] = useState ('1')
+    const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
+    const ApiGetPais = `http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/FICHA/${idEndPoint}`
+    //Fetch//
+    
     //Values INPUTS//
     const Ref1 = useRef()
     const Ref2 = useRef()
     const Ref3 = useRef()
     const Ref4 = useRef()
     //ESTADOS DOS INPUTS//
-    const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
     const [inputValue, setInputValue] = useState('');
     const [PaisValue , setPaisValue] = useState ('')
     const [SiglaValue , setSiglaValue] = useState('')
@@ -40,6 +36,32 @@ function PaisCrud() {
             }
         }
     }
+    
+    async function TestGet () {
+        const Username = 'INTEGRASIS';
+        const PassWord = '32P@&sB@rr0S';
+        const BasicAuth = 'Basic ' + btoa(Username + ':' + PassWord)
+
+        try {
+            const dados = await fetch(ApiGetPais, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': BasicAuth
+                },
+            })
+    
+            if (!dados.ok) {
+                throw new Error('Erro ao enviar dados para a API');
+            }
+    
+            const dadosJson = await dados.json();
+            console.log(dadosJson);
+        } catch (error) {
+            console.error('Erro:', error);
+        }
+    }
+
     const Save = () => {
         const newData = {
             "id":0,
@@ -109,18 +131,17 @@ function PaisCrud() {
                         <h1 className="H1-hud">ID</h1>
                         <h1 className="H1-hud">Sigla</h1>
                         <h1 className="H1-hud">Pais</h1>
-                        <h1 className="H1-hud">Nacionalidade</h1>
-                        <h1 className="H1-hud">Nacional</h1>
+                        <h1 className="H1-hud" id="AjustePais">Nacionalidade</h1>
                     </div>
                     <div className="Td-List">
-                        <p>1</p>
-                        <p>br</p>
-                        <p>brasil</p>
-                        <p>nacionalidade</p>
+                        <p className="td-list-conteudo" id="Id-TD">1</p>
+                        <p className="td-list-conteudo">br</p>
+                        <p className="td-list-conteudo">brasil</p>
+                        <p className="td-list-conteudo">nacionalidade</p>
                         <div className="BTN-Td-List">
-                            <button><FontAwesomeIcon icon={faFolderOpen} /></button>
-                            <button><FontAwesomeIcon icon={faPenToSquare} /></button>
-                            <button><FontAwesomeIcon icon={faTrash} /></button>
+                            <button className="BTNs-TD"><FontAwesomeIcon icon={faFolderOpen} onClick={TestGet}/></button>
+                            <button className="BTNs-TD"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                            <button className="BTNs-TD"><FontAwesomeIcon icon={faTrash} /></button>
                         </div>
                     </div>
                 </div>
