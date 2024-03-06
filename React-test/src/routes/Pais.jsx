@@ -27,7 +27,7 @@ function PaisCrud() {
     // Funções
 
     const Exclui = ()=>{
-        ApiDelete()
+        
     }
 
     const converterParaMaiusculo = (ref) => {
