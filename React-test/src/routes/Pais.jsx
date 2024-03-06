@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { GetPais } from "../functions/ReadPais";
+import { GetAll } from "../functions/GetAllPais";
+import { ApiDelete } from "../functions/DeletePais";
 
 function PaisCrud() {
     // APIS
@@ -12,6 +14,7 @@ function PaisCrud() {
     const Ref2 = useRef();
     const Ref3 = useRef();
     const Ref4 = useRef();
+    const Ref5 = useRef();
 
     // ESTADOS DOS INPUTS
     const [PaisValue, setPaisValue] = useState('');
@@ -22,6 +25,11 @@ function PaisCrud() {
     const [SituacaoValue, setSituacaoValue] = useState(false);
 
     // Funções
+
+    const Exclui = ()=>{
+        ApiDelete()
+    }
+
     const converterParaMaiusculo = (ref) => {
         return function (e) {
             const novoValor = e.target.value.toUpperCase();
@@ -33,7 +41,8 @@ function PaisCrud() {
     };
 
     async function TestGet() {
-        GetPais()
+        var testinho = await GetAll()
+        console.log (testinho)
     }
 
     const Save = () => {
@@ -42,7 +51,8 @@ function PaisCrud() {
             "pais": Ref1.current.value,
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
-            "bacen": Ref4.current.value
+            "bacen": Ref4.current.value,
+            "situacao": Ref5.current.value
         };
 
         const Username = 'INTEGRASIS';
@@ -70,6 +80,7 @@ function PaisCrud() {
         setSiglaValue(newData.sigla);
         setNacionalidadeValue(newData.nacionalidade);
         setBacenValue(newData.bacen);
+        setSituacaoValue(newData.situacao)
     };
 
     return (
@@ -81,19 +92,23 @@ function PaisCrud() {
                     <form action="" method="post" id="FormPais">
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Pais</label>
-                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1)} maxLength="12" />
+                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1)} maxLength="12" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Sigla</label>
-                            <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2)} maxLength="3" />
+                            <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2)} maxLength="3" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Nacionalidade</label>
-                            <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3)} maxLength="20" />
+                            <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3)} maxLength="20" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Bacen</label>
-                            <input type="text" ref={Ref4} className="InputsFormPais" onChange={converterParaMaiusculo(Ref4)} maxLength="10" />
+                            <input type="number" ref={Ref4} className="InputsFormPais" maxLength="10" />
+                        </fieldset>
+                        <fieldset className="Fieldset-Pais-Form">
+                            <label htmlFor="">Situação</label>
+                            <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required/>
                         </fieldset>
                     </form>
                     <button type="submit" onClick={Save}>Salvar</button>
@@ -101,21 +116,25 @@ function PaisCrud() {
             </div>
             <div id="Div-Form-Pais-Conteudo">
                 <div id="Conteudo-Pais-Container">
-                    <div id="Pais-Hud">
-                        <h1 className="H1-hud">ID</h1>
-                        <h1 className="H1-hud">Sigla</h1>
-                        <h1 className="H1-hud">Pais</h1>
-                        <h1 className="H1-hud" id="AjustePais">Nacionalidade</h1>
+                    <div id="HudPais">
+                        <ul id="HudPais-Ul">
+                            <li id="HudId" className="TD-Hud">ID</li>
+                            <li id="Hud-Pais" className="TD-Hud">Pais</li>
+                            <li id="HudSigla" className="TD-Hud">Sigla</li>
+                            <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
+                        </ul>
                     </div>
-                    <div className="Td-List">
-                        <p className="td-list-conteudo" id="Id-TD">1</p>
-                        <p className="td-list-conteudo">br</p>
-                        <p className="td-list-conteudo">brasil</p>
-                        <p className="td-list-conteudo">nacionalidade</p>
-                        <div className="BTN-Td-List">
-                            <button className="BTNs-TD"><FontAwesomeIcon icon={faFolderOpen} onClick={TestGet} /></button>
-                            <button className="BTNs-TD"><FontAwesomeIcon icon={faPenToSquare} /></button>
-                            <button className="BTNs-TD"><FontAwesomeIcon icon={faTrash} /></button>
+                    <div id="Table-Pais">
+                        <ul className="Todo-List-ul">
+                            <li className="Todo-List-li id-tdList">1</li>
+                            <li className="Todo-List-li pais-tdList">BRASIL</li>
+                            <li className="Todo-List-li sigla-tdList">BR</li>
+                            <li className="Todo-List-li Naci-tdlist">BRASILEIRO</li>
+                        </ul>
+                        <div className="BTNs-tdList">
+                            <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen} onClick={TestGet}/></button>
+                            <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                            <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
                         </div>
                     </div>
                 </div>
