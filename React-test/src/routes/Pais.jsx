@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { GetPais } from "../functions/ReadPais";
@@ -24,7 +24,30 @@ function PaisCrud() {
     const [DDIValue, setDDIValue] = useState('');
     const [SituacaoValue, setSituacaoValue] = useState(false);
 
+    //ESTADOS  RENDERGETALL
+    const [elementosUl, setelementosUl] = useState ([])
+
+    //OUTROS ESTADOS
+    const [isVisivel, setisVisivel] = useState(false)
+
+    // EFFECT
+    useEffect (()=>{
+        async function fetchData () {
+            const data = await RenderGetAll()
+            setelementosUl(data)
+        }
+        fetchData()
+    },[])
+
+    
     // Funções
+
+    const Add = ()=>{
+        setisVisivel(true)
+        if (isVisivel == true) {
+            window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
+        }
+    }
 
     const Exclui = ()=>{
         
@@ -40,10 +63,25 @@ function PaisCrud() {
         };
     };
 
-    async function TestGet() {
-        var testinho = await GetAll()
-        console.log (testinho)
+    async function RenderGetAll() {
+        var dados = await GetAll();
+        return dados.map((element, index) => (
+            <ul key={index} className="Todo-List-ul">
+                <li className="Todo-List-li id-tdList">{element.id}</li>
+                <li className="Todo-List-li pais-tdList">{element.pais}</li>
+                <li className="Todo-List-li sigla-tdList">{element.sigla}</li>
+                <li className="Todo-List-li Naci-tdlist">{element.nacionalidade}</li>
+                <li className="li-td-btn">
+                    <div className="BTNs-tdList">
+                        <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
+                        <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                        <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
+                    </div>
+                </li>
+            </ul>
+        ));
     }
+    
 
     const Save = () => {
         const newData = {
@@ -86,6 +124,9 @@ function PaisCrud() {
     return (
         <div id="Tela-Pais">
             <h1 id="Titulo-Pais">Pais</h1>
+            <div id="divBTN-ADD" >
+                <button onClick={Add}>ADD</button>
+            </div>
             <div id="Form-Pais-ADD">
                 <p><i>Selecionar Informações</i></p>
                 <div id="Form-Pais-ADD2">
@@ -130,11 +171,16 @@ function PaisCrud() {
                             <li className="Todo-List-li pais-tdList">BRASIL</li>
                             <li className="Todo-List-li sigla-tdList">BR</li>
                             <li className="Todo-List-li Naci-tdlist">BRASILEIRO</li>
+                            <li className="li-td-btn">
+                                <div className="BTNs-tdList">
+                                    <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                    <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                    <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
+                                 </div>
+                            </li>
                         </ul>
-                        <div className="BTNs-tdList">
-                            <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen} onClick={TestGet}/></button>
-                            <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
-                            <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
+                        <div>
+                            {elementosUl}
                         </div>
                     </div>
                 </div>
