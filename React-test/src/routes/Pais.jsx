@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import NavBar from "../components/Nav";
 import { GetPais } from "../functions/ReadPais";
 import { GetAll } from "../functions/GetAllPais";
 import { ApiDelete } from "../functions/DeletePais";
+
+const stylo = {
+    display: "none"
+}
 
 function PaisCrud() {
     // APIS
@@ -46,6 +51,7 @@ function PaisCrud() {
         setisVisivel(true)
         if (isVisivel == true) {
             window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
+            window.document.getElementById('divBTN-ADD').style.display = 'none'
         }
     }
 
@@ -53,10 +59,10 @@ function PaisCrud() {
         
     }
 
-    const converterParaMaiusculo = (ref) => {
+    const converterParaMaiusculo = (ref, setFunction) => {
         return function (e) {
             const novoValor = e.target.value.toUpperCase();
-            setInputValue(novoValor);
+            setFunction(novoValor);
             if (ref.current) {
                 ref.current.value = novoValor;
             }
@@ -67,7 +73,7 @@ function PaisCrud() {
         var dados = await GetAll();
         return dados.map((element, index) => (
             <ul key={index} className="Todo-List-ul">
-                <li className="Todo-List-li id-tdList">{element.id}</li>
+                <li key="item1" className="Todo-List-li id-tdList">{element.id}</li>
                 <li className="Todo-List-li pais-tdList">{element.pais}</li>
                 <li className="Todo-List-li sigla-tdList">{element.sigla}</li>
                 <li className="Todo-List-li Naci-tdlist">{element.nacionalidade}</li>
@@ -119,10 +125,14 @@ function PaisCrud() {
         setNacionalidadeValue(newData.nacionalidade);
         setBacenValue(newData.bacen);
         setSituacaoValue(newData.situacao)
+
+        window.document.getElementById('Form-Pais-ADD').style.display="none"
+        window.document.getElementById('divBTN-ADD').style.display="flex"
     };
 
     return (
         <div id="Tela-Pais">
+            <NavBar/>
             <h1 id="Titulo-Pais">Pais</h1>
             <div id="divBTN-ADD" >
                 <button onClick={Add}>ADD</button>
@@ -133,15 +143,15 @@ function PaisCrud() {
                     <form action="" method="post" id="FormPais">
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Pais</label>
-                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1)} maxLength="12" required/>
+                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="12" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Sigla</label>
-                            <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2)} maxLength="3" required/>
+                            <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2, setSiglaValue)} maxLength="3" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Nacionalidade</label>
-                            <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3)} maxLength="20" required/>
+                            <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3, setNacionalidadeValue)} maxLength="20" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Bacen</label>
@@ -156,23 +166,23 @@ function PaisCrud() {
                 </div>
             </div>
             <div id="Div-Form-Pais-Conteudo">
+                <div id="HudPais">
+                    <ul id="HudPais-Ul">
+                        <li id="HudId" className="TD-Hud">ID</li>
+                        <li id="Hud-Pais" className="TD-Hud">Pais</li>
+                        <li id="HudSigla" className="TD-Hud">Sigla</li>
+                        <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
+                    </ul>
+                </div>
                 <div id="Conteudo-Pais-Container">
-                    <div id="HudPais">
-                        <ul id="HudPais-Ul">
-                            <li id="HudId" className="TD-Hud">ID</li>
-                            <li id="Hud-Pais" className="TD-Hud">Pais</li>
-                            <li id="HudSigla" className="TD-Hud">Sigla</li>
-                            <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
-                        </ul>
-                    </div>
                     <div id="Table-Pais">
                         <ul className="Todo-List-ul">
-                            <li className="Todo-List-li id-tdList">1</li>
-                            <li className="Todo-List-li pais-tdList">BRASIL</li>
-                            <li className="Todo-List-li sigla-tdList">BR</li>
-                            <li className="Todo-List-li Naci-tdlist">BRASILEIRO</li>
+                            <li className="Todo-List-li id-tdList"></li>
+                            <li className="Todo-List-li pais-tdList"></li>
+                            <li className="Todo-List-li sigla-tdList"></li>
+                            <li className="Todo-List-li Naci-tdlist"></li>
                             <li className="li-td-btn">
-                                <div className="BTNs-tdList">
+                                <div className="BTNs-tdList" style={stylo}>
                                     <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
                                     <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
                                     <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
