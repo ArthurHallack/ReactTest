@@ -55,8 +55,8 @@ function PaisCrud() {
         }
     }
 
-    const Exclui = ()=>{
-        
+    const Exclui = (id)=>{
+        ApiDelete(id)
     }
 
     const converterParaMaiusculo = (ref, setFunction) => {
@@ -73,7 +73,7 @@ function PaisCrud() {
         var dados = await GetAll();
         return dados.map((element, index) => (
             <ul key={index} className="Todo-List-ul">
-                <li key="item1" className="Todo-List-li id-tdList">{element.id}</li>
+                <li className="Todo-List-li id-tdList">{element.id}</li>
                 <li className="Todo-List-li pais-tdList">{element.pais}</li>
                 <li className="Todo-List-li sigla-tdList">{element.sigla}</li>
                 <li className="Todo-List-li Naci-tdlist">{element.nacionalidade}</li>
@@ -81,7 +81,7 @@ function PaisCrud() {
                     <div className="BTNs-tdList">
                         <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
                         <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
-                        <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
+                        <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(element.id)}}><FontAwesomeIcon icon={faTrash} /></button>
                     </div>
                 </li>
             </ul>

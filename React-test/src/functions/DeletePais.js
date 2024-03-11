@@ -1,7 +1,7 @@
-let id = '1'
-let ApiDeletePais = `http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/EXCLUI/${id}` 
+ 
 
-export async function ApiDelete () {
+export async function ApiDelete (id) {
+    let ApiDeletePais = `http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/EXCLUI/${id}`
     const Username = 'INTEGRASIS';
     const PassWord = '32P@&sB@rr0S';
     const BasicAuth = 'Basic ' + btoa(Username + ':' + PassWord);

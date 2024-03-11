@@ -1,5 +1,6 @@
 import React from "react";
 import cataventoImg from "../img/catavento.png"
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon } from "@fortawesome/free-solid-svg-icons"
 
@@ -13,6 +14,12 @@ const StyleMoon = {
 }
 
 function NavBar () {
+
+    const navigate = useNavigate()
+    const Redirect = ()=>{
+        navigate('/Home')
+    }
+
     return (
         <nav id="nav-bar">
             <div id="Titulo-Container">
@@ -20,7 +27,7 @@ function NavBar () {
                 <img src={cataventoImg} alt="iconCatavento" style={StyleNav} />
             </div>
            <ul id="NavList">
-            <li className="LiNav">Home</li>
+            <li className="LiNav" onClick={Redirect}>Home</li>
             <li className="LiNav">Usuario</li>
             <li className="LiNav">Projeto</li>
             <li className="LiNav">Financeiro</li>
