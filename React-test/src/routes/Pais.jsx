@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { redirect, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../components/Nav";
@@ -22,6 +23,7 @@ function PaisCrud() {
     const Ref5 = useRef();
 
     // ESTADOS DOS INPUTS
+    const [idValue, setidValue] = useState ('')
     const [PaisValue, setPaisValue] = useState('');
     const [SiglaValue, setSiglaValue] = useState('');
     const [NacionalidadeValue, setNacionalidadeValue] = useState('');
@@ -44,8 +46,37 @@ function PaisCrud() {
         fetchData()
     },[])
 
-    
+    useEffect(() => {
+        console.log(idValue);
+    }, [idValue]);
+
     // Funções
+    const converterParaMaiusculo = (ref, setFunction) => {
+        return function (e) {
+            const novoValor = e.target.value.toUpperCase();
+            setFunction(novoValor);
+            if (ref.current) {
+                ref.current.value = novoValor;
+            }
+        };
+    };
+
+    async function EditPais (element) {
+        setidValue(element.id)
+        Ref1.current.value = element.pais
+        Ref2.current.value = element.sigla
+        Ref3.current.value = element.nacionalidade
+        Ref4.current.value = element.bacen
+        Ref5.current.value = element.situacao
+
+        window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
+        window.document.getElementById('divBTN-ADD').style.display = 'none'
+        const navigate = useNavigate()
+        const Redirect = ()=>{
+        navigate('/Pais')
+        }
+        redirect()
+    }
 
     const Add = ()=>{
         setisVisivel(true)
@@ -59,15 +90,6 @@ function PaisCrud() {
         ApiDelete(id)
     }
 
-    const converterParaMaiusculo = (ref, setFunction) => {
-        return function (e) {
-            const novoValor = e.target.value.toUpperCase();
-            setFunction(novoValor);
-            if (ref.current) {
-                ref.current.value = novoValor;
-            }
-        };
-    };
 
     async function RenderGetAll() {
         var dados = await GetAll();
@@ -80,7 +102,7 @@ function PaisCrud() {
                 <li className="li-td-btn">
                     <div className="BTNs-tdList">
                         <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
-                        <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                        <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(element)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
                         <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(element.id)}}><FontAwesomeIcon icon={faTrash} /></button>
                     </div>
                 </li>
@@ -99,26 +121,55 @@ function PaisCrud() {
             "situacao": Ref5.current.value
         };
 
+        const dataUpdate = {
+            "id": idValue,
+            "pais": Ref1.current.value,
+            "sigla": Ref2.current.value,
+            "nacionalidade": Ref3.current.value,
+            "bacen": Ref4.current.value,
+            "situacao": Ref5.current.value
+            
+        };
+
         const Username = 'INTEGRASIS';
         const PassWord = '32P@&sB@rr0S';
         const BasicAuth = 'Basic ' + btoa(Username + ':' + PassWord);
 
-        fetch(APIEndpoint, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': BasicAuth
-            },
-            body: JSON.stringify(newData)
-        })
-            .then(res => {
-                console.log(res);
-                if (!res.ok) {
-                    throw new Error('Erro ao enviar dados para a API');
-                }
-            }).catch(error => {
-                console.error('Erro:', error);
-            });
+        if(idValue==''){
+            fetch(APIEndpoint, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': BasicAuth
+                },
+                body: JSON.stringify(newData)
+            })
+                .then(res => {
+                    console.log(res);
+                    if (!res.ok) {
+                        throw new Error('Erro ao enviar dados para a API');
+                    }
+                }).catch(error => {
+                    console.error('Erro:', error);
+                });
+        }else {
+            fetch(APIEndpoint, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': BasicAuth
+                },
+                body: JSON.stringify(dataUpdate)
+            })
+                .then(res => {
+                    console.log(res);
+                    if (!res.ok) {
+                        throw new Error('Erro ao enviar dados para a API');
+                    }
+                }).catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
 
         setPaisValue(newData.pais);
         setSiglaValue(newData.sigla);
