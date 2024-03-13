@@ -383,6 +383,12 @@ button:focus-visible {
   gap: 1.5rem;
 }
 
+#BTNS-Form-Pais{
+  display: flex;
+  gap: 1rem;
+}
+
+
 .Fieldset-Pais-Form{
   display: flex;
   flex-direction: column;
@@ -412,6 +418,7 @@ button:focus-visible {
   width: 92%;
   height: 50vh;
   background-color: #ffffff6a;
+  margin-bottom: 2rem;
 }
 
 #Conteudo-Pais-Container{
@@ -482,6 +489,10 @@ button:focus-visible {
   flex-direction: row;
   margin-top: 1rem;
   gap: 3rem;
+}
+
+.hidden {
+  display: none;
 }
 
 .id-tdList{

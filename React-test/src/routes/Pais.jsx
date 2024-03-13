@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { redirect, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../components/Nav";
-import { GetPais } from "../functions/ReadPais";
 import { GetAll } from "../functions/GetAllPais";
 import { ApiDelete } from "../functions/DeletePais";
 
@@ -31,17 +30,19 @@ function PaisCrud() {
     const [DDIValue, setDDIValue] = useState('');
     const [SituacaoValue, setSituacaoValue] = useState(false);
 
-    //ESTADOS  RENDERGETALL
-    const [elementosUl, setelementosUl] = useState ([])
+    //ESTADOS  PARA ARMAZENAR OS DADOS DOS PAÍSES
+    const [paises, setPaises] = useState([]);
 
     //OUTROS ESTADOS
     const [isVisivel, setisVisivel] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [listaVisivel, setListaVisivel] = useState(true)
 
     // EFFECT
     useEffect (()=>{
         async function fetchData () {
             const data = await RenderGetAll()
-            setelementosUl(data)
+            setPaises(data)
         }
         fetchData()
     },[])
@@ -49,6 +50,14 @@ function PaisCrud() {
     useEffect(() => {
         console.log(idValue);
     }, [idValue]);
+
+    useEffect(() => {
+        if (success) {
+            setTimeout(() => {
+                window.location.reload();
+            }, 0); // 1 segundo de espera antes de recarregar a página
+        }
+    }, [success]);
 
     // Funções
     const converterParaMaiusculo = (ref, setFunction) => {
@@ -71,11 +80,6 @@ function PaisCrud() {
 
         window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
         window.document.getElementById('divBTN-ADD').style.display = 'none'
-        const navigate = useNavigate()
-        const Redirect = ()=>{
-        navigate('/Pais')
-        }
-        redirect()
     }
 
     const Add = ()=>{
@@ -86,28 +90,17 @@ function PaisCrud() {
         }
     }
 
-    const Exclui = (id)=>{
-        ApiDelete(id)
-    }
+    const Exclui = async (element) => {
+        await ApiDelete(element.id);
+        setPaises(prevPaises => {
+            return prevPaises.filter(pais => pais.id !== element.id);
+        });
+    };
 
 
     async function RenderGetAll() {
         var dados = await GetAll();
-        return dados.map((element, index) => (
-            <ul key={index} className="Todo-List-ul">
-                <li className="Todo-List-li id-tdList">{element.id}</li>
-                <li className="Todo-List-li pais-tdList">{element.pais}</li>
-                <li className="Todo-List-li sigla-tdList">{element.sigla}</li>
-                <li className="Todo-List-li Naci-tdlist">{element.nacionalidade}</li>
-                <li className="li-td-btn">
-                    <div className="BTNs-tdList">
-                        <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
-                        <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(element)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                        <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(element.id)}}><FontAwesomeIcon icon={faTrash} /></button>
-                    </div>
-                </li>
-            </ul>
-        ));
+        return dados;
     }
     
 
@@ -149,6 +142,8 @@ function PaisCrud() {
                     if (!res.ok) {
                         throw new Error('Erro ao enviar dados para a API');
                     }
+                    setSuccess(true)
+
                 }).catch(error => {
                     console.error('Erro:', error);
                 });
@@ -166,6 +161,7 @@ function PaisCrud() {
                     if (!res.ok) {
                         throw new Error('Erro ao enviar dados para a API');
                     }
+                    setSuccess(true)
                 }).catch(error => {
                     console.error('Erro:', error);
                 });
@@ -180,6 +176,16 @@ function PaisCrud() {
         window.document.getElementById('Form-Pais-ADD').style.display="none"
         window.document.getElementById('divBTN-ADD').style.display="flex"
     };
+
+    function fechar () {
+        window.document.getElementById('Form-Pais-ADD').style.display="none"
+        window.document.getElementById('divBTN-ADD').style.display="flex"
+        Ref1.current.value = ''
+        Ref2.current.value = ''
+        Ref3.current.value = ''
+        Ref4.current.value = ''
+        Ref5.current.value = ''
+    }
 
     return (
         <div id="Tela-Pais">
@@ -213,7 +219,11 @@ function PaisCrud() {
                             <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required/>
                         </fieldset>
                     </form>
-                    <button type="submit" onClick={Save}>Salvar</button>
+                    <div id="BTNS-Form-Pais">
+                        <button type="submit" onClick={Save}>Salvar</button>
+                        <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/>Fechar</button>
+                    </div>
+
                 </div>
             </div>
             <div id="Div-Form-Pais-Conteudo">
@@ -227,22 +237,21 @@ function PaisCrud() {
                 </div>
                 <div id="Conteudo-Pais-Container">
                     <div id="Table-Pais">
-                        <ul className="Todo-List-ul">
-                            <li className="Todo-List-li id-tdList"></li>
-                            <li className="Todo-List-li pais-tdList"></li>
-                            <li className="Todo-List-li sigla-tdList"></li>
-                            <li className="Todo-List-li Naci-tdlist"></li>
-                            <li className="li-td-btn">
-                                <div className="BTNs-tdList" style={stylo}>
-                                    <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
-                                    <button className="BTN-EditPais BTNtd-Pais"><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                    <button className="BTN-ExcluiPais BTNtd-Pais"><FontAwesomeIcon icon={faTrash} /></button>
-                                 </div>
-                            </li>
-                        </ul>
-                        <div>
-                            {elementosUl}
-                        </div>
+                        {paises.map((pais, index) => (
+                            <ul key={index} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
+                                <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
+                                <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
+                                <li className="li-td-btn">
+                                    <div className="BTNs-tdList">
+                                        <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                        <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                        <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                    </div>
+                                </li>
+                            </ul>
+                        ))}
                     </div>
                 </div>
             </div>
