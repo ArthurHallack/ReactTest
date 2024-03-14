@@ -552,3 +552,32 @@ button:focus-visible {
   width: 2rem;
   height: 1.5rem;
 }
+
+/*MODAL PAIS*/
+
+.ModalPais{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 45vh;
+  height: 60vh;
+  border-radius: 8px;
+  z-index: 1;
+  background-color: #cccccc;
+}
+
+.ModalTop{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 25%;
+}
+
+.ModalTop span {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: baseline;
+  height: 100%;
+}

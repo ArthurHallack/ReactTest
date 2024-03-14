@@ -39,6 +39,7 @@ function PaisCrud() {
     const [isVisivel, setisVisivel] = useState(false)
     const [success, setSuccess] = useState(false)
     const [listaVisivel, setListaVisivel] = useState(true)
+    const [modalAberto, setModalAberto] = useState(false)
 
     // EFFECT
     useEffect (()=>{
@@ -190,8 +191,11 @@ function PaisCrud() {
         Ref5.current.value = ''
     }
 
-    function ModalView () {
-        console.log(arrayPaises)
+    function abrirModal () {
+        setModalAberto(true)
+    }
+    function fecharModal () {
+        setModalAberto(false)
     }
 
     return (
@@ -233,6 +237,7 @@ function PaisCrud() {
 
                 </div>
             </div>
+            {modalAberto&&<ModalPais fecharModal={fecharModal}/>}
             <div id="Div-Form-Pais-Conteudo">
                 <div id="HudPais">
                     <ul id="HudPais-Ul">
@@ -253,7 +258,7 @@ function PaisCrud() {
                                 <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
                                 <li className="li-td-btn">
                                     <div className="BTNs-tdList">
-                                        <button className="BTN-ReadPais BTNtd-Pais" onClick={ModalView}><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                        <button className="BTN-ReadPais BTNtd-Pais" onClick={abrirModal}><FontAwesomeIcon icon={faFolderOpen}/></button>
                                         <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                         <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
                                     </div>
