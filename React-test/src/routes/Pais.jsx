@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import NavBar from "../components/Nav";
-import { GetAll } from "../functions/GetAllPais";
-import { ApiDelete } from "../functions/DeletePais";
+import React, { useState, useRef, useEffect } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import NavBar from "../components/Nav"
+import ModalPais from "../components/ModalPais"
+import { GetAll } from "../functions/GetAllPais"
+import { ApiDelete } from "../functions/DeletePais"
 
 const stylo = {
     display: "none"
@@ -12,7 +13,7 @@ const stylo = {
 
 function PaisCrud() {
     // APIS
-    const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA';
+    const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
     
     // Values INPUTS
     const Ref1 = useRef();
@@ -23,15 +24,16 @@ function PaisCrud() {
 
     // ESTADOS DOS INPUTS
     const [idValue, setidValue] = useState ('')
-    const [PaisValue, setPaisValue] = useState('');
-    const [SiglaValue, setSiglaValue] = useState('');
-    const [NacionalidadeValue, setNacionalidadeValue] = useState('');
-    const [BacenValue, setBacenValue] = useState('');
-    const [DDIValue, setDDIValue] = useState('');
-    const [SituacaoValue, setSituacaoValue] = useState(false);
+    const [PaisValue, setPaisValue] = useState('')
+    const [SiglaValue, setSiglaValue] = useState('')
+    const [NacionalidadeValue, setNacionalidadeValue] = useState('')
+    const [BacenValue, setBacenValue] = useState('')
+    const [DDIValue, setDDIValue] = useState('')
+    const [SituacaoValue, setSituacaoValue] = useState(false)
 
     //ESTADOS  PARA ARMAZENAR OS DADOS DOS PAÍSES
-    const [paises, setPaises] = useState([]);
+    const [paises, setPaises] = useState([])
+    const [arrayPaises, setArrayPaises] = useState ([])
 
     //OUTROS ESTADOS
     const [isVisivel, setisVisivel] = useState(false)
@@ -100,6 +102,7 @@ function PaisCrud() {
 
     async function RenderGetAll() {
         var dados = await GetAll();
+        setArrayPaises(dados)
         return dados;
     }
     
@@ -187,6 +190,10 @@ function PaisCrud() {
         Ref5.current.value = ''
     }
 
+    function ModalView () {
+        console.log(arrayPaises)
+    }
+
     return (
         <div id="Tela-Pais">
             <NavBar/>
@@ -233,6 +240,7 @@ function PaisCrud() {
                         <li id="Hud-Pais" className="TD-Hud">Pais</li>
                         <li id="HudSigla" className="TD-Hud">Sigla</li>
                         <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
+                        <li id="HudSearch" className="TD-Hud"><input type="search" /></li>
                     </ul>
                 </div>
                 <div id="Conteudo-Pais-Container">
@@ -245,7 +253,7 @@ function PaisCrud() {
                                 <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
                                 <li className="li-td-btn">
                                     <div className="BTNs-tdList">
-                                        <button className="BTN-ReadPais BTNtd-Pais"><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                        <button className="BTN-ReadPais BTNtd-Pais" onClick={ModalView}><FontAwesomeIcon icon={faFolderOpen}/></button>
                                         <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                         <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
                                     </div>
