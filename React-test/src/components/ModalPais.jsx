@@ -21,6 +21,17 @@ function ModalPais ({fecharModal}) {
                 </span>
                 <FontAwesomeIcon icon={faXmark} onClick={CloseModal}/>
            </div>
+           <div className="ModalPais-conteudo">
+                <ul>
+                    <li>id:</li>
+                    <li>Pais:</li>
+                    <li>Sigla:</li>
+                    <li>Nacionalidade:</li>
+                    <li>Bacen:</li>
+                    <li>DDI:</li>
+                    <li>Situação:</li>
+                </ul>
+           </div>
         </div>
     )
 }

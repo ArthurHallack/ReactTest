@@ -21,6 +21,7 @@ function PaisCrud() {
     const Ref3 = useRef();
     const Ref4 = useRef();
     const Ref5 = useRef();
+    const Ref6 = useRef();//DDI
 
     // ESTADOS DOS INPUTS
     const [idValue, setidValue] = useState ('')
@@ -115,7 +116,8 @@ function PaisCrud() {
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
             "bacen": Ref4.current.value,
-            "situacao": Ref5.current.value
+            "situacao": Ref5.current.value,
+            "ddi": Ref6.current.value
         };
 
         const dataUpdate = {
@@ -176,6 +178,7 @@ function PaisCrud() {
         setNacionalidadeValue(newData.nacionalidade);
         setBacenValue(newData.bacen);
         setSituacaoValue(newData.situacao)
+        setDDIValue(newData.ddi)
 
         window.document.getElementById('Form-Pais-ADD').style.display="none"
         window.document.getElementById('divBTN-ADD').style.display="flex"
@@ -224,6 +227,10 @@ function PaisCrud() {
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Bacen</label>
                             <input type="number" ref={Ref4} className="InputsFormPais" maxLength="10" />
+                        </fieldset>
+                        <fieldset className="Fieldset-Pais-Form">
+                            <label htmlFor="">DDI</label>
+                            <input type="number" ref={Ref6} className="InputsFormPais" id="inputDDI"/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Situação</label>
