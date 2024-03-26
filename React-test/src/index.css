@@ -260,90 +260,30 @@ button:focus-visible {
 
 /*style componentes*/
 /*navBar*/
-#nav-bar{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  background-color: #ffffff6a;
-  box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  height: 4rem;
-}
 
-#Titulo-Container{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: -3rem;
-}
-
-#H1-Nav{
-  font-size: 2rem;
-}
-
-#NavList{
-  display: flex;
-  flex-direction: row;
-  gap: 2.5rem;
-}
-
-.LiNav{
-  cursor: pointer;
-}
 
 
 /*Menu*/
 
-#Menu{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 20rem;
-  height: 27rem;
-  color: #ffffff;
-  background-color: #1a1a1a;
-  gap: 4rem;
-  box-shadow: 20px 25px 6px rgba(0, 0, 0, 0.2);
-}
-
-#Container-H1Menu{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 1rem;
-  margin-left: 2.5rem;
-}
-
-#H1Menu{
-  font-size: 1.7rem;
-}
-
-#MenuList{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 4rem;
-}
-
-.LiMenu{
-  font-size: 1rem;
-  cursor: pointer;
-}
-
 
 
 /*////////PAIS////////*/
+
+#direction-pais{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 
 #Tela-Pais{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
   gap: 3rem;
   margin-top: 2rem;
 }

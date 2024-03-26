@@ -318,103 +318,106 @@ function PaisCrud() {
     }
 
     return (
-        <div id="Tela-Pais">
-            <h1 id="Titulo-Pais">Pais</h1>
-            <div id="divBTN-ADD" >
-                <button onClick={Add}>ADD</button>
-                <button onClick={Filtro}><FontAwesomeIcon icon={faFilter} /></button>
-            </div>
-            <div id="Form-Pais-ADD">
-                <p><i>Selecionar Informações</i></p>
-                <div id="Form-Pais-ADD2">
-                    <form action="" method="post" id="FormPais">
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">Pais</label>
-                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="14" required/>
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">Sigla</label>
-                            <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2, setSiglaValue)} maxLength="3" required/>
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">Nacionalidade</label>
-                            <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3, setNacionalidadeValue)} maxLength="20" required/>
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">Bacen</label>
-                            <input type="number" ref={Ref4} className="InputsFormPais" maxLength="10" />
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">DDI</label>
-                            <input type="number" ref={Ref6} className="InputsFormPais" id="inputDDI"/>
-                        </fieldset>
-                        <fieldset className="Fieldset-Pais-Form">
-                            <label htmlFor="">Situação</label>
-                            <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required/>
-                        </fieldset>
-                    </form>
-                    <div id="BTNS-Form-Pais">
-                        <button type="submit" onClick={Save}>Salvar</button>
-                        <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/>Fechar</button>
-                    </div>
-                    <div id="BTNS-Form-Pais-Filtro">
-                        <button type="submit" onClick={Filtrar}>Filtrar <FontAwesomeIcon icon={faFilter} /></button>
-                        <button onClick={FecharInterno}><FontAwesomeIcon icon={faXmark}/></button>
-                    </div>
+        <div id="direction-pais">
+            <NavBar/>
+            <div id="Tela-Pais">
+                <h1 id="Titulo-Pais">Pais</h1>
+                <div id="divBTN-ADD" >
+                    <button onClick={Add}>ADD</button>
+                    <button onClick={Filtro}><FontAwesomeIcon icon={faFilter} /></button>
                 </div>
-            </div>
-            {modalAberto&&<ModalPais fecharModal={fecharModal} FuncaoModal={ArrayModal} dados={arrayPaises} idElement={idSelecionado}/>}
-            <div id="Div-Form-Pais-Conteudo">
-                <div id="HudPais">
-                    <ul id="HudPais-Ul">
-                        <li id="HudId" className="TD-Hud">ID</li>
-                        <li id="Hud-Pais" className="TD-Hud">Pais</li>
-                        <li id="HudSigla" className="TD-Hud">Sigla</li>
-                        <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
-                        <li id="HudSearch" className="TD-Hud"><input type="search" /></li>
-                    </ul>
-                </div>
-                <div id="Conteudo-Pais-Container">
-                    <div id="Table-Pais">
-                        <div id="table-pais1">
-                            {paises.map((pais, index) => (
-                                <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
-                                    <li className="Todo-List-li id-tdList">{pais.id}</li>
-                                    <li className="Todo-List-li pais-tdList">{pais.pais}</li>
-                                    <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
-                                    <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
-                                    <li className="li-td-btn">
-                                        <div className="BTNs-tdList">
-                                            <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
-                                            <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                            <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            ))}
+                <div id="Form-Pais-ADD">
+                    <p><i>Selecionar Informações</i></p>
+                    <div id="Form-Pais-ADD2">
+                        <form action="" method="post" id="FormPais">
+                            <fieldset className="Fieldset-Pais-Form">
+                                <label htmlFor="">Pais</label>
+                                <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="14" required/>
+                            </fieldset>
+                            <fieldset className="Fieldset-Pais-Form">
+                                <label htmlFor="">Sigla</label>
+                                <input type="text" ref={Ref2} id="InputSigla" className="InputsFormPais" onChange={converterParaMaiusculo(Ref2, setSiglaValue)} maxLength="3" required/>
+                            </fieldset>
+                            <fieldset className="Fieldset-Pais-Form">
+                                <label htmlFor="">Nacionalidade</label>
+                                <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3, setNacionalidadeValue)} maxLength="20" required/>
+                            </fieldset>
+                            <fieldset className="Fieldset-Pais-Form">
+                                <label htmlFor="">Bacen</label>
+                                <input type="number" ref={Ref4} className="InputsFormPais" maxLength="10" />
+                            </fieldset>
+                            <fieldset className="Fieldset-Pais-Form">
+                                <label htmlFor="">DDI</label>
+                                <input type="number" ref={Ref6} className="InputsFormPais" id="inputDDI"/>
+                            </fieldset>
+                            <fieldset className="Fieldset-Pais-Form">
+                                <label htmlFor="">Situação</label>
+                                <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required/>
+                            </fieldset>
+                        </form>
+                        <div id="BTNS-Form-Pais">
+                            <button type="submit" onClick={Save}>Salvar</button>
+                            <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/>Fechar</button>
                         </div>
-                        <div id="table-pais2">
-                            {arrayFiltro.map((pais, index) => (
-                                <ul key={pais.id} id="td-ul-filtro" className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
-                                    <li className="Todo-List-li id-tdList">{pais.id}</li>
-                                    <li className="Todo-List-li pais-tdList">{pais.pais}</li>
-                                    <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
-                                    <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
-                                    <li className="li-td-btn">
-                                        <div className="BTNs-tdList">
-                                            <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
-                                            <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                            <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            ))}
+                        <div id="BTNS-Form-Pais-Filtro">
+                            <button type="submit" onClick={Filtrar}>Filtrar <FontAwesomeIcon icon={faFilter} /></button>
+                            <button onClick={FecharInterno}><FontAwesomeIcon icon={faXmark}/></button>
+                        </div>
+                    </div>
+                </div>
+                {modalAberto&&<ModalPais fecharModal={fecharModal} FuncaoModal={ArrayModal} dados={arrayPaises} idElement={idSelecionado}/>}
+                <div id="Div-Form-Pais-Conteudo">
+                    <div id="HudPais">
+                        <ul id="HudPais-Ul">
+                            <li id="HudId" className="TD-Hud">ID</li>
+                            <li id="Hud-Pais" className="TD-Hud">Pais</li>
+                            <li id="HudSigla" className="TD-Hud">Sigla</li>
+                            <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
+                            <li id="HudSearch" className="TD-Hud"><input type="search" /></li>
+                        </ul>
+                    </div>
+                    <div id="Conteudo-Pais-Container">
+                        <div id="Table-Pais">
+                            <div id="table-pais1">
+                                {paises.map((pais, index) => (
+                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
+                                        <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                        <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                        <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
+                                        <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
+                                        <li className="li-td-btn">
+                                            <div className="BTNs-tdList">
+                                                <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                                <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                                <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                ))}
+                            </div>
+                            <div id="table-pais2">
+                                {arrayFiltro.map((pais, index) => (
+                                    <ul key={pais.id} id="td-ul-filtro" className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
+                                        <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                        <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                        <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
+                                        <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
+                                        <li className="li-td-btn">
+                                            <div className="BTNs-tdList">
+                                                <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                                <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                                <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default PaisCrud;

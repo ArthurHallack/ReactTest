@@ -1,41 +1,64 @@
-import React from "react";
-import cataventoImg from "../img/catavento.png"
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoon } from "@fortawesome/free-solid-svg-icons"
-
-
-const StyleNav = {
-    width: "3rem"
-}
-
-const StyleMoon = {
-    cursor: 'pointer'
-}
+import { NavData } from "./NavData";
+import PuserImg from "../img/Puser.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import '../css/componentes.css/nav.css';
 
 function NavBar () {
+    const [isComponentVisible, setIsComponentVisible] = useState(false);
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    const Redirect = ()=>{
-        navigate('/Home')
+    const ativarAnimacao = () => {
+        setIsComponentVisible(prevState => !prevState);
     }
 
+    const Redirect = (id) => {
+        console.log(id);
+        switch (id) {
+            case "1":
+                navigate('/Home');
+                break;
+            case "2":
+                // Implemente ações para o id 2
+                break;
+            case "3":
+                // Implemente ações para o id 3
+                break;
+            // Adicione mais casos conforme necessário
+            default:
+                // Ação padrão para outros ids
+                break;
+        }
+    };
+
     return (
-        <nav id="nav-bar">
-            <div id="Titulo-Container">
-                <h1 id="H1-Nav">Catavento</h1>
-                <img src={cataventoImg} alt="iconCatavento" style={StyleNav} />
-            </div>
-           <ul id="NavList">
-            <li className="LiNav" onClick={Redirect}>Home</li>
-            <li className="LiNav">Usuario</li>
-            <li className="LiNav">Tabelas</li>
-            <li className="LiNav">Financeiro</li>
-            <li className="LiNav">Sistema</li>
-           </ul>
-           <FontAwesomeIcon icon={faMoon} style={StyleMoon} />
-        </nav>
+        <div id="Componente" style={{ left: isComponentVisible ? '0' : '-38.6vh' }}>
+            <nav id="nav-bar">
+                <div id="Hud">
+                    <img src={PuserImg} alt="usuario"  id="UserImg"/>
+                    <h1 id="UserName">Arthur Hallack</h1>
+                    <p id="Titulo">Admin</p>
+                </div>
+                <ul id="NavList">
+                    {NavData.map((val, key)=>{
+                        return(
+                            <li className="row" key={val.id}  id={window.location.pathname == val.link ? "active" : "" }onClick={() => Redirect(val.id)}>
+                                <div id="icon">
+                                    {val.icon}
+                                </div>
+                                <div id="title">
+                                    {val.title}
+                                </div>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </nav>
+            <span id="BTN" onClick={ativarAnimacao}><FontAwesomeIcon icon={faBars}/></span>
+        </div>
     )
 }
 
-export default NavBar
+export default NavBar;
