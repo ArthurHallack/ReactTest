@@ -21,6 +21,6 @@ export async function GetAll () {
 
     }catch(error){
 
-        console.error('Erro:', error)
+        alert.error('Erro:', error)
     }
 }

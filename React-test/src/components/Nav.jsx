@@ -29,7 +29,7 @@ function NavBar () {
            <ul id="NavList">
             <li className="LiNav" onClick={Redirect}>Home</li>
             <li className="LiNav">Usuario</li>
-            <li className="LiNav">Projeto</li>
+            <li className="LiNav">Tabelas</li>
             <li className="LiNav">Financeiro</li>
             <li className="LiNav">Sistema</li>
            </ul>

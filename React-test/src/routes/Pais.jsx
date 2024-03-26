@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import ModalPais from "../components/ModalPais"
 import { GetAll } from "../functions/GetAllPais"
 import { ApiDelete } from "../functions/DeletePais"
+import { FiltroGet } from "../functions/GetFiltro"
 
 const stylo = {
     display: "none"
@@ -35,6 +37,7 @@ function PaisCrud() {
     //ESTADOS  PARA ARMAZENAR OS DADOS DOS PAÍSES
     const [paises, setPaises] = useState([])
     const [arrayPaises, setArrayPaises] = useState ([])
+    const [arrayFiltro, setarrayFiltro] = useState ([])
 
     //OUTROS ESTADOS
     const [isVisivel, setisVisivel] = useState(false)
@@ -42,6 +45,9 @@ function PaisCrud() {
     const [listaVisivel, setListaVisivel] = useState(true)
     const [modalAberto, setModalAberto] = useState(false)
     const [idSelecionado, setIdSelecionado] = useState(null)
+    const [showFilterBtns, setShowFilterBtns] = useState(false)
+    const [veriFiltro, setveriFiltro] = useState (false)
+    const [filtroEx, setfiltroEx] = useState (false)
 
     // EFFECT
     useEffect (()=>{
@@ -60,11 +66,23 @@ function PaisCrud() {
         if (success) {
             setTimeout(() => {
                 window.location.reload();
-            }, 0); // 1 segundo de espera antes de recarregar a página
+            }, 0);
         }
     }, [success]);
 
+    useEffect(() => {
+        if (showFilterBtns===true) {
+            window.document.getElementById('BTNS-Form-Pais-Filtro').style.display = 'flex';
+            window.document.getElementById('BTNS-Form-Pais').style.display = 'none';
+        } else {
+            window.document.getElementById('BTNS-Form-Pais-Filtro').style.display = 'none';
+            window.document.getElementById('BTNS-Form-Pais').style.display = 'flex';
+        }
+        console.log(showFilterBtns)
+    }, [showFilterBtns]);
+
     // Funções
+    //CONVERTER PARA MAIUSCULO
     const converterParaMaiusculo = (ref, setFunction) => {
         return function (e) {
             const novoValor = e.target.value.toUpperCase();
@@ -74,7 +92,71 @@ function PaisCrud() {
             }
         };
     };
+    // FILTRO
+    const toggleFilterBtns = () => {
+        setShowFilterBtns(true)
+    }
+    function Filtro (){
+        Ref1.current.value = ''
+        Ref2.current.value = ''
+        Ref3.current.value = ''
+        Ref4.current.value = ''
+        Ref5.current.value = ''
+        if (veriFiltro === true){
+            Ref1.current.value = PaisValue
+            Ref2.current.value = SiglaValue
+            Ref3.current.value = NacionalidadeValue
+            Ref4.current.value = BacenValue
+            Ref5.current.value = SituacaoValue
+            Ref6.current.value = DDIValue
+        }
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
+        window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
+        window.document.getElementById('divBTN-ADD').style.display = 'none'
+        toggleFilterBtns()
+    }
 
+    function FecharInterno (){
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
+        window.document.getElementById('Form-Pais-ADD').style.display = 'none'
+        window.document.getElementById('divBTN-ADD').style.display = 'flex'
+        setShowFilterBtns(false)
+    }
+
+    async function Filtrar (){
+        var data = {
+            "id": 0,
+            "pais": Ref1.current.value,
+            "sigla": Ref2.current.value,
+            "nacionalidade": Ref3.current.value,
+            "bacen": Ref4.current.value,
+            "situacao": Ref5.current.value,
+            "ddi": Ref6.current.value
+        }
+        var data = await FiltroGet(data)
+        var datajson = await data.json()
+        setarrayFiltro(datajson)
+        
+        setPaisValue(Ref1.current.value);
+        setSiglaValue(Ref2.current.value);
+        setNacionalidadeValue(Ref3.current.value);
+        setBacenValue(Ref4.current.value);
+        setSituacaoValue(Ref5.current.value)
+        setDDIValue(Ref6.current.value)
+
+        setShowFilterBtns(true)
+        setveriFiltro(true)
+
+
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
+        window.document.getElementById('Form-Pais-ADD').style.display = 'none'
+        window.document.getElementById('divBTN-ADD').style.display = 'flex'
+        window.document.getElementById('table-pais1').style.display = 'none'
+        window.document.getElementById('table-pais2').style.display = 'flex'
+    }
+
+
+    //EDITAR
     async function EditPais (element) {
         setidValue(element.id)
         Ref1.current.value = element.pais
@@ -85,31 +167,58 @@ function PaisCrud() {
 
         window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
         window.document.getElementById('divBTN-ADD').style.display = 'none'
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
+        setShowFilterBtns(false)
     }
 
+    //EDITAR
+    async function EditPais (element) {
+        setidValue(element.id)
+        Ref1.current.value = element.pais
+        Ref2.current.value = element.sigla
+        Ref3.current.value = element.nacionalidade
+        Ref4.current.value = element.bacen
+        Ref5.current.value = element.situacao
+
+        window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
+        window.document.getElementById('divBTN-ADD').style.display = 'none'
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
+        setShowFilterBtns(false)
+    }
+    
+    //ADICIONAR
     const Add = ()=>{
         setisVisivel(true)
         if (isVisivel == true) {
             window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
             window.document.getElementById('divBTN-ADD').style.display = 'none'
+            window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
+            setShowFilterBtns(false)
         }
     }
-
+    //EXCLUIR
     const Exclui = async (element) => {
-        await ApiDelete(element.id);
-        setPaises(prevPaises => {
-            return prevPaises.filter(pais => pais.id !== element.id);
-        });
+        try {
+            console.log("Excluindo país:", element);
+            await ApiDelete(element.id);
+            setPaises(prevPaises => prevPaises.filter(pais => pais.id !== element.id));
+            // Atualiza o estado do arrayFiltro removendo o país excluído
+            setarrayFiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id));
+            console.log("País excluído com sucesso:", element);
+        } catch (error) {
+            console.error("Erro ao excluir país:", error);
+        }
     };
+    
 
-
+    //RENDERIZAR A LISTA
     async function RenderGetAll() {
         var dados = await GetAll();
         setArrayPaises(dados)
         return dados;
     }
     
-
+    //SALVAR
     const Save = () => {
         const newData = {
             "id": 0,
@@ -152,7 +261,7 @@ function PaisCrud() {
                     setSuccess(true)
 
                 }).catch(error => {
-                    console.error('Erro:', error);
+                    alert.error('Erro:', error);
                 });
         }else {
             fetch(APIEndpoint, {
@@ -170,7 +279,7 @@ function PaisCrud() {
                     }
                     setSuccess(true)
                 }).catch(error => {
-                    console.error('Erro:', error);
+                    alert.error('Erro:', error);
                 });
         }
 
@@ -184,10 +293,11 @@ function PaisCrud() {
         window.document.getElementById('Form-Pais-ADD').style.display="none"
         window.document.getElementById('divBTN-ADD').style.display="flex"
     };
-
+    //BTN FECHAR
     function fechar () {
         window.document.getElementById('Form-Pais-ADD').style.display="none"
         window.document.getElementById('divBTN-ADD').style.display="flex"
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
         Ref1.current.value = ''
         Ref2.current.value = ''
         Ref3.current.value = ''
@@ -209,10 +319,10 @@ function PaisCrud() {
 
     return (
         <div id="Tela-Pais">
-            <NavBar/>
             <h1 id="Titulo-Pais">Pais</h1>
             <div id="divBTN-ADD" >
                 <button onClick={Add}>ADD</button>
+                <button onClick={Filtro}><FontAwesomeIcon icon={faFilter} /></button>
             </div>
             <div id="Form-Pais-ADD">
                 <p><i>Selecionar Informações</i></p>
@@ -220,7 +330,7 @@ function PaisCrud() {
                     <form action="" method="post" id="FormPais">
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Pais</label>
-                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="12" required/>
+                            <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="14" required/>
                         </fieldset>
                         <fieldset className="Fieldset-Pais-Form">
                             <label htmlFor="">Sigla</label>
@@ -247,7 +357,10 @@ function PaisCrud() {
                         <button type="submit" onClick={Save}>Salvar</button>
                         <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/>Fechar</button>
                     </div>
-
+                    <div id="BTNS-Form-Pais-Filtro">
+                        <button type="submit" onClick={Filtrar}>Filtrar <FontAwesomeIcon icon={faFilter} /></button>
+                        <button onClick={FecharInterno}><FontAwesomeIcon icon={faXmark}/></button>
+                    </div>
                 </div>
             </div>
             {modalAberto&&<ModalPais fecharModal={fecharModal} FuncaoModal={ArrayModal} dados={arrayPaises} idElement={idSelecionado}/>}
@@ -263,21 +376,40 @@ function PaisCrud() {
                 </div>
                 <div id="Conteudo-Pais-Container">
                     <div id="Table-Pais">
-                        {paises.map((pais, index) => (
-                            <ul key={index} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
-                                <li className="Todo-List-li id-tdList">{pais.id}</li>
-                                <li className="Todo-List-li pais-tdList">{pais.pais}</li>
-                                <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
-                                <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
-                                <li className="li-td-btn">
-                                    <div className="BTNs-tdList">
-                                        <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
-                                        <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                        <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
-                                    </div>
-                                </li>
-                            </ul>
-                        ))}
+                        <div id="table-pais1">
+                            {paises.map((pais, index) => (
+                                <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
+                                    <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                    <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                    <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
+                                    <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList">
+                                            <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                            <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                            <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            ))}
+                        </div>
+                        <div id="table-pais2">
+                            {arrayFiltro.map((pais, index) => (
+                                <ul key={pais.id} id="td-ul-filtro" className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
+                                    <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                    <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                    <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
+                                    <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList">
+                                            <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
+                                            <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                            <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

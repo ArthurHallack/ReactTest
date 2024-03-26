@@ -345,11 +345,13 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
   gap: 3rem;
+  margin-top: 2rem;
 }
 
 #divBTN-ADD{
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
   min-width: 90%;
   max-width: 90%;
 }
@@ -367,6 +369,7 @@ button:focus-visible {
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 1rem;
+  margin-top: 5%;
   border-radius: 5px;
 }
 
@@ -388,6 +391,10 @@ button:focus-visible {
   gap: 1rem;
 }
 
+#BTNS-Form-Pais-Filtro{
+  display: none;
+  gap: 1rem;
+}
 
 .Fieldset-Pais-Form{
   display: flex;
@@ -556,6 +563,19 @@ button:focus-visible {
   justify-content: center;
   width: 2rem;
   height: 1.5rem;
+}
+
+/*LISTA DO FILTRO*/
+
+#table-pais1{
+  display: block;
+  width: 100%;
+}
+
+#table-pais2{
+  display: none;
+  width: 100%;
+  flex-direction: column;
 }
 
 /*MODAL PAIS*/
