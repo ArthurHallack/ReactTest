@@ -38,3 +38,21 @@ export const NavData = [
         icon: <FontAwesomeIcon icon={faGears} />
     }
 ]
+
+
+export const NavData2 = [
+    {
+        id: "1",
+        title: "Pais"
+    },
+
+    {
+        id: "2",
+        title: "Municipio"
+    },
+
+    {
+        id: "3",
+        title: "Aeroporto"
+    }
+]

@@ -118,3 +118,13 @@
   .row #title {
     flex: 1%;
   }
+
+  #Table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #OpsTable{
+    display: flex;
+    flex-direction: column;
+  }
