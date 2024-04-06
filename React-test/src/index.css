@@ -290,7 +290,7 @@ button:focus-visible {
 
 #divBTN-ADD{
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 1rem;
   min-width: 90%;
   max-width: 90%;
@@ -367,11 +367,13 @@ button:focus-visible {
   background-color: #ffffff6a;
   margin-bottom: 2rem;
   border-radius: 5px 5px;
+  position: relative;
 }
 
 #Conteudo-Pais-Container{
   overflow: auto;
   height: 49vh;
+  position: relative;
 }
 
 #InputSituação-Pais{
@@ -392,6 +394,7 @@ button:focus-visible {
   background-color: rgb(0, 0, 0);
   height: 2rem;
   border-radius: 5px 5px 0px 0px;
+  position: relative;
 }
 
 #HudPais-Ul{
@@ -421,7 +424,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5rem;
+  width: 4rem;
 }
 
 #HudNacionalidade{
@@ -440,15 +443,20 @@ button:focus-visible {
   flex-direction: column;
   justify-content: space-between;
   height: 2rem;
+  width: auto;
   margin-left: 3rem;
+  position: relative;
 }
 
 .Todo-List-ul{
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
+  width: 99%;
   margin-top: 1rem;
-  margin-left: 1;
-  gap: 3rem;
+  margin-left: 0.7rem;
+  gap: 2rem;
+  position: relative;
 }
 
 .hidden {
@@ -458,35 +466,35 @@ button:focus-visible {
 .id-tdList{
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 3rem;
+  justify-content: flex-start;
+  padding-right: 2rem;
 }
 
 .pais-tdList{
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 4rem;
+  justify-content: flex-start;
+  width: 5rem;
 }
 
 .sigla-tdList{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 5rem;
 }
 
 .Naci-tdlist{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 9rem;
 }
 
 /*BTN*/
 
 .li-td-btn{
-  margin-left: 50%;
+  margin-left: auto;
 }
 
 .BTNs-tdList{

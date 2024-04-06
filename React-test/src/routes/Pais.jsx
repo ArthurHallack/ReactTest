@@ -3,8 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import ModalPais from "../components/ModalPais"
+import Alert from "../components/Error"
 import { GetAll } from "../functions/GetAllPais"
 import { ApiDelete } from "../functions/DeletePais"
 import { FiltroGet } from "../functions/GetFiltro"
@@ -323,7 +326,7 @@ function PaisCrud() {
             <div id="Tela-Pais">
                 <h1 id="Titulo-Pais">Pais</h1>
                 <div id="divBTN-ADD" >
-                    <button onClick={Add}>ADD</button>
+                    <button onClick={Add}><FontAwesomeIcon icon={faPlus} /></button>
                     <button onClick={Filtro}><FontAwesomeIcon icon={faFilter} /></button>
                 </div>
                 <div id="Form-Pais-ADD">
@@ -356,8 +359,8 @@ function PaisCrud() {
                             </fieldset>
                         </form>
                         <div id="BTNS-Form-Pais">
-                            <button type="submit" onClick={Save}>Salvar</button>
-                            <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/>Fechar</button>
+                            <button type="submit" onClick={Save}><FontAwesomeIcon icon={faCheck} /></button>
+                            <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/></button>
                         </div>
                         <div id="BTNS-Form-Pais-Filtro">
                             <button type="submit" onClick={Filtrar}>Filtrar <FontAwesomeIcon icon={faFilter} /></button>
@@ -373,7 +376,6 @@ function PaisCrud() {
                             <li id="Hud-Pais" className="TD-Hud">Pais</li>
                             <li id="HudSigla" className="TD-Hud">Sigla</li>
                             <li id="HudNacionalidade" className="TD-Hud">Nacionalidade</li>
-                            <li id="HudSearch" className="TD-Hud"><input type="search" /></li>
                         </ul>
                     </div>
                     <div id="Conteudo-Pais-Container">
