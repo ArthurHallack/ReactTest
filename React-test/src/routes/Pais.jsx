@@ -7,7 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import ModalPais from "../components/ModalPais"
-import Alert from "../components/Error"
+import AlertE from "../components/Msg"
 import { GetAll } from "../functions/GetAllPais"
 import { ApiDelete } from "../functions/DeletePais"
 import { FiltroGet } from "../functions/GetFiltro"
@@ -45,6 +45,7 @@ function PaisCrud() {
     //OUTROS ESTADOS
     const [isVisivel, setisVisivel] = useState(false)
     const [success, setSuccess] = useState(false)
+    const [msgerro, setMsgerro] = useState (null)
     const [listaVisivel, setListaVisivel] = useState(true)
     const [modalAberto, setModalAberto] = useState(false)
     const [idSelecionado, setIdSelecionado] = useState(null)
@@ -66,12 +67,12 @@ function PaisCrud() {
     }, [idValue]);
 
     useEffect(() => {
-        if (success) {
+        if (success && !msgerro) { // Recarregar apenas se success for verdadeiro e não houver erro da API
             setTimeout(() => {
                 window.location.reload();
             }, 0);
         }
-    }, [success]);
+    }, [success, msgerro]);
 
     useEffect(() => {
         if (showFilterBtns===true) {
@@ -256,16 +257,20 @@ function PaisCrud() {
                 },
                 body: JSON.stringify(newData)
             })
-                .then(res => {
-                    console.log(res);
-                    if (!res.ok) {
-                        throw new Error('Erro ao enviar dados para a API');
-                    }
-                    setSuccess(true)
-
-                }).catch(error => {
-                    alert.error('Erro:', error);
-                });
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Erro na requisição');
+                }
+            })
+            .then(data => {
+                if (data.msgerro) {
+                    setMsgerro(data);
+                } else {
+                    setSuccess(true) // Define success como verdadeiro se não houver erro
+                }
+            }).catch(error => {
+                console.log(msgerro); // Define o erro da API no estado
+            })
         }else {
             fetch(APIEndpoint, {
                 method: 'PUT',
@@ -295,6 +300,7 @@ function PaisCrud() {
 
         window.document.getElementById('Form-Pais-ADD').style.display="none"
         window.document.getElementById('divBTN-ADD').style.display="flex"
+        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
     };
     //BTN FECHAR
     function fechar () {
@@ -323,6 +329,7 @@ function PaisCrud() {
     return (
         <div id="direction-pais">
             <NavBar/>
+            <AlertE error ={msgerro}/>
             <div id="Tela-Pais">
                 <h1 id="Titulo-Pais">Pais</h1>
                 <div id="divBTN-ADD" >
