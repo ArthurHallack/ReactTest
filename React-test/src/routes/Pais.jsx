@@ -67,12 +67,18 @@ function PaisCrud() {
     }, [idValue]);
 
     useEffect(() => {
-        if (success && !msgerro) { // Recarregar apenas se success for verdadeiro e não houver erro da API
+        if (msgerro) {
+            console.log(msgerro)
+        }
+    }, [msgerro]) //efect responsavel pela mensagem de erro
+
+    useEffect(()=>{
+        if (success) {
             setTimeout(() => {
                 window.location.reload();
-            }, 0);
+            }, 0)
         }
-    }, [success, msgerro]);
+    }, [success]) //effect reponsavel por recarregar a página se dado salvo com sucesso
 
     useEffect(() => {
         if (showFilterBtns===true) {
@@ -257,19 +263,17 @@ function PaisCrud() {
                 },
                 body: JSON.stringify(newData)
             })
-            .then(res => {
+            .then(res =>{
                 if (!res.ok) {
                     throw new Error('Erro na requisição');
                 }
-            })
-            .then(data => {
-                if (data.msgerro) {
-                    setMsgerro(data);
-                } else {
-                    setSuccess(true) // Define success como verdadeiro se não houver erro
+                return res.json()
+            }).then(data => {
+                if (data.msgerro !== ''){
+                    setMsgerro(data.msgerro)
+                }else{
+                    setSuccess(true)
                 }
-            }).catch(error => {
-                console.log(msgerro); // Define o erro da API no estado
             })
         }else {
             fetch(APIEndpoint, {
@@ -279,16 +283,19 @@ function PaisCrud() {
                     'Authorization': BasicAuth
                 },
                 body: JSON.stringify(dataUpdate)
-            })
-                .then(res => {
-                    console.log(res);
-                    if (!res.ok) {
-                        throw new Error('Erro ao enviar dados para a API');
-                    }
+            }).then(res =>{
+                if (!res.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return res.json()
+            }).then(data => {
+                if (data.msgerro !== ''){
+                    setMsgerro(data.msgerro)
+                }else{
                     setSuccess(true)
-                }).catch(error => {
-                    alert.error('Erro:', error);
-                });
+                }
+            })
+               
         }
 
         setPaisValue(newData.pais);
