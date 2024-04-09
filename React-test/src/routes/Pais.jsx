@@ -5,6 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
+import { faBroom } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import ModalPais from "../components/ModalPais"
 import AlertE from "../components/Msg"
@@ -165,6 +166,12 @@ function PaisCrud() {
         window.document.getElementById('table-pais2').style.display = 'flex'
     }
 
+    //LIMPAR FILTRO
+
+    function Limpar () {
+
+        window.location.reload()
+    }
 
     //EDITAR
     async function EditPais (element) {
@@ -377,7 +384,8 @@ function PaisCrud() {
                             <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/></button>
                         </div>
                         <div id="BTNS-Form-Pais-Filtro">
-                            <button type="submit" onClick={Filtrar}>Filtrar <FontAwesomeIcon icon={faFilter} /></button>
+                            <button type="submit" onClick={Filtrar}><FontAwesomeIcon icon={faFilter} /></button>
+                            <button onClick={Limpar}><FontAwesomeIcon icon={faBroom} /></button>
                             <button onClick={FecharInterno}><FontAwesomeIcon icon={faXmark}/></button>
                         </div>
                     </div>

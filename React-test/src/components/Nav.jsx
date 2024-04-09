@@ -59,7 +59,7 @@ function NavBar () {
     };
 
     return (
-        <div id="Componente" style={{ left: isComponentVisible ? '0' : '-35.6vh' }}>
+        <div id="Componente" style={{ left: isComponentVisible ? '0' : '-17%' }}>
             <nav id="nav-bar">
                 <div id="Hud">
                     <img src={PuserImg} alt="usuario"  id="UserImg"/>
