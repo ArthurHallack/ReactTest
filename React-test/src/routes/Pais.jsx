@@ -52,8 +52,7 @@ function PaisCrud() {
     const [idSelecionado, setIdSelecionado] = useState(null)
     const [showFilterBtns, setShowFilterBtns] = useState(false)
     const [veriFiltro, setveriFiltro] = useState (false)
-    const [filtroEx, setfiltroEx] = useState (false)
-
+    
     // EFFECT
     useEffect (()=>{
         async function fetchData () {
@@ -93,6 +92,13 @@ function PaisCrud() {
     }, [showFilterBtns]);
 
     // Funções
+
+    //função relacionada a fechar a mensagem de erro
+
+    function handleError () {
+        setMsgerro(null)
+    }
+
     //CONVERTER PARA MAIUSCULO
     const converterParaMaiusculo = (ref, setFunction) => {
         return function (e) {
@@ -211,6 +217,11 @@ function PaisCrud() {
             window.document.getElementById('divBTN-ADD').style.display = 'none'
             window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
             setShowFilterBtns(false)
+            Ref1.current.value = ''
+            Ref2.current.value = ''
+            Ref3.current.value = ''
+            Ref4.current.value = ''
+            Ref5.current.value = ''
         }
     }
     //EXCLUIR
@@ -253,7 +264,8 @@ function PaisCrud() {
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
             "bacen": Ref4.current.value,
-            "situacao": Ref5.current.value
+            "situacao": Ref5.current.value,
+            "ddi": Ref6.current.value
             
         };
 
@@ -343,7 +355,7 @@ function PaisCrud() {
     return (
         <div id="direction-pais">
             <NavBar/>
-            <AlertE error ={msgerro}/>
+            <AlertE error ={msgerro} handleError={handleError}/>
             <div id="Tela-Pais">
                 <h1 id="Titulo-Pais">Pais</h1>
                 <div id="divBTN-ADD" >

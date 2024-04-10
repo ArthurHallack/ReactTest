@@ -101,6 +101,7 @@
 
   .row:hover {
     background-color: #293846;
+    border-left: 3px solid #ffff;
   }
 
  #active{

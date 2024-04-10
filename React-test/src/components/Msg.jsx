@@ -5,7 +5,7 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import '../css/componentes.css/Msg.css'
 
-function AlertE({ error }) {
+function AlertE({ error, handleError }) {
     const [visivel, setVisivel] = useState(false); // Inicializa visivel como false
 
     useEffect(() => {
@@ -19,6 +19,7 @@ function AlertE({ error }) {
 
     const close = () => {
         setVisivel(false); // Define visivel como false ao clicar no botão
+        handleError()
     };
 
     return (
