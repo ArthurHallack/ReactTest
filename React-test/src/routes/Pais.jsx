@@ -324,9 +324,6 @@ function PaisCrud() {
         setSituacaoValue(newData.situacao)
         setDDIValue(newData.ddi)
 
-        window.document.getElementById('Form-Pais-ADD').style.display="none"
-        window.document.getElementById('divBTN-ADD').style.display="flex"
-        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
     };
     //BTN FECHAR
     function fechar () {
@@ -423,9 +420,9 @@ function PaisCrud() {
                                         <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
                                         <li className="li-td-btn">
                                             <div className="BTNs-tdList">
-                                                <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
-                                                <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                                <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)} />
+                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}} />
+                                                <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}} />
                                             </div>
                                         </li>
                                     </ul>
@@ -440,9 +437,9 @@ function PaisCrud() {
                                         <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
                                         <li className="li-td-btn">
                                             <div className="BTNs-tdList">
-                                                <button className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)}><FontAwesomeIcon icon={faFolderOpen}/></button>
-                                                <button className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                                <button className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}><FontAwesomeIcon icon={faTrash} /></button>
+                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)} />
+                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}} />
+                                                <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}} />
                                             </div>
                                         </li>
                                     </ul>

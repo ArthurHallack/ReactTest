@@ -20,9 +20,9 @@
     height: 4rem;
     border-radius: 4px;
     padding-inline: 1rem;
-    margin-top: 100px;
     margin-left: 65%;
-    margin-bottom: 30%;
+    top: 5%;
+    z-index: 1;
     position: absolute;
     animation: enter 1s forwards;
 }

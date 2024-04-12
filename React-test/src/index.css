@@ -409,28 +409,28 @@ button:focus-visible {
 #HudId{
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 3rem;
+  justify-content: flex-start;
+  width: 2.9rem;
 }
 
 #Hud-Pais{
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 4rem;
+  justify-content: flex-start;
+  width: 6rem;
 }
 
 #HudSigla{
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 4rem;
+  justify-content: flex-start;
+  width: 5rem;
 }
 
 #HudNacionalidade{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 9rem;
 }
 
@@ -444,7 +444,6 @@ button:focus-visible {
   justify-content: space-between;
   height: 2rem;
   width: auto;
-  margin-left: 3rem;
   position: relative;
 }
 
@@ -452,9 +451,9 @@ button:focus-visible {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 99%;
-  margin-top: 1rem;
-  margin-left: 0.7rem;
+  font-size: 12px;
+  width: 96%;
+  padding-left: 3rem;
   gap: 2rem;
   position: relative;
 }
@@ -474,7 +473,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 5rem;
+  width: 7rem;
 }
 
 .sigla-tdList{
@@ -494,7 +493,7 @@ button:focus-visible {
 /*BTN*/
 
 .li-td-btn{
-  margin-left: auto;
+  margin-left:auto;
 }
 
 .BTNs-tdList{
@@ -503,6 +502,7 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
   height: 2rem;
+  gap: 0.5rem;
 }
 
 .BTNtd-Pais{
@@ -510,8 +510,9 @@ button:focus-visible {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 1.5rem;
+  width: 1.5rem;
+  height: 1rem;
+  cursor: pointer;
 }
 
 /*LISTA DO FILTRO*/
