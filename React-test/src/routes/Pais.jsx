@@ -53,7 +53,7 @@ function PaisCrud() {
     const [showFilterBtns, setShowFilterBtns] = useState(false)
     const [veriFiltro, setveriFiltro] = useState (false)
     
-    // EFFECT
+    // EFFECTS
     useEffect (()=>{
         async function fetchData () {
             const data = await RenderGetAll()
@@ -80,6 +80,25 @@ function PaisCrud() {
         }
     }, [success]) //effect reponsavel por recarregar a página se dado salvo com sucesso
 
+    useEffect(()=>{
+        const input1 = window.document.getElementById("inputPais")
+        const input2 = window.document.getElementById("InputSigla")
+        const input3 = window.document.getElementById("inputNac")
+        if(msgerro=="País inválido"){
+            input1.style.border = "3px solid red"
+            input2.style.border = "none"
+            input3.style.border = "none"
+        } else if (msgerro=="Sigla inválida"){
+            input2.style.border = "3px solid red"
+            input1.style.border = "none"
+            input3.style.border = "none"
+        } else if (msgerro=="Nacionalidade inválida"){
+            input3.style.border = "3px solid red"
+            input2.style.border = "none"
+            input1.style.border = "none"
+        }
+    }, [msgerro])// effect esponsavel por fazer os inputs vermelhos em caso de erro
+
     useEffect(() => {
         if (showFilterBtns===true) {
             window.document.getElementById('BTNS-Form-Pais-Filtro').style.display = 'flex';
@@ -99,7 +118,7 @@ function PaisCrud() {
         setMsgerro(null)
     }
 
-    //CONVERTER PARA MAIUSCULO
+    //CONVERTER PARA MAIUSCULO NOS INPUTS
     const converterParaMaiusculo = (ref, setFunction) => {
         return function (e) {
             const novoValor = e.target.value.toUpperCase();
@@ -365,7 +384,7 @@ function PaisCrud() {
                         <form action="" method="post" id="FormPais">
                             <fieldset className="Fieldset-Pais-Form">
                                 <label htmlFor="">Pais</label>
-                                <input type="text" ref={Ref1} className="InputsFormPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="14" required/>
+                                <input type="text" ref={Ref1} className="InputsFormPais" id="inputPais" onChange={converterParaMaiusculo(Ref1,  setPaisValue)} maxLength="14" required/>
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
                                 <label htmlFor="">Sigla</label>
@@ -373,11 +392,11 @@ function PaisCrud() {
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
                                 <label htmlFor="">Nacionalidade</label>
-                                <input type="text" ref={Ref3} className="InputsFormPais" onChange={converterParaMaiusculo(Ref3, setNacionalidadeValue)} maxLength="20" required/>
+                                <input type="text" ref={Ref3} className="InputsFormPais" id="inputNac" onChange={converterParaMaiusculo(Ref3, setNacionalidadeValue)} maxLength="20" required/>
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
                                 <label htmlFor="">Bacen</label>
-                                <input type="number" ref={Ref4} className="InputsFormPais" maxLength="10" />
+                                <input type="number" ref={Ref4} className="InputsFormPais" id="inputBacen" maxLength="10" />
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
                                 <label htmlFor="">DDI</label>
