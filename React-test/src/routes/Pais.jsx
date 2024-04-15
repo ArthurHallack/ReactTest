@@ -96,6 +96,10 @@ function PaisCrud() {
             input3.style.border = "3px solid red"
             input2.style.border = "none"
             input1.style.border = "none"
+        } else if (msgerro=="Informação Já Cadastrada"){
+            input1.style.border = "3px solid red"
+            input2.style.border = "3px solid red"
+            input3.style.border = "3px solid red"
         }
     }, [msgerro])// effect esponsavel por fazer os inputs vermelhos em caso de erro
 
