@@ -62,7 +62,7 @@ function ModalPais ({ fecharModal, dados, idElement }) {
                         <li>Nacionalidade: {itemSelecionado.nacionalidade}</li>
                         <li>Bacen: {itemSelecionado.bacen}</li>
                         <li>DDI: {itemSelecionado.ddi}</li>
-                        <li>Situação: {itemSelecionado.situacao}</li>
+                        <li>Situação: {itemSelecionado.situacao ? 'Ativo' : 'Inativo'}</li>
                     </ul>
                 )}
             </div>

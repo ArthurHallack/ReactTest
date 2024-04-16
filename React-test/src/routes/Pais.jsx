@@ -52,7 +52,7 @@ function PaisCrud() {
     const [idSelecionado, setIdSelecionado] = useState(null)
     const [showFilterBtns, setShowFilterBtns] = useState(false)
     const [veriFiltro, setveriFiltro] = useState (false)
-    
+
     // EFFECTS
     useEffect (()=>{
         async function fetchData () {
@@ -61,10 +61,6 @@ function PaisCrud() {
         }
         fetchData()
     },[])
-
-    useEffect(() => {
-        console.log(idValue);
-    }, [idValue]);
 
     useEffect(() => {
         if (msgerro) {
@@ -111,7 +107,6 @@ function PaisCrud() {
             window.document.getElementById('BTNS-Form-Pais-Filtro').style.display = 'none';
             window.document.getElementById('BTNS-Form-Pais').style.display = 'flex';
         }
-        console.log(showFilterBtns)
     }, [showFilterBtns]);
 
     // Funções
@@ -147,14 +142,14 @@ function PaisCrud() {
             Ref2.current.value = SiglaValue
             Ref3.current.value = NacionalidadeValue
             Ref4.current.value = BacenValue
-            Ref5.current.value = SituacaoValue
+            Ref5.current.checked = SituacaoValue
             Ref6.current.value = DDIValue
         }
         window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
         window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
         window.document.getElementById('divBTN-ADD').style.display = 'none'
         toggleFilterBtns()
-    }
+    } //responsavel por mostrar o form de filtragem
 
     function FecharInterno (){
         window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
@@ -169,12 +164,12 @@ function PaisCrud() {
             "pais": Ref1.current.value,
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
-            "bacen": Ref4.current.value,
+            "bacen": parseInt(Ref4.current.value, 10),
             "situacao": Ref5.current.value,
             "ddi": Ref6.current.value
         }
-        var data = await FiltroGet(data)
-        var datajson = await data.json()
+        var req = await FiltroGet(data)
+        var datajson = await req.json()
         setarrayFiltro(datajson)
         
         setPaisValue(Ref1.current.value);
@@ -193,7 +188,7 @@ function PaisCrud() {
         window.document.getElementById('divBTN-ADD').style.display = 'flex'
         window.document.getElementById('table-pais1').style.display = 'none'
         window.document.getElementById('table-pais2').style.display = 'flex'
-    }
+    } //faz a filtragem mesmo
 
     //LIMPAR FILTRO
 
@@ -224,7 +219,7 @@ function PaisCrud() {
         Ref2.current.value = element.sigla
         Ref3.current.value = element.nacionalidade
         Ref4.current.value = element.bacen
-        Ref5.current.value = element.situacao
+        Ref5.current.checked = element.situacao
 
         window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
         window.document.getElementById('divBTN-ADD').style.display = 'none'
@@ -277,7 +272,7 @@ function PaisCrud() {
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
             "bacen": Ref4.current.value,
-            "situacao": Ref5.current.value,
+            "situacao": Ref5.current.checked,
             "ddi": Ref6.current.value
         };
 
@@ -287,7 +282,7 @@ function PaisCrud() {
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
             "bacen": Ref4.current.value,
-            "situacao": Ref5.current.value,
+            "situacao": Ref5.current.checked,
             "ddi": Ref6.current.value
             
         };
@@ -408,7 +403,7 @@ function PaisCrud() {
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
                                 <label htmlFor="">Situação</label>
-                                <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required/>
+                                <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required />
                             </fieldset>
                         </form>
                         <div id="BTNS-Form-Pais">

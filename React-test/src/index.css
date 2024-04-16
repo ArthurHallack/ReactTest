@@ -528,6 +528,10 @@ button:focus-visible {
   flex-direction: column;
 }
 
+.Bacen-tdlist{
+  display: flex;
+}
+
 /*MODAL PAIS*/
 
 .ModalPais{
