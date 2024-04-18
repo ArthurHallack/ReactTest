@@ -385,6 +385,29 @@ button:focus-visible {
   width: 5rem;
 }
 
+#DivSit{
+  display:flex;
+  flex-direction: row;
+  align-items:center ;
+  margin-top: 2px;
+  gap: 3px;
+}
+
+#OpSituacao{
+  width: 8rem;
+  height: 1.6rem;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  margin-left: -3rem;
+}
+
+#OpSituacao option:focus,
+#OpSituacao option:hover  {
+  background-color: #e0e0e0;
+    color: #555;
+}
+
 /*HUD*/
 
 #HudPais{

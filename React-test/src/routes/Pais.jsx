@@ -22,12 +22,13 @@ function PaisCrud() {
     const APIEndpoint = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/GRAVA'
     
     // Values INPUTS
-    const Ref1 = useRef();
-    const Ref2 = useRef();
-    const Ref3 = useRef();
-    const Ref4 = useRef();
-    const Ref5 = useRef();
+    const Ref1 = useRef();//Pais
+    const Ref2 = useRef();//Sigla
+    const Ref3 = useRef();//Nacionalidade
+    const Ref4 = useRef();//Bacen
+    const Ref5 = useRef();//Situação (input)
     const Ref6 = useRef();//DDI
+    const Ref7 = useRef();//Situação (options)
 
     // ESTADOS DOS INPUTS
     const [idValue, setidValue] = useState ('')
@@ -37,6 +38,7 @@ function PaisCrud() {
     const [BacenValue, setBacenValue] = useState('')
     const [DDIValue, setDDIValue] = useState('')
     const [SituacaoValue, setSituacaoValue] = useState(false)
+    const [OpSitValue, setOpSitValue] = useState(null)
 
     //ESTADOS  PARA ARMAZENAR OS DADOS DOS PAÍSES
     const [paises, setPaises] = useState([])
@@ -103,9 +105,24 @@ function PaisCrud() {
         if (showFilterBtns===true) {
             window.document.getElementById('BTNS-Form-Pais-Filtro').style.display = 'flex';
             window.document.getElementById('BTNS-Form-Pais').style.display = 'none';
+            window.document.getElementById('inputBacen').style.display = 'none'
+            window.document.getElementById('labelBacen').style.display = 'none'
+            window.document.getElementById('labelDDI').style.display = 'none'
+            window.document.getElementById('inputDDI').style.display = 'none'
+            window.document.getElementById('DivSit').style.display = 'none'
+            window.document.getElementById('OpSituacao').style.display = 'flex'
+            window.document.getElementById('labelSituacao').style.display = 'flex';
         } else {
             window.document.getElementById('BTNS-Form-Pais-Filtro').style.display = 'none';
             window.document.getElementById('BTNS-Form-Pais').style.display = 'flex';
+            window.document.getElementById('inputBacen').style.display = 'flex'
+            window.document.getElementById('labelBacen').style.display = 'flex'
+            window.document.getElementById('labelDDI').style.display = 'flex'
+            window.document.getElementById('inputDDI').style.display = 'flex'
+            window.document.getElementById('DivSit').style.display = 'flex'
+            window.document.getElementById('OpSituacao').style.display = 'none'
+            window.document.getElementById('labelSituacao').style.display = 'flex';
+            window.document.getElementById('InputSituação-Pais').style.display = 'flex';
         }
     }, [showFilterBtns]);
 
@@ -135,15 +152,12 @@ function PaisCrud() {
         Ref1.current.value = ''
         Ref2.current.value = ''
         Ref3.current.value = ''
-        Ref4.current.value = ''
         Ref5.current.value = ''
         if (veriFiltro === true){
             Ref1.current.value = PaisValue
             Ref2.current.value = SiglaValue
             Ref3.current.value = NacionalidadeValue
-            Ref4.current.value = BacenValue
             Ref5.current.checked = SituacaoValue
-            Ref6.current.value = DDIValue
         }
         window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
         window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
@@ -165,7 +179,7 @@ function PaisCrud() {
             "sigla": Ref2.current.value,
             "nacionalidade": Ref3.current.value,
             "bacen": parseInt(Ref4.current.value, 10),
-            "situacao": Ref5.current.value,
+            "situacao": Ref7.current.value,
             "ddi": Ref6.current.value
         }
         var req = await FiltroGet(data)
@@ -176,7 +190,7 @@ function PaisCrud() {
         setSiglaValue(Ref2.current.value);
         setNacionalidadeValue(Ref3.current.value);
         setBacenValue(Ref4.current.value);
-        setSituacaoValue(Ref5.current.value)
+        setSituacaoValue(Ref7.current.value)
         setDDIValue(Ref6.current.value)
 
         setShowFilterBtns(true)
@@ -348,6 +362,12 @@ function PaisCrud() {
         window.document.getElementById('Form-Pais-ADD').style.display="none"
         window.document.getElementById('divBTN-ADD').style.display="flex"
         window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'flex'
+        const input1 = window.document.getElementById("inputPais")
+        const input2 = window.document.getElementById("InputSigla")
+        const input3 = window.document.getElementById("inputNac")
+        input1.style.border = "none"
+        input2.style.border = "none"
+        input3.style.border = "none"
         Ref1.current.value = ''
         Ref2.current.value = ''
         Ref3.current.value = ''
@@ -394,16 +414,24 @@ function PaisCrud() {
                                 <input type="text" ref={Ref3} className="InputsFormPais" id="inputNac" onChange={converterParaMaiusculo(Ref3, setNacionalidadeValue)} maxLength="20" required/>
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
-                                <label htmlFor="">Bacen</label>
+                                <label htmlFor="" id="labelBacen">Bacen</label>
                                 <input type="number" ref={Ref4} className="InputsFormPais" id="inputBacen" maxLength="10" />
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
-                                <label htmlFor="">DDI</label>
+                                <label htmlFor="" id="labelDDI">DDI</label>
                                 <input type="number" ref={Ref6} className="InputsFormPais" id="inputDDI"/>
                             </fieldset>
                             <fieldset className="Fieldset-Pais-Form">
-                                <label htmlFor="">Situação</label>
-                                <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required />
+                                <label htmlFor="" id="labelSituacao">Situação</label>
+                                <div id="DivSit">
+                                    <input type="checkbox" ref={Ref5} className="InputsFormPais" id="InputSituação-Pais" required />
+                                    <p>Ativo</p>
+                                </div>
+                                <select name="Situacao" id="OpSituacao" ref={Ref7} onChange={()=>{setOpSitValue(Ref7.current.value)}}>
+                                    <option value="">Selecionar</option>
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
+                                </select>
                             </fieldset>
                         </form>
                         <div id="BTNS-Form-Pais">
