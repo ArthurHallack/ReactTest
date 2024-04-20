@@ -555,6 +555,10 @@ button:focus-visible {
   display: flex;
 }
 
+.red-list {
+  color: red;
+}
+
 /*MODAL PAIS*/
 
 .ModalPais{

@@ -476,21 +476,27 @@ function PaisCrud() {
                             </div>
                             <div id="table-pais2">
                                 {arrayFiltro.map((pais, index) => (
-                                    <ul key={pais.id} id="td-ul-filtro" className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
-                                        <li className="Todo-List-li id-tdList">{pais.id}</li>
-                                        <li className="Todo-List-li pais-tdList">{pais.pais}</li>
-                                        <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
-                                        <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
-                                        <li className="li-td-btn">
-                                            <div className="BTNs-tdList">
-                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)} />
-                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}} />
-                                                <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}} />
-                                            </div>
-                                        </li>
+                                    <ul
+                                    key={pais.id}
+                                    id="td-ul-filtro"
+                                    className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''} ${pais.situacao ? 'red-list' : ''}`}
+                                    style={{ display: listaVisivel ? "flex" : "none" }}
+                                    >
+                                    <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                    <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                    <li className="Todo-List-li sigla-tdList">{pais.sigla}</li>
+                                    <li className="Todo-List-li Naci-tdlist">{pais.nacionalidade}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList">
+                                        <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={() => abrirModal(pais.id)} />
+                                        <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={() => { EditPais(pais) }} />
+                                        <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={() => { Exclui(pais) }} />
+                                        </div>
+                                    </li>
                                     </ul>
                                 ))}
                             </div>
+
                         </div>
                     </div>
                 </div>
