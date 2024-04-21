@@ -214,59 +214,9 @@ button:focus-visible {
 }
 
 /*Style HOME */
-
-#Tela-Home{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#Conteudo-Home{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 90vh;
-  gap: 5rem;
-}
-
-#Div-Conteudo-Home{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 1rem;
-}
-
-#H1-Conteudo-Home{
-  font-size: 2rem;
-  color: #ffffffae;
-}
-
-#H2-Conteudo-Home{
-  color: #ffffffae;
-}
-
-.h2Home{
-  font-size: 3rem;
-}
-
-#H3-Conteudo-Home{
-  padding: 8px;
-  background-color: #ffffff6a;
-  border-radius: 10px;
-  
-}
-
 /*style componentes*/
 /*navBar*/
-
-
-
 /*Menu*/
-
-
-
 /*////////PAIS////////*/
 
 #direction-pais{

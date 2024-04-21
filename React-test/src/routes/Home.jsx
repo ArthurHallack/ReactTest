@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from "../components/Nav";
+import '../css/routes.css/home.css'
 import { NavAux, NavAuxP } from "../components/NavAux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAtom } from "@fortawesome/free-solid-svg-icons"
