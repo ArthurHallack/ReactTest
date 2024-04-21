@@ -288,6 +288,10 @@ button:focus-visible {
   margin-top: 2rem;
 }
 
+#Titulo-Pais{
+  width: 90%;
+}
+
 #divBTN-ADD{
   display: flex;
   justify-content: flex-start;
