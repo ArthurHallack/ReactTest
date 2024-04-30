@@ -1,0 +1,50 @@
+*{
+
+}
+
+#TelaMunicipio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#SecTop{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5rem;
+}
+
+#SecTopBTN{
+    display: flex;
+    gap: 1rem;
+}
+
+/*FORMULARIO*/
+
+#FormAdd{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80rem;
+    height: 13rem;
+    gap: 1rem;
+    background-color: #ffffff6a;
+    border-radius: 5px;
+}
+
+.LabelForm{
+    display: flex;
+    flex-direction: column;
+}
+
+#FormAdd fieldset {
+    border: none;
+}
+
+#DivSit{
+    display: flex;
+    flex-direction: row;
+}
