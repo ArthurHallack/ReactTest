@@ -25,14 +25,23 @@
 /*FORMULARIO*/
 
 #FormAdd{
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     width: 80rem;
     height: 13rem;
-    gap: 1rem;
     background-color: #ffffff6a;
     border-radius: 5px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5%;
+}
+
+#FormCampos{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 .LabelForm{
@@ -47,4 +56,32 @@
 #DivSit{
     display: flex;
     flex-direction: row;
+}
+
+.InputForm{
+    border: none;
+    border-radius: 2px;
+    height: 1.5rem;
+}
+
+#InputPais{
+    width: 13rem;
+}
+
+#InputMunicipio{
+    width: 13rem;
+}
+
+#InputUf{
+    width: 5rem;
+}
+
+#InputDDD{
+    width: 5rem;
+}
+
+#BtnFormAdd{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
