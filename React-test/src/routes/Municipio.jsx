@@ -36,16 +36,16 @@ function Municipio () {
         if(FormVisivel===true){
             window.document.getElementById('FormAdd').style.display='flex'
             window.document.getElementById('SecTopBTN').style.display='none'           
+            window.document.getElementById('Table-Municipio').style.display='none'           
         }
     }
 
     function CloseForm (event) {
         event.preventDefault()
         setFormVisivel(false)
-        if(FormVisivel===false){
-            window.document.getElementById('FormAdd').style.display='none'
-            window.document.getElementById('SecTopBTN').style.display='flex'
-        }
+        window.document.getElementById('FormAdd').style.display='none'
+        window.document.getElementById('SecTopBTN').style.display='flex'
+        window.document.getElementById('Table-Municipio').style.display='flex'
     }
 
 
@@ -56,7 +56,7 @@ function Municipio () {
                 <h1>Municipio</h1>
                 <div id="SecTopBTN">
                     <button onClick={ADD}><FontAwesomeIcon icon={faPlus} /></button>
-                    <button onClick={CloseForm}><FontAwesomeIcon icon={faFilter} /></button>
+                    <button><FontAwesomeIcon icon={faFilter} /></button>
                 </div>
             </div>
             <form action="" method="post" id="FormAdd">
@@ -87,13 +87,36 @@ function Municipio () {
                             <input type="checkbox" ref={Ref6} />
                             <p>Ativo</p>
                         </div>
+                        <div id="DivSitF">
+                            <select name="Situacao" id="OpSituacao">
+                                    <option value="">Selecionar</option>
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
+                            </select>
+                        </div>
                     </fieldset>
                 </div>
                 <div id="BtnFormAdd">
                     <button id="BtnConfirmAdd"><FontAwesomeIcon icon={faCheck} /></button>
-                    <button id="BtnCloseAdd"><FontAwesomeIcon icon={faXmark}/></button>
+                    <button id="BtnCloseAdd" onClick={CloseForm}><FontAwesomeIcon icon={faXmark}/></button>
+                </div>
+                <div id="BtnFormFilter">
+                    <button id="BtnConfirmFilter"><FontAwesomeIcon icon={faCheck} /></button>
+                    <button id="BtnCloseAdd" onClick={CloseForm}><FontAwesomeIcon icon={faXmark}/></button>
                 </div>
             </form>
+            <div id="Table-Municipio">
+                <div id="HudMunicipio">
+                    <ul>
+                        <li id="HudIdM">ID</li>
+                        <li id="HudPaisM">Pais</li>
+                        <li id="HudMunicipioM">Municipio</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="Table-Municipio2">
+
+            </div>
         </div>
     )
 }
