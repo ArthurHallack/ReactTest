@@ -5,6 +5,7 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { UfList } from "../functions/municipio/UfMunicipio";
 
 import '../css/routes.css/municipio.css'
 
