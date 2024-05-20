@@ -6,6 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { UfList } from "../functions/municipio/UfMunicipio";
+import { PaisPesquisa } from "../functions/municipio/PaisPesquisa";
 
 import '../css/routes.css/municipio.css'
 
@@ -29,6 +30,11 @@ function Municipio () {
 
     //ESTADOS DOS COMPONENTES
     const [FormVisivel, setFormVisivel] = useState (false)
+
+    //EFFECTS 
+    useEffect(()=>{
+        
+    },[])
 
     //FUNÇÕES
     //ADD
@@ -71,6 +77,19 @@ function Municipio () {
 
     }
 
+    //PAIS PESQUISA 
+    async function ListPais () {
+        var valorInput = Refe1.current.value
+        if(valorInput.length >= 3){
+            var Data = valorInput
+            var Dados = await PaisPesquisa(Data)
+            console.log(Dados)
+        }
+    }
+
+    //UF 
+    
+
     return(
         <div id="TelaMunicipio">
             <NavBar/>
@@ -85,7 +104,7 @@ function Municipio () {
                 <div id="FormCampos">
                     <fieldset>
                         <label className="LabelForm">Pais</label>
-                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} />
+                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={ListPais} />
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">Municipio</label>
