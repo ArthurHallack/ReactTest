@@ -31,6 +31,10 @@ function Municipio () {
     //ESTADOS DOS COMPONENTES
     const [FormVisivel, setFormVisivel] = useState (false)
 
+    //OUTROS ESTADOS 
+    const [ArrayPaises, setArrayPaises] = useState ([]) 
+    const [ArrayUf, setArrayUf] = useState ([])
+
     //EFFECTS 
     useEffect(()=>{
         
@@ -83,7 +87,7 @@ function Municipio () {
         if(valorInput.length >= 3){
             var Data = valorInput
             var Dados = await PaisPesquisa(Data)
-            console.log(Dados)
+            setArrayPaises(Dados)
         }
     }
 
@@ -105,6 +109,15 @@ function Municipio () {
                     <fieldset>
                         <label className="LabelForm">Pais</label>
                         <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={ListPais} />
+                        <div>
+                            <ul>
+                                {ArrayPaises.map((val,key)=>{
+                                    return(
+                                        <li></li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">Municipio</label>
