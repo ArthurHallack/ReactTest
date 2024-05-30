@@ -32,14 +32,14 @@ function Municipio () {
     const [FormVisivel, setFormVisivel] = useState (false)
 
     //OUTROS ESTADOS 
-    const [ArrayPaises, setArrayPaises] = useState ([]) 
+    const [ArrayPaises, setArrayPaises] = useState ([])
+    const [ResList, setResList] = useState ('')
     const [ArrayUf, setArrayUf] = useState ([])
 
     //EFFECTS 
-    useEffect(()=>{
+     useEffect(()=>{
         
-    },[])
-
+     }, [ArrayPaises])
     //FUNÇÕES
     //ADD
     function ADD () {
@@ -88,6 +88,16 @@ function Municipio () {
             var Data = valorInput
             var Dados = await PaisPesquisa(Data)
             setArrayPaises(Dados)
+            ArrayPaises.map((val,key)=>{
+                setResList(val.descricao)
+            })
+        }
+    }
+    async function ListVisivel () {
+        if(ResList=== "Não há Registros"){
+            window.document.getElementById('DivListPais').style.display='none'
+        }else{
+            window.document.getElementById('DivListPais').style.display='flex'
         }
     }
 
@@ -108,12 +118,15 @@ function Municipio () {
                 <div id="FormCampos">
                     <fieldset>
                         <label className="LabelForm">Pais</label>
-                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={ListPais} />
-                        <div>
-                            <ul>
+                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={()=>{
+                            ListPais()
+                            ListVisivel()
+                        }} />
+                        <div className="DivList" id="DivListPais">
+                            <ul id="ListPais" className="ListOps">
                                 {ArrayPaises.map((val,key)=>{
                                     return(
-                                        <li></li>
+                                        <li className="ListItem" key={key}>{val.descricao}</li>
                                     )
                                 })}
                             </ul>

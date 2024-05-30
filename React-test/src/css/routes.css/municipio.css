@@ -152,3 +152,29 @@
     justify-content: flex-start;
     width: 9rem;
 }
+
+#DivListPais{
+    margin-top: 3px;
+    width: 13rem;
+    height: 13rem;
+    background-color: #ffffff;
+    position: absolute;
+    border-radius: 3px;
+    display: none;
+}
+
+.ListItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1rem;
+    height: 1.8rem;
+    width: 12rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    cursor: context-menu;
+}
+
+.ListItem:hover {
+    background-color: #dbdbdb;
+}
