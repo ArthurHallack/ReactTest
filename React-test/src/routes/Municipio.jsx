@@ -38,8 +38,21 @@ function Municipio () {
 
     //EFFECTS 
      useEffect(()=>{
-        
-     }, [ArrayPaises])
+        const listap = window.document.getElementById('DivListPais')
+        if (Array.isArray(ArrayPaises) && ArrayPaises.length > 0) {
+            if (ArrayPaises[0].id === 0) {
+                listap.style.display='none'
+            } else {
+                listap.style.display='flex'
+            }
+        } else if (ArrayPaises === undefined) {
+            console.log('ArrayPaises não está definido');
+        } else {
+            console.log('ArrayPaises está vazio');
+        }
+
+     },[ArrayPaises])
+
     //FUNÇÕES
     //ADD
     function ADD () {
@@ -88,16 +101,8 @@ function Municipio () {
             var Data = valorInput
             var Dados = await PaisPesquisa(Data)
             setArrayPaises(Dados)
-            ArrayPaises.map((val,key)=>{
-                setResList(val.descricao)
-            })
-        }
-    }
-    async function ListVisivel () {
-        if(ResList=== "Não há Registros"){
+        } else if (valorInput <= 2) {
             window.document.getElementById('DivListPais').style.display='none'
-        }else{
-            window.document.getElementById('DivListPais').style.display='flex'
         }
     }
 
@@ -118,10 +123,7 @@ function Municipio () {
                 <div id="FormCampos">
                     <fieldset>
                         <label className="LabelForm">Pais</label>
-                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={()=>{
-                            ListPais()
-                            ListVisivel()
-                        }} />
+                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={ListPais} />
                         <div className="DivList" id="DivListPais">
                             <ul id="ListPais" className="ListOps">
                                 {ArrayPaises.map((val,key)=>{
