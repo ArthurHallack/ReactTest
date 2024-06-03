@@ -51,7 +51,12 @@ function Municipio () {
             console.log('ArrayPaises está vazio');
         }
 
-     },[ArrayPaises])
+     },[ArrayPaises])//lista de paises do input
+
+     useEffect(()=>{
+        const listaUf = UfList()
+        setArrayUf(listaUf)
+     },[])
 
     //FUNÇÕES
     //ADD
@@ -141,6 +146,11 @@ function Municipio () {
                     <fieldset>
                         <label className="LabelForm">UF</label>
                         <input type="text"  className="InputForm" id="InputUf" ref={Refe3} />
+                        <div id="DivListUf">
+                            <ul id="ListaUF">
+                                {}
+                            </ul>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">DDD</label>
