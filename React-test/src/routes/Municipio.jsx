@@ -54,8 +54,11 @@ function Municipio () {
      },[ArrayPaises])//lista de paises do input
 
      useEffect(()=>{
-        const listaUf = UfList()
-        setArrayUf(listaUf)
+        async function fetchData (){
+            const data = await UfList()
+            setArrayUf(data)
+        }
+        fetchData()
      },[])
 
     //FUNÇÕES
@@ -112,7 +115,9 @@ function Municipio () {
     }
 
     //UF 
-    
+    function uflista () {
+        console.log(ArrayUf)
+    }
 
     return(
         <div id="TelaMunicipio">
@@ -145,10 +150,14 @@ function Municipio () {
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">UF</label>
-                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} />
+                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={uflista}/>
                         <div id="DivListUf">
                             <ul id="ListaUF">
-                                {}
+                                {ArrayUf.map((val, key)=>{
+                                    return(
+                                        <li className="ListItemUf" key={key}>{val.descricao}</li>
+                                    )
+                                })}
                             </ul>
                         </div>
                     </fieldset>
