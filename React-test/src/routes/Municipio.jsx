@@ -11,7 +11,6 @@ import { PaisPesquisa } from "../functions/municipio/PaisPesquisa";
 import '../css/routes.css/municipio.css'
 
 function Municipio () {
-
     // Values INPUTS
     const Refe1 = useRef();//Pais
     const Refe2 = useRef();//Municipio
@@ -19,6 +18,7 @@ function Municipio () {
     const Refe4 = useRef();//DDD
     const Refe5 = useRef();//IBGE
     const Refe6 = useRef();//Situação
+
 
     // ESTADOS DOS INPUTS
     const [PaisValue, setPaisValue] = useState('')
@@ -59,7 +59,11 @@ function Municipio () {
             setArrayUf(data)
         }
         fetchData()
-     },[])
+     },[])// trás a lista uf da api 
+
+     useEffect(()=>{
+        
+     },[UfValue])
 
     //FUNÇÕES
     //ADD
@@ -114,11 +118,17 @@ function Municipio () {
         }
     }
 
-    //UF 
-    function uflista () {
-        console.log(ArrayUf)
+    function clickPais () {
+
     }
 
+    //UF 
+
+    function changeUf () {
+        var valor = Refe3.current.value
+        setUfValue(valor)
+    }
+    
     return(
         <div id="TelaMunicipio">
             <NavBar/>
@@ -150,7 +160,7 @@ function Municipio () {
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">UF</label>
-                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={uflista}/>
+                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={changeUf}/>
                         <div id="DivListUf">
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
