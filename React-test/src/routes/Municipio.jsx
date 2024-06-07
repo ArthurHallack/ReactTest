@@ -66,6 +66,13 @@ function Municipio () {
      },[UfValue])
 
     //FUNÇÕES
+
+     function ConvertMaiusculo (ref) {
+        if(ref.current){
+            ref.current.value = ref.current.value.toUpperCase()
+        }
+     }
+
     //ADD
     function ADD () {
         setFormVisivel(true)
@@ -118,8 +125,9 @@ function Municipio () {
         }
     }
 
-    function clickPais () {
-
+    function clickPais (descricao) {
+        Refe1.current.value = descricao
+        window.document.getElementById('DivListPais').style.display='none'
     }
 
     //UF 
@@ -143,12 +151,15 @@ function Municipio () {
                 <div id="FormCampos">
                     <fieldset>
                         <label className="LabelForm">Pais</label>
-                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={ListPais} />
+                        <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={()=>{
+                            ListPais()
+                            ConvertMaiusculo(Refe1)
+                        }} />
                         <div className="DivList" id="DivListPais">
                             <ul id="ListPais" className="ListOps">
                                 {ArrayPaises.map((val,key)=>{
                                     return(
-                                        <li className="ListItem" key={key}>{val.descricao}</li>
+                                        <li className="ListItem" key={key} onClick={() => clickPais(val.descricao)} >{val.descricao}</li>
                                     )
                                 })}
                             </ul>
