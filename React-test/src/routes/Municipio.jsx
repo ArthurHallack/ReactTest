@@ -89,6 +89,7 @@ function Municipio () {
         window.document.getElementById('FormAdd').style.display='none'
         window.document.getElementById('SecTopBTN').style.display='flex'
         window.document.getElementById('Table-Municipio').style.display='flex'
+        window.document.getElementsByClassName('DivList').style.display='none'
 
             Refe1.current.value = ''
             Refe2.current.value = ''
@@ -175,7 +176,7 @@ function Municipio () {
                             changeUf()
                             ConvertMaiusculo(Refe3)
                         }} maxLength="2"/>
-                        <div id="DivListUf">
+                        <div className="DivList" id="DivListUf">
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
                                     return(
