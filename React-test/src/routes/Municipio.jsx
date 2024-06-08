@@ -171,7 +171,10 @@ function Municipio () {
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">UF</label>
-                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={changeUf}/>
+                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={()=>{
+                            changeUf()
+                            ConvertMaiusculo()
+                        }}/>
                         <div id="DivListUf">
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
