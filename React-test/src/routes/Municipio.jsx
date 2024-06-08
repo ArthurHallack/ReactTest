@@ -154,7 +154,7 @@ function Municipio () {
                         <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={()=>{
                             ListPais()
                             ConvertMaiusculo(Refe1)
-                        }} />
+                        }} maxLength="14" />
                         <div className="DivList" id="DivListPais">
                             <ul id="ListPais" className="ListOps">
                                 {ArrayPaises.map((val,key)=>{
@@ -174,7 +174,7 @@ function Municipio () {
                         <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={()=>{
                             changeUf()
                             ConvertMaiusculo(Refe3)
-                        }}/>
+                        }} maxLength="2"/>
                         <div id="DivListUf">
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
