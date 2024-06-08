@@ -173,7 +173,7 @@ function Municipio () {
                         <label className="LabelForm">UF</label>
                         <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={()=>{
                             changeUf()
-                            ConvertMaiusculo()
+                            ConvertMaiusculo(Refe3)
                         }}/>
                         <div id="DivListUf">
                             <ul id="ListaUF">
