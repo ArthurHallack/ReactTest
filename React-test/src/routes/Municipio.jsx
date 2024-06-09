@@ -78,6 +78,7 @@ function Municipio () {
         setFormVisivel(true)
         if(FormVisivel===true){
             window.document.getElementById('FormAdd').style.display='flex'
+            window.document.getElementById('DivSit').style.display='flex'
             window.document.getElementById('SecTopBTN').style.display='none'           
             window.document.getElementById('Table-Municipio').style.display='none'           
         }
@@ -91,6 +92,7 @@ function Municipio () {
         window.document.getElementById('Table-Municipio').style.display='flex'
         window.document.getElementById('DivListPais').style.display='none'
         window.document.getElementById('DivListUf').style.display='none'
+        window.document.getElementById('DivSitF').style.display='none'
         
 
             Refe1.current.value = ''
@@ -143,6 +145,21 @@ function Municipio () {
             window.document.getElementById('DivListUf').style.display='none'
         }
     }
+
+    //FILTRAR 
+
+    function FiltroBTN () {
+        setFormVisivel(true)
+        if(FormVisivel===true){
+            window.document.getElementById('FormAdd').style.display='flex'
+            window.document.getElementById('SecTopBTN').style.display='none'           
+            window.document.getElementById('Table-Municipio').style.display='none'
+            window.document.getElementById('DivSitF').style.display='flex'
+            window.document.getElementById('OpSituacao').style.display='flex'
+            window.document.getElementById('DivSit').style.display='none'
+
+        }
+    }
     
     return(
         <div id="TelaMunicipio">
@@ -151,7 +168,7 @@ function Municipio () {
                 <h1>Municipio</h1>
                 <div id="SecTopBTN">
                     <button onClick={ADD}><FontAwesomeIcon icon={faPlus} /></button>
-                    <button><FontAwesomeIcon icon={faFilter} /></button>
+                    <button onClick={FiltroBTN}><FontAwesomeIcon icon={faFilter} /></button>
                 </div>
             </div>
             <form action="" method="post" id="FormAdd">
