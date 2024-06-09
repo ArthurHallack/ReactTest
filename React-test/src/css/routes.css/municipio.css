@@ -175,7 +175,7 @@
     background-color: #ffffff;
     position: absolute;
     border-radius: 3px;
-    display: flex;
+    display: none;
     overflow: auto;
 }
 

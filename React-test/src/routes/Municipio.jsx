@@ -89,7 +89,9 @@ function Municipio () {
         window.document.getElementById('FormAdd').style.display='none'
         window.document.getElementById('SecTopBTN').style.display='flex'
         window.document.getElementById('Table-Municipio').style.display='flex'
-        window.document.getElementsByClassName('DivList').style.display='none'
+        window.document.getElementById('DivListPais').style.display='none'
+        window.document.getElementById('DivListUf').style.display='none'
+        
 
             Refe1.current.value = ''
             Refe2.current.value = ''
@@ -135,7 +137,11 @@ function Municipio () {
 
     function changeUf () {
         var valor = Refe3.current.value
-        setUfValue(valor)
+        if(valor){
+            window.document.getElementById('DivListUf').style.display='flex'
+        }else{
+            window.document.getElementById('DivListUf').style.display='none'
+        }
     }
     
     return(
@@ -168,7 +174,9 @@ function Municipio () {
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">Municipio</label>
-                        <input type="text" className="InputForm" id="InputMunicipio" ref={Refe2} />
+                        <input type="text" className="InputForm" id="InputMunicipio" ref={Refe2} onChange={()=>{
+                            ConvertMaiusculo(Refe2)
+                        }}/>
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">UF</label>
