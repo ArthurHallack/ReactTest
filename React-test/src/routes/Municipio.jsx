@@ -146,6 +146,11 @@ function Municipio () {
         }
     }
 
+    function clickUf (descricao) {
+        Refe3.current.value = descricao
+        window.document.getElementById('DivListUf').style.display='none'
+    }
+
     //FILTRAR 
 
     function FiltroBTN () {
@@ -205,7 +210,7 @@ function Municipio () {
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
                                     return(
-                                        <li className="ListItemUf" key={key}>{val.descricao}</li>
+                                        <li className="ListItemUf" key={key} onClick={()=>{clickUf(val.descricao)}}>{val.descricao}</li>
                                     )
                                 })}
                             </ul>

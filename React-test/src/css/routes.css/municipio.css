@@ -48,6 +48,8 @@
 .LabelForm{
     display: flex;
     flex-direction: column;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
 }
 
 #FormAdd fieldset {
