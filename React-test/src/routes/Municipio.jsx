@@ -35,6 +35,7 @@ function Municipio () {
     const [ArrayPaises, setArrayPaises] = useState ([])
     const [ResList, setResList] = useState ('')
     const [ArrayUf, setArrayUf] = useState ([])
+    const [inputValue, setInputValue] = useState('')
 
     //EFFECTS 
      useEffect(()=>{
@@ -62,7 +63,18 @@ function Municipio () {
      },[])// trás a lista uf da api 
 
      useEffect(()=>{
-        
+        var valor = Refe3.current.value
+        var fond = ArrayUf.find(item => item.descricao === valor)
+
+        if (fond){
+            setUfValue(fond)
+        }else{
+            setUfValue(null)
+        }
+     },[inputValue, Refe3])
+
+     useEffect(()=>{
+        console.log(UfValue)
      },[UfValue])
 
     //FUNÇÕES
@@ -151,6 +163,11 @@ function Municipio () {
         window.document.getElementById('DivListUf').style.display='none'
     }
 
+    const handleInputChange = (event) => {
+        const upperCaseValue = event.target.value.toUpperCase();
+        setInputValue(upperCaseValue);
+      }
+
     //FILTRAR 
 
     function FiltroBTN () {
@@ -202,9 +219,10 @@ function Municipio () {
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">UF</label>
-                        <input type="text"  className="InputForm" id="InputUf" ref={Refe3} onChange={()=>{
+                        <input type="text"  className="InputForm" id="InputUf" value={inputValue} ref={Refe3} onChange={()=>{
                             changeUf()
                             ConvertMaiusculo(Refe3)
+                            handleInputChange(event)
                         }} maxLength="2"/>
                         <div className="DivList" id="DivListUf">
                             <ul id="ListaUF">
