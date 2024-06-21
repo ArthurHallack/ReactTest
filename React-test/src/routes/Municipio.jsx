@@ -23,7 +23,7 @@ function Municipio () {
     // ESTADOS DOS INPUTS
     const [PaisValue, setPaisValue] = useState('')
     const [MunicipioValue, setMunicipioValue] = useState('')
-    const [UfValue, setUfValue] = useState('')
+    const [UfValue, setUfValue] = useState({ id: 0, descricao: '' })
     const [DDDValue, setDDDValue] = useState('')
     const [IBGEvalu, setIBGEvalue] = useState('')
     const [SituacaoValue, setSituacaoValue] = useState(false)
@@ -46,10 +46,6 @@ function Municipio () {
             } else {
                 listap.style.display='flex'
             }
-        } else if (ArrayPaises === undefined) {
-            console.log('ArrayPaises não está definido');
-        } else {
-            console.log('ArrayPaises está vazio');
         }
 
      },[ArrayPaises])//lista de paises do input
@@ -65,17 +61,14 @@ function Municipio () {
      useEffect(()=>{
         var valor = Refe3.current.value
         var fond = ArrayUf.find(item => item.descricao === valor)
+        const divListUf = document.getElementById('DivListUf')
 
         if (fond){
             setUfValue(fond)
         }else{
-            setUfValue(null)
+            setUfValue({ id: 0, descricao: '' })
         }
-     },[inputValue, Refe3])
-
-     useEffect(()=>{
-        console.log(UfValue)
-     },[UfValue])
+     },[inputValue, Refe3])// Gera a segunda lista UF
 
     //FUNÇÕES
 
@@ -114,9 +107,8 @@ function Municipio () {
             Refe5.current.value = ''
         
     }
-
     //SAVE
-    function Salvar (event) {
+    async function Salvar (event) {
         event.preventDefault()
         var dataNew = {
             "id": 0,
@@ -127,6 +119,7 @@ function Municipio () {
             "ibge": Refe5.current.value,
             "situacao": Refe6.current.checked
         }
+
 
     }
 
@@ -151,10 +144,27 @@ function Municipio () {
 
     function changeUf () {
         var valor = Refe3.current.value
-        if(valor){
+        const divListUf = document.getElementById('DivListUf');
+        const liUf1 = document.getElementsByClassName('LiUF1');
+
+        if(valor.length === 1){
+
             window.document.getElementById('DivListUf').style.display='flex'
-        }else{
-            window.document.getElementById('DivListUf').style.display='none'
+            divListUf.style.height='13rem'
+            Array.from(liUf1).forEach((element) => {
+                element.style.display = 'flex';
+              });
+
+        }else if (valor.length === 2){
+
+            Array.from(liUf1).forEach((element) => {
+                element.style.display = 'none';
+              });
+              divListUf.style.height='1.8rem'
+        
+        }else if (valor.length === 0){
+            divListUf.style.height='13rem'
+            divListUf.style.display='none'
         }
     }
 
@@ -182,7 +192,7 @@ function Municipio () {
 
         }
     }
-    
+
     return(
         <div id="TelaMunicipio">
             <NavBar/>
@@ -228,9 +238,12 @@ function Municipio () {
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
                                     return(
-                                        <li className="ListItemUf" key={key} onClick={()=>{clickUf(val.descricao)}}>{val.descricao}</li>
+                                        <li className="ListItemUf LiUF1" key={key} onClick={()=>{clickUf(val.descricao)}}>{val.descricao}</li>
                                     )
                                 })}
+                                <li className="ListItemUf" id="LiUF2" onClick={()=>{
+                                    window.document.getElementById('DivListUf').style.display='none'
+                                }} >{UfValue.descricao}</li>
                             </ul>
                         </div>
                     </fieldset>
