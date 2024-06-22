@@ -8,6 +8,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { UfList } from "../functions/municipio/UfMunicipio";
 import { PaisPesquisa } from "../functions/municipio/PaisPesquisa";
 import { SalvarMunicipio } from "../functions/municipio/SaveMunicipio";
+import { GetAllMunicipio } from "../functions/municipio/GetAllMunicipio";
 
 import '../css/routes.css/municipio.css'
 
@@ -33,6 +34,8 @@ function Municipio () {
 
     //OUTROS ESTADOS 
     const [ArrayPaises, setArrayPaises] = useState ([])
+    const [arrayPaisesList, setArrayPaisesList] = useState ([])
+    const [paises, setPaises] = useState([])
     const [ResList, setResList] = useState ('')
     const [ArrayUf, setArrayUf] = useState ([])
     const [inputValue, setInputValue] = useState('')
@@ -79,6 +82,14 @@ function Municipio () {
         }
     }, [success]) //effect reponsavel por recarregar a página se dado salvo com sucesso
 
+    useEffect (()=>{
+        async function fetchData () {
+            const data = await RenderGetAll()
+            setPaises(data)
+        }
+        fetchData()
+    },[]) //Responsavel pela Lista a ser renderizada
+
     //FUNÇÕES
 
      function ConvertMaiusculo (ref) {
@@ -86,6 +97,13 @@ function Municipio () {
             ref.current.value = ref.current.value.toUpperCase()
         }
      }
+
+     //RENDERIZAR A LISTA
+    async function RenderGetAll() {
+        var dados = await GetAllMunicipio();
+        setArrayPaisesList(dados)
+        return dados;
+    }
 
     //ADD
     function ADD () {
@@ -140,7 +158,9 @@ function Municipio () {
 
         const Salvando = await SalvarMunicipio(dataNew)
 
-        console.log(Salvando)
+        if (Salvando){
+            setSuccess(true)
+        }
 
     }
 
