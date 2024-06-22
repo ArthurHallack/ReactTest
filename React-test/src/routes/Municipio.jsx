@@ -7,6 +7,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { UfList } from "../functions/municipio/UfMunicipio";
 import { PaisPesquisa } from "../functions/municipio/PaisPesquisa";
+import { SalvarMunicipio } from "../functions/municipio/SaveMunicipio";
 
 import '../css/routes.css/municipio.css'
 
@@ -18,7 +19,6 @@ function Municipio () {
     const Refe4 = useRef();//DDD
     const Refe5 = useRef();//IBGE
     const Refe6 = useRef();//Situação
-
 
     // ESTADOS DOS INPUTS
     const [PaisValue, setPaisValue] = useState('')
@@ -36,6 +36,7 @@ function Municipio () {
     const [ResList, setResList] = useState ('')
     const [ArrayUf, setArrayUf] = useState ([])
     const [inputValue, setInputValue] = useState('')
+    const [success, setSuccess] = useState(false)
 
     //EFFECTS 
      useEffect(()=>{
@@ -69,6 +70,14 @@ function Municipio () {
             setUfValue({ id: 0, descricao: '' })
         }
      },[inputValue, Refe3])// Gera a segunda lista UF
+
+     useEffect(()=>{
+        if (success) {
+            setTimeout(() => {
+                window.location.reload();
+            }, 0)
+        }
+    }, [success]) //effect reponsavel por recarregar a página se dado salvo com sucesso
 
     //FUNÇÕES
 
@@ -107,19 +116,31 @@ function Municipio () {
             Refe5.current.value = ''
         
     }
+
     //SAVE
     async function Salvar (event) {
+
         event.preventDefault()
+        var valorP = Refe1.current.value
+        var valorReal = ArrayPaises.find(pais=> pais.descricao === valorP)
+        var idCorrespondente = valorReal ? valorReal.id : null
+
+        var valorS = Refe6.current.checked
+        var valorRealS = valorS ? 1 : 2
+
         var dataNew = {
             "id": 0,
-            "pais": Refe1.current.value,
+            "id_pais": idCorrespondente,
             "municipio": Refe2.current.value,
             "uf": Refe3.current.value,
-            "ddd": Refe4.current.value,
             "ibge": Refe5.current.value,
-            "situacao": Refe6.current.checked
+            "ddd": Refe4.current.value,
+            "situacao": valorRealS
         }
 
+        const Salvando = await SalvarMunicipio(dataNew)
+
+        console.log(Salvando)
 
     }
 
