@@ -228,3 +228,87 @@
 .ListItemUf:hover{
     background-color: #dbdbdb;
 }
+
+
+/* LISTA PRINCIPAL (AINDA DENTRO DA SESSÃO ANTERIOR */
+
+#Conteudo-Pais-Container{
+    overflow: auto;
+    height: 49vh;
+    position: relative;
+  }
+
+#Table-Pais{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 2rem;
+  width: auto;
+  position: relative;
+}
+
+#table-pais1{
+    display: block;
+    width: 100%;
+  }
+
+.Todo-List-ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 12px;
+  width: 96%;
+  padding-left: 3rem;
+  gap: 2rem;
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+.id-tdList{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 2rem;
+  }
+
+.pais-tdList{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 7rem;
+}
+
+.municipio-tdList{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 7rem;
+}
+
+/*BTN*/
+
+.li-td-btn{
+    margin-left:auto;
+  }
+
+.BTNs-tdList{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  gap: 0.5rem;
+}
+
+.BTNtd-Pais{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1rem;
+    cursor: pointer;
+  }

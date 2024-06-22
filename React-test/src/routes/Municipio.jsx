@@ -5,10 +5,12 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 import { UfList } from "../functions/municipio/UfMunicipio";
 import { PaisPesquisa } from "../functions/municipio/PaisPesquisa";
 import { SalvarMunicipio } from "../functions/municipio/SaveMunicipio";
 import { GetAllMunicipio } from "../functions/municipio/GetAllMunicipio";
+import { ApiDeleteMunicipio } from "../functions/municipio/DeleteMunicipio";
 
 import '../css/routes.css/municipio.css'
 
@@ -35,6 +37,7 @@ function Municipio () {
     //OUTROS ESTADOS 
     const [ArrayPaises, setArrayPaises] = useState ([])
     const [arrayPaisesList, setArrayPaisesList] = useState ([])
+    const [arrayFiltro, setarrayFiltro] = useState ([])
     const [paises, setPaises] = useState([])
     const [ResList, setResList] = useState ('')
     const [ArrayUf, setArrayUf] = useState ([])
@@ -234,6 +237,20 @@ function Municipio () {
         }
     }
 
+    //EXCLUIR
+    const Exclui = async (element) => {
+        try {
+            console.log("Excluindo país:", element);
+            await ApiDeleteMunicipio(element.id);
+            setPaises(prevPaises => prevPaises.filter(pais => pais.id !== element.id));
+            // Atualiza o estado do arrayFiltro removendo o país excluído
+            setarrayFiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id));
+            console.log("País excluído com sucesso:", element);
+        } catch (error) {
+            console.error("Erro ao excluir país:", error);
+        }
+    };
+
     return(
         <div id="TelaMunicipio">
             <NavBar/>
@@ -328,9 +345,29 @@ function Municipio () {
                         <li id="HudMunicipioM">Municipio</li>
                     </ul>
                 </div>
-            </div>
-            <div id="Table-Municipio2">
+                <div id="Conteudo-Pais-Container">
+                    <div id="Table-Pais">
+                        <div id="table-pais1">
+                                {paises.map((pais,index)=>(
+                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} >
+                                        <li className="Todo-List-li id-tdList">{pais.id}</li>
+                                        <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                        <li className="Todo-List-li municipio-tdList">{pais.municipio}</li>
+                                        <li className="li-td-btn">
+                                            <div className="BTNs-tdList">
+                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{}}/>
+                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{}}/>
+                                                <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                ))}
+                        </div>
+                        <div id="table-pais2">
 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
