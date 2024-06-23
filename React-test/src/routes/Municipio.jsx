@@ -24,6 +24,7 @@ function Municipio () {
     const Refe6 = useRef();//Situação
 
     // ESTADOS DOS INPUTS
+    const [idValue, setidValue] = useState ('')
     const [PaisValue, setPaisValue] = useState('')
     const [MunicipioValue, setMunicipioValue] = useState('')
     const [UfValue, setUfValue] = useState({ id: 0, descricao: '' })
@@ -251,6 +252,25 @@ function Municipio () {
         }
     };
 
+    //EDITAR
+    async function EditPais (element) {
+        setidValue(element.id)
+        Refe1.current.value = element.pais
+        Refe2.current.value = element.municipio
+        Refe3.current.value = element.uf
+        Refe4.current.value = element.ddd
+        Refe5.current.value = element.ibge
+        Refe6.current.checked = element.situacao
+
+        setFormVisivel(true)
+        if(FormVisivel===true){
+            window.document.getElementById('FormAdd').style.display='flex'
+            window.document.getElementById('DivSit').style.display='flex'
+            window.document.getElementById('SecTopBTN').style.display='none'           
+            window.document.getElementById('Table-Municipio').style.display='none'           
+        }
+    }
+
     return(
         <div id="TelaMunicipio">
             <NavBar/>
@@ -356,7 +376,7 @@ function Municipio () {
                                         <li className="li-td-btn">
                                             <div className="BTNs-tdList">
                                                 <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{}}/>
-                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{}}/>
+                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}/>
                                                 <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
                                             </div>
                                         </li>

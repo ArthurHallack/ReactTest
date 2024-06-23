@@ -225,21 +225,6 @@ function PaisCrud() {
         window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
         setShowFilterBtns(false)
     }
-
-    //EDITAR
-    async function EditPais (element) {
-        setidValue(element.id)
-        Ref1.current.value = element.pais
-        Ref2.current.value = element.sigla
-        Ref3.current.value = element.nacionalidade
-        Ref4.current.value = element.bacen
-        Ref5.current.checked = element.situacao
-
-        window.document.getElementById('Form-Pais-ADD').style.display = 'flex'
-        window.document.getElementById('divBTN-ADD').style.display = 'none'
-        window.document.getElementById('Div-Form-Pais-Conteudo').style.display= 'none'
-        setShowFilterBtns(false)
-    }
     
     //ADICIONAR
     const Add = ()=>{
