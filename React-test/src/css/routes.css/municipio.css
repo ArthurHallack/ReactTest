@@ -149,7 +149,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 6rem;
+    width: 7.4rem;
 }
 
 #HudMunicipioM{
@@ -267,18 +267,22 @@
   display: none;
 }
 
-.id-tdList{
+.Todo-List-li{
+    
+}
+
+.id-tdListM{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding-right: 2rem;
+    padding-right: 2.8rem;
   }
 
-.pais-tdList{
+.pais-tdListM{
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 7rem;
+  width: 8.2rem;
 }
 
 .municipio-tdList{

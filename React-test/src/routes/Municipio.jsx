@@ -387,8 +387,8 @@ function Municipio () {
                         <div id="table-pais1">
                                 {paises.map((pais,index)=>(
                                     <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} >
-                                        <li className="Todo-List-li id-tdList">{pais.id}</li>
-                                        <li className="Todo-List-li pais-tdList">{pais.pais}</li>
+                                        <li className="Todo-List-li id-tdListM">{pais.id}</li>
+                                        <li className="Todo-List-li pais-tdListM">{pais.pais}</li>
                                         <li className="Todo-List-li municipio-tdList">{pais.municipio}</li>
                                         <li className="li-td-btn">
                                             <div className="BTNs-tdList">
