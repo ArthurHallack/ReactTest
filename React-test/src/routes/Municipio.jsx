@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import NavBar from "../components/Nav";
+import ModalMunicipio from "../components/ModalMunicipio";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
@@ -44,6 +45,8 @@ function Municipio () {
     const [ArrayUf, setArrayUf] = useState ([])
     const [inputValue, setInputValue] = useState('')
     const [success, setSuccess] = useState(false)
+    const [modalAberto, setModalAberto] = useState(false)
+    const [idSelecionado, setIdSelecionado] = useState(null)
 
     //EFFECTS 
      useEffect(()=>{
@@ -271,6 +274,19 @@ function Municipio () {
         }
     }
 
+    //FUNÇÕES DO MODAL////////
+    function abrirModal (id) {
+        setIdSelecionado(id)
+        setModalAberto(true)
+    }
+    function fecharModal () {
+        setModalAberto(false)
+    }
+
+    function ArrayModal (ArrayPaises) {
+        
+    }
+
     return(
         <div id="TelaMunicipio">
             <NavBar/>
@@ -357,6 +373,7 @@ function Municipio () {
                     <button id="BtnCloseAdd" onClick={CloseForm}><FontAwesomeIcon icon={faXmark}/></button>
                 </div>
             </form>
+            {modalAberto&&<ModalMunicipio fecharModal={fecharModal} FuncaoModal={ArrayModal} dados={paises} idElement={idSelecionado}/>}
             <div id="Table-Municipio">
                 <div id="HudMunicipio">
                     <ul>
@@ -375,7 +392,7 @@ function Municipio () {
                                         <li className="Todo-List-li municipio-tdList">{pais.municipio}</li>
                                         <li className="li-td-btn">
                                             <div className="BTNs-tdList">
-                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{}}/>
+                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{abrirModal(pais.id)}}/>
                                                 <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}/>
                                                 <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
                                             </div>
