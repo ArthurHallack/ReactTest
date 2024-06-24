@@ -9,6 +9,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 import { UfList } from "../functions/municipio/UfMunicipio";
 import { PaisPesquisa } from "../functions/municipio/PaisPesquisa";
+import { PaisPesquisa2 } from "../functions/municipio/PaisPesquisa";
 import { SalvarMunicipio } from "../functions/municipio/SaveMunicipio";
 import { GetAllMunicipio } from "../functions/municipio/GetAllMunicipio";
 import { ApiDeleteMunicipio } from "../functions/municipio/DeleteMunicipio";
@@ -27,6 +28,7 @@ function Municipio () {
     // ESTADOS DOS INPUTS
     const [idValue, setidValue] = useState ('')
     const [PaisValue, setPaisValue] = useState('')
+    const [PaisIdValue, setPaisIdValue] = useState('')
     const [MunicipioValue, setMunicipioValue] = useState('')
     const [UfValue, setUfValue] = useState({ id: 0, descricao: '' })
     const [DDDValue, setDDDValue] = useState('')
@@ -38,6 +40,7 @@ function Municipio () {
 
     //OUTROS ESTADOS 
     const [ArrayPaises, setArrayPaises] = useState ([])
+    const [ArrayPaises2, setArrayPaises2] = useState ([])
     const [arrayPaisesList, setArrayPaisesList] = useState ([])
     const [arrayFiltro, setarrayFiltro] = useState ([])
     const [paises, setPaises] = useState([])
@@ -64,7 +67,9 @@ function Municipio () {
      useEffect(()=>{
         async function fetchData (){
             const data = await UfList()
+            const data2 = await PaisPesquisa2()
             setArrayUf(data)
+            setArrayPaises2(data2)
         }
         fetchData()
      },[])// trás a lista uf da api 
@@ -163,9 +168,21 @@ function Municipio () {
             "situacao": valorRealS
         }
 
-        const Salvando = await SalvarMunicipio(dataNew)
+        var dataUpdate ={
+            "id": idValue,
+            "id_pais": PaisIdValue,
+            "municipio": Refe2.current.value,
+            "uf": Refe3.current.value,
+            "ibge": Refe5.current.value,
+            "ddd": Refe4.current.value,
+            "situacao": valorRealS
+        }
 
-        if (Salvando){
+        if (idValue==''){
+            const Salvando = await SalvarMunicipio(dataNew)
+            setSuccess(true)
+        }else{
+            const Salvando = await SalvarMunicipio(dataUpdate)
             setSuccess(true)
         }
 
@@ -265,6 +282,12 @@ function Municipio () {
         Refe5.current.value = element.ibge
         Refe6.current.checked = element.situacao
 
+        var valorP = Refe1.current.value
+        var valorReal = ArrayPaises2.find(pais=> pais.descricao === valorP)
+        var idCorrespondente = valorReal ? valorReal.id : null
+
+
+        setPaisIdValue(idCorrespondente)
         setFormVisivel(true)
         if(FormVisivel===true){
             window.document.getElementById('FormAdd').style.display='flex'
