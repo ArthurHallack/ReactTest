@@ -3,6 +3,7 @@ import NavBar from "../components/Nav";
 import ModalMunicipio from "../components/ModalMunicipio";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
+import { faBroom } from "@fortawesome/free-solid-svg-icons"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
@@ -13,6 +14,7 @@ import { PaisPesquisa2 } from "../functions/municipio/PaisPesquisa";
 import { SalvarMunicipio } from "../functions/municipio/SaveMunicipio";
 import { GetAllMunicipio } from "../functions/municipio/GetAllMunicipio";
 import { ApiDeleteMunicipio } from "../functions/municipio/DeleteMunicipio";
+import { FiltroGetMunicipio } from "../functions/municipio/GetFiltroMunicipio";
 
 import '../css/routes.css/municipio.css'
 
@@ -24,6 +26,7 @@ function Municipio () {
     const Refe4 = useRef();//DDD
     const Refe5 = useRef();//IBGE
     const Refe6 = useRef();//Situação
+    const Refe7 = useRef();//Situação (options)
 
     // ESTADOS DOS INPUTS
     const [idValue, setidValue] = useState ('')
@@ -33,10 +36,11 @@ function Municipio () {
     const [UfValue, setUfValue] = useState({ id: 0, descricao: '' })
     const [DDDValue, setDDDValue] = useState('')
     const [IBGEvalu, setIBGEvalue] = useState('')
-    const [SituacaoValue, setSituacaoValue] = useState(false)
+    const [SituacaoValue, setSituacaoValue] = useState(null)//option
 
     //ESTADOS DOS COMPONENTES
     const [FormVisivel, setFormVisivel] = useState (false)
+    const [BTNSfiltro, setBTNSfiltro]= useState (false)
 
     //OUTROS ESTADOS 
     const [ArrayPaises, setArrayPaises] = useState ([])
@@ -102,6 +106,16 @@ function Municipio () {
         fetchData()
     },[]) //Responsavel pela Lista a ser renderizada
 
+    useEffect (()=>{
+        if(BTNSfiltro===true){
+            window.document.getElementById('BtnFormFilter').style.display='flex'
+            window.document.getElementById('BtnFormAdd').style.display='none'
+        }else{
+            window.document.getElementById('BtnFormFilter').style.display='none'
+            window.document.getElementById('BtnFormAdd').style.display='flex'
+        }
+    },[BTNSfiltro])
+
     //FUNÇÕES
 
      function ConvertMaiusculo (ref) {
@@ -120,9 +134,14 @@ function Municipio () {
     //ADD
     function ADD () {
         setFormVisivel(true)
+        setBTNSfiltro(false)
         if(FormVisivel===true){
             window.document.getElementById('FormAdd').style.display='flex'
             window.document.getElementById('DivSit').style.display='flex'
+            window.document.getElementById('labelDDD').style.display='flex'
+            window.document.getElementById('InputDDD').style.display='flex'
+            window.document.getElementById('labelIBGE').style.display='flex'
+            window.document.getElementById('InputIBGE').style.display='flex'
             window.document.getElementById('SecTopBTN').style.display='none'           
             window.document.getElementById('Table-Municipio').style.display='none'           
         }
@@ -144,6 +163,7 @@ function Municipio () {
             Refe3.current.value = ''
             Refe4.current.value = ''
             Refe5.current.value = ''
+            Refe6.current.checked = false
         
     }
 
@@ -155,9 +175,6 @@ function Municipio () {
         var valorReal = ArrayPaises.find(pais=> pais.descricao === valorP)
         var idCorrespondente = valorReal ? valorReal.id : null
 
-        var valorS = Refe6.current.checked
-        var valorRealS = valorS ? 1 : 2
-
         var dataNew = {
             "id": 0,
             "id_pais": idCorrespondente,
@@ -165,7 +182,7 @@ function Municipio () {
             "uf": Refe3.current.value,
             "ibge": Refe5.current.value,
             "ddd": Refe4.current.value,
-            "situacao": valorRealS
+            "situacao": Refe6.current.checked
         }
 
         var dataUpdate ={
@@ -175,7 +192,7 @@ function Municipio () {
             "uf": Refe3.current.value,
             "ibge": Refe5.current.value,
             "ddd": Refe4.current.value,
-            "situacao": valorRealS
+            "situacao": Refe6.current.checked
         }
 
         if (idValue==''){
@@ -247,6 +264,12 @@ function Municipio () {
 
     function FiltroBTN () {
         setFormVisivel(true)
+        Refe1.current.value = ''
+        Refe2.current.value = ''
+        Refe3.current.value = ''
+        Refe5.current.value = ''
+        Refe7.current.value = ''
+
         if(FormVisivel===true){
             window.document.getElementById('FormAdd').style.display='flex'
             window.document.getElementById('SecTopBTN').style.display='none'           
@@ -254,8 +277,32 @@ function Municipio () {
             window.document.getElementById('DivSitF').style.display='flex'
             window.document.getElementById('OpSituacao').style.display='flex'
             window.document.getElementById('DivSit').style.display='none'
+            window.document.getElementById('labelDDD').style.display='none'
+            window.document.getElementById('InputDDD').style.display='none'
+            window.document.getElementById('labelIBGE').style.display='none'
+            window.document.getElementById('InputIBGE').style.display='none'
 
         }
+
+        setBTNSfiltro(true)
+    }
+
+    async function Filtrar () {
+        var data = {
+            "pais": Refe1.current.value,
+            "municipio": Refe2.current.value,
+            "uf": Refe3.current.value,
+            "situacao": Refe7.current.value
+        }
+
+        var req = await FiltroGetMunicipio(data)
+        var datajson = await req.json()
+        setarrayFiltro(datajson)
+    }
+
+    function Limpar () {
+
+        setSuccess(true)
     }
 
     //EXCLUIR
@@ -275,6 +322,7 @@ function Municipio () {
     //EDITAR
     async function EditPais (element) {
         setidValue(element.id)
+        setBTNSfiltro(false)
         Refe1.current.value = element.pais
         Refe2.current.value = element.municipio
         Refe3.current.value = element.uf
@@ -293,7 +341,12 @@ function Municipio () {
             window.document.getElementById('FormAdd').style.display='flex'
             window.document.getElementById('DivSit').style.display='flex'
             window.document.getElementById('SecTopBTN').style.display='none'           
-            window.document.getElementById('Table-Municipio').style.display='none'           
+            window.document.getElementById('Table-Municipio').style.display='none'
+            
+            window.document.getElementById('labelDDD').style.display='flex'
+            window.document.getElementById('InputDDD').style.display='flex'
+            window.document.getElementById('labelIBGE').style.display='flex'
+            window.document.getElementById('InputIBGE').style.display='flex'
         }
     }
 
@@ -364,12 +417,12 @@ function Municipio () {
                             </ul>
                         </div>
                     </fieldset>
-                    <fieldset>
-                        <label className="LabelForm">DDD</label>
+                    <fieldset id="FieldsetDDD">
+                        <label className="LabelForm" id="labelDDD">DDD</label>
                         <input type="number" className="InputForm" id="InputDDD" ref={Refe4} />
                     </fieldset>
-                    <fieldset>
-                        <label className="LabelForm">IBGE</label>
+                    <fieldset id="FieldsetIBGE">
+                        <label className="LabelForm" id="labelIBGE">IBGE</label>
                         <input type="number" className="InputForm" id="InputIBGE" ref={Refe5} />
                     </fieldset>
                     <fieldset>
@@ -379,10 +432,10 @@ function Municipio () {
                             <p>Ativo</p>
                         </div>
                         <div id="DivSitF">
-                            <select name="Situacao" id="OpSituacao">
-                                    <option value="">Selecionar</option>
-                                    <option value="1">Ativo</option>
-                                    <option value="0">Inativo</option>
+                            <select name="Situacao" id="OpSituacao" ref={Refe7} onChange={()=>{setSituacaoValue(Refe7.current.value)}}>
+                                    <option value="" selected>Selecionar</option>
+                                    <option value="true">Ativo</option>
+                                    <option value="false">Inativo</option>
                             </select>
                         </div>
                     </fieldset>
@@ -392,7 +445,8 @@ function Municipio () {
                     <button id="BtnCloseAdd" onClick={CloseForm}><FontAwesomeIcon icon={faXmark}/></button>
                 </div>
                 <div id="BtnFormFilter">
-                    <button id="BtnConfirmFilter"><FontAwesomeIcon icon={faCheck} /></button>
+                    <button id="BtnConfirmFilter" onClick={Filtrar}><FontAwesomeIcon icon={faFilter} /></button>
+                    <button id="BtnConfirmFilter" onClick={Limpar}><FontAwesomeIcon icon={faBroom} /></button>
                     <button id="BtnCloseAdd" onClick={CloseForm}><FontAwesomeIcon icon={faXmark}/></button>
                 </div>
             </form>

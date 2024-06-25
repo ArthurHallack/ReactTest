@@ -96,6 +96,8 @@
 /*filtro*/
 #BtnFormFilter{
     display: none;
+    gap: 1rem;
+    height: 3rem;
 }
 
 #OpSituacao{
