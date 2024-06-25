@@ -287,7 +287,8 @@ function Municipio () {
         setBTNSfiltro(true)
     }
 
-    async function Filtrar () {
+    async function Filtrar (event) {
+        event.preventDefault()
         var data = {
             "pais": Refe1.current.value,
             "municipio": Refe2.current.value,
