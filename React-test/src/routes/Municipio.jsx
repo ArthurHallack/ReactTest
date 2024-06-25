@@ -478,7 +478,20 @@ function Municipio () {
                                 ))}
                         </div>
                         <div id="table-pais2">
-
+                                {arrayFiltro.map((pais, index)=>(
+                                    <ul key={pais.id}>
+                                        <li>{pais.id}</li>
+                                        <li>{pais.pais}</li>
+                                        <li>{pais.municipio}</li>
+                                        <li>
+                                            <div>
+                                                <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{abrirModal(pais.id)}}/>
+                                                <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}/>
+                                                <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                ))}
                         </div>
                     </div>
                 </div>
