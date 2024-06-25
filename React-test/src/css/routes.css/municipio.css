@@ -250,9 +250,16 @@
 }
 
 #table-pais1{
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
   }
+
+#table-pais2{
+    display: none;
+    flex-direction: column;
+    width: 100%;
+}
 
 .Todo-List-ul{
   display: flex;

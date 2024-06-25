@@ -38,9 +38,17 @@ function Municipio () {
     const [IBGEvalu, setIBGEvalue] = useState('')
     const [SituacaoValue, setSituacaoValue] = useState(null)//option
 
+    // ESTADOS DOS INPUTS DURANTE O FILTRO
+    const [paisvalueFiltro, setpaisvalueFiltro] = useState ('')
+    const [municipioFiltro, setmunicipioFiltro] = useState ('')
+    const [ufValueFiltro, setufValueFiltro] = useState ('')
+    const [sitValueFiltro, setsitValueFiltro] = useState ('')
+    const [veriFiltro, setveriFiltro] = useState (false)
+
     //ESTADOS DOS COMPONENTES
     const [FormVisivel, setFormVisivel] = useState (false)
     const [BTNSfiltro, setBTNSfiltro]= useState (false)
+    const [TrocarTabelas, setTrocarTabelas]= useState (false)
 
     //OUTROS ESTADOS 
     const [ArrayPaises, setArrayPaises] = useState ([])
@@ -109,12 +117,24 @@ function Municipio () {
     useEffect (()=>{
         if(BTNSfiltro===true){
             window.document.getElementById('BtnFormFilter').style.display='flex'
+            window.document.getElementById('DivSitF').style.display='flex'
             window.document.getElementById('BtnFormAdd').style.display='none'
         }else{
             window.document.getElementById('BtnFormFilter').style.display='none'
+            window.document.getElementById('DivSitF').style.display='none'
             window.document.getElementById('BtnFormAdd').style.display='flex'
         }
-    },[BTNSfiltro])
+    },[BTNSfiltro])//TROCA OS BOTÕES DENTRO DO FORMULARIO
+
+    useEffect (()=>{
+        if(TrocarTabelas===true){
+            window.document.getElementById('table-pais2').style.display='flex'
+            window.document.getElementById('table-pais1').style.display='none'
+        }else{
+            window.document.getElementById('table-pais2').style.display='none'
+            window.document.getElementById('table-pais1').style.display='flex'
+        }
+    },[TrocarTabelas])
 
     //FUNÇÕES
 
@@ -270,6 +290,12 @@ function Municipio () {
         Refe5.current.value = ''
         Refe7.current.value = ''
 
+        if(veriFiltro===true){
+            Refe1.current.value = paisvalueFiltro
+            Refe2.current.value = municipioFiltro
+            Refe3.current.value = ufValueFiltro
+        }
+
         if(FormVisivel===true){
             window.document.getElementById('FormAdd').style.display='flex'
             window.document.getElementById('SecTopBTN').style.display='none'           
@@ -299,6 +325,17 @@ function Municipio () {
         var req = await FiltroGetMunicipio(data)
         var datajson = await req.json()
         setarrayFiltro(datajson)
+        setTrocarTabelas(true)
+        setBTNSfiltro(false)
+        setveriFiltro(true)
+        setpaisvalueFiltro(Refe1.current.value)
+        setmunicipioFiltro(Refe2.current.value)
+        setufValueFiltro(Refe3.current.value)
+
+        window.document.getElementById('FormAdd').style.display='none'
+        window.document.getElementById('Table-Municipio').style.display='flex'
+        window.document.getElementById('SecTopBTN').style.display='flex'
+
     }
 
     function Limpar () {
@@ -435,8 +472,8 @@ function Municipio () {
                         <div id="DivSitF">
                             <select name="Situacao" id="OpSituacao" ref={Refe7} onChange={()=>{setSituacaoValue(Refe7.current.value)}}>
                                     <option value="" selected>Selecionar</option>
-                                    <option value="true">Ativo</option>
-                                    <option value="false">Inativo</option>
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
                             </select>
                         </div>
                     </fieldset>
@@ -480,12 +517,12 @@ function Municipio () {
                         </div>
                         <div id="table-pais2">
                                 {arrayFiltro.map((pais, index)=>(
-                                    <ul key={pais.id}>
-                                        <li>{pais.id}</li>
-                                        <li>{pais.pais}</li>
-                                        <li>{pais.municipio}</li>
-                                        <li>
-                                            <div>
+                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`}>
+                                        <li  className="Todo-List-li id-tdListM">{pais.id}</li>
+                                        <li  className="Todo-List-li pais-tdListM">{pais.pais}</li>
+                                        <li  className="Todo-List-li municipio-tdList">{pais.municipio}</li>
+                                        <li  className="li-td-btn">
+                                            <div className="BTNs-tdList">
                                                 <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{abrirModal(pais.id)}}/>
                                                 <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{EditPais(pais)}}/>
                                                 <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
