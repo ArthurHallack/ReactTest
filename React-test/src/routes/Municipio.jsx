@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import NavBar from "../components/Nav";
 import ModalMunicipio from "../components/ModalMunicipio";
+import AlertE from "../components/Msg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faBroom } from "@fortawesome/free-solid-svg-icons"
@@ -60,8 +61,10 @@ function Municipio () {
     const [ArrayUf, setArrayUf] = useState ([])
     const [inputValue, setInputValue] = useState('')
     const [success, setSuccess] = useState(false)
+    const [msgerro, setMsgerro] = useState (null)
     const [modalAberto, setModalAberto] = useState(false)
     const [idSelecionado, setIdSelecionado] = useState(null)
+    const [listaVisivel, setListaVisivel] = useState(true)
 
     //EFFECTS 
      useEffect(()=>{
@@ -144,6 +147,12 @@ function Municipio () {
         }
      }
 
+     //função relacionada a fechar a mensagem de erro
+
+    function handleError () {
+        setMsgerro(null)
+    }
+
      //RENDERIZAR A LISTA
     async function RenderGetAll() {
         var dados = await GetAllMunicipio();
@@ -153,6 +162,12 @@ function Municipio () {
 
     //ADD
     function ADD () {
+            Refe1.current.value = ''
+            Refe2.current.value = ''
+            Refe3.current.value = ''
+            Refe4.current.value = ''
+            Refe5.current.value = ''
+            Refe6.current.checked = false
         setFormVisivel(true)
         setBTNSfiltro(false)
         if(FormVisivel===true){
@@ -217,7 +232,11 @@ function Municipio () {
 
         if (idValue==''){
             const Salvando = await SalvarMunicipio(dataNew)
-            setSuccess(true)
+            if(Salvando.msgerro===""){
+                setSuccess(true)
+            }else{
+                setMsgerro(Salvando.msgerro)
+            }
         }else{
             const Salvando = await SalvarMunicipio(dataUpdate)
             setSuccess(true)
@@ -294,6 +313,7 @@ function Municipio () {
             Refe1.current.value = paisvalueFiltro
             Refe2.current.value = municipioFiltro
             Refe3.current.value = ufValueFiltro
+            Refe7.current.value = sitValueFiltro
         }
 
         if(FormVisivel===true){
@@ -331,6 +351,7 @@ function Municipio () {
         setpaisvalueFiltro(Refe1.current.value)
         setmunicipioFiltro(Refe2.current.value)
         setufValueFiltro(Refe3.current.value)
+        setveriFiltro(Refe7.current.value)
 
         window.document.getElementById('FormAdd').style.display='none'
         window.document.getElementById('Table-Municipio').style.display='flex'
@@ -404,6 +425,7 @@ function Municipio () {
     return(
         <div id="TelaMunicipio">
             <NavBar/>
+            <AlertE error ={msgerro} handleError={handleError}/>
             <div id="SecTop">
                 <h1>Municipio</h1>
                 <div id="SecTopBTN">
@@ -471,7 +493,7 @@ function Municipio () {
                         </div>
                         <div id="DivSitF">
                             <select name="Situacao" id="OpSituacao" ref={Refe7} onChange={()=>{setSituacaoValue(Refe7.current.value)}}>
-                                    <option value="" selected>Selecionar</option>
+                                    <option value="">Selecionar</option>
                                     <option value="1">Ativo</option>
                                     <option value="0">Inativo</option>
                             </select>
@@ -501,7 +523,7 @@ function Municipio () {
                     <div id="Table-Pais">
                         <div id="table-pais1">
                                 {paises.map((pais,index)=>(
-                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} >
+                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }} >
                                         <li className="Todo-List-li id-tdListM">{pais.id}</li>
                                         <li className="Todo-List-li pais-tdListM">{pais.pais}</li>
                                         <li className="Todo-List-li municipio-tdList">{pais.municipio}</li>
@@ -517,7 +539,7 @@ function Municipio () {
                         </div>
                         <div id="table-pais2">
                                 {arrayFiltro.map((pais, index)=>(
-                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''}`}>
+                                    <ul key={pais.id} className={`Todo-List-ul ${pais.hidden ? 'hidden' : ''} ${pais.situacao ? 'red-list' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }} >
                                         <li  className="Todo-List-li id-tdListM">{pais.id}</li>
                                         <li  className="Todo-List-li pais-tdListM">{pais.pais}</li>
                                         <li  className="Todo-List-li municipio-tdList">{pais.municipio}</li>
