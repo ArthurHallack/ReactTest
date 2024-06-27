@@ -194,6 +194,10 @@ function Municipio () {
             Refe4.current.value = ''
             Refe5.current.value = ''
             Refe6.current.checked = false
+            const input1 = window.document.getElementById("InputPais")
+            const input2 = window.document.getElementById("InputMunicipio")
+            input2.style.border = "none"
+            input1.style.border = "none"
         setFormVisivel(true)
         setBTNSfiltro(false)
         if(FormVisivel===true){
@@ -334,6 +338,10 @@ function Municipio () {
         Refe3.current.value = ''
         Refe5.current.value = ''
         Refe7.current.value = ''
+        const input1 = window.document.getElementById("InputPais")
+        const input2 = window.document.getElementById("InputMunicipio")
+        input2.style.border = "none"
+        input1.style.border = "none"
 
         if(veriFiltro===true){
             Refe1.current.value = paisvalueFiltro
@@ -414,6 +422,10 @@ function Municipio () {
         Refe4.current.value = element.ddd
         Refe5.current.value = element.ibge
         Refe6.current.checked = element.situacao
+        const input1 = window.document.getElementById("InputPais")
+        const input2 = window.document.getElementById("InputMunicipio")
+        input2.style.border = "none"
+        input1.style.border = "none"
 
         var valorP = Refe1.current.value
         var valorReal = ArrayPaises2.find(pais=> pais.descricao === valorP)
