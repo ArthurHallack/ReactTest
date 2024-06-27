@@ -137,7 +137,19 @@ function Municipio () {
             window.document.getElementById('table-pais2').style.display='none'
             window.document.getElementById('table-pais1').style.display='flex'
         }
-    },[TrocarTabelas])
+    },[TrocarTabelas])//TROCA OS FORMULARIOS
+
+    useEffect(()=>{
+        const input1 = window.document.getElementById("InputPais")
+        const input2 = window.document.getElementById("InputMunicipio")
+        if(msgerro=="País inválido"){
+            input1.style.border = "3px solid red"
+            input2.style.border = "none"
+        } else if (msgerro=="Município inválido"){
+            input2.style.border = "3px solid red"
+            input1.style.border = "none"
+        }
+    },[msgerro])
 
     //FUNÇÕES
 
@@ -145,6 +157,20 @@ function Municipio () {
         if(ref.current){
             ref.current.value = ref.current.value.toUpperCase()
         }
+     }
+
+     function fecharListaUf () {
+        const divListUf = document.getElementById('DivListUf')
+        divListUf.style.display='none'
+     }
+
+     function fecharListaPais () {
+        window.document.getElementById('DivListPais').style.display='none'
+     }
+     function fecharListas () {
+        window.document.getElementById('DivListPais').style.display='none'
+        const divListUf = document.getElementById('DivListUf')
+        divListUf.style.display='none'
      }
 
      //função relacionada a fechar a mensagem de erro
@@ -440,7 +466,7 @@ function Municipio () {
                         <input type="text" className="InputForm" id="InputPais" ref={Refe1} onChange={()=>{
                             ListPais()
                             ConvertMaiusculo(Refe1)
-                        }} maxLength="14" />
+                        }} onClick={fecharListaUf} maxLength="14" />
                         <div className="DivList" id="DivListPais">
                             <ul id="ListPais" className="ListOps">
                                 {ArrayPaises.map((val,key)=>{
@@ -455,7 +481,7 @@ function Municipio () {
                         <label className="LabelForm">Municipio</label>
                         <input type="text" className="InputForm" id="InputMunicipio" ref={Refe2} onChange={()=>{
                             ConvertMaiusculo(Refe2)
-                        }}/>
+                        }} onClick={fecharListas}/>
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">UF</label>
@@ -463,7 +489,8 @@ function Municipio () {
                             changeUf()
                             ConvertMaiusculo(Refe3)
                             handleInputChange(event)
-                        }} maxLength="2"/>
+                            fecharListaPais()
+                        }} onClick={fecharListaPais} maxLength="2"/>
                         <div className="DivList" id="DivListUf">
                             <ul id="ListaUF">
                                 {ArrayUf.map((val, key)=>{
@@ -479,11 +506,11 @@ function Municipio () {
                     </fieldset>
                     <fieldset id="FieldsetDDD">
                         <label className="LabelForm" id="labelDDD">DDD</label>
-                        <input type="number" className="InputForm" id="InputDDD" ref={Refe4} />
+                        <input type="number" className="InputForm" id="InputDDD" ref={Refe4} onClick={fecharListas}/>
                     </fieldset>
                     <fieldset id="FieldsetIBGE">
                         <label className="LabelForm" id="labelIBGE">IBGE</label>
-                        <input type="number" className="InputForm" id="InputIBGE" ref={Refe5} />
+                        <input type="number" className="InputForm" id="InputIBGE" ref={Refe5} onClick={fecharListas}/>
                     </fieldset>
                     <fieldset>
                         <label className="LabelForm">Situação</label>
@@ -492,7 +519,7 @@ function Municipio () {
                             <p>Ativo</p>
                         </div>
                         <div id="DivSitF">
-                            <select name="Situacao" id="OpSituacao" ref={Refe7} onChange={()=>{setSituacaoValue(Refe7.current.value)}}>
+                            <select name="Situacao" id="OpSituacao" ref={Refe7} onChange={()=>{setSituacaoValue(Refe7.current.value)}} onClick={fecharListas}>
                                     <option value="">Selecionar</option>
                                     <option value="1">Ativo</option>
                                     <option value="0">Inativo</option>
