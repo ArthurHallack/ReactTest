@@ -43,7 +43,7 @@ function ModalPais ({ fecharModal, dados, idElement }) {
         const itemEncontrado = array.find(item => item.id === idElement);
         setItemSelecionado(itemEncontrado);
     }, [idElement, array]);
-
+    
     return (
         <div className="ModalPais" style={{ display: modalAberto ? "block" : "none" }}>
             <div className="ModalTop">

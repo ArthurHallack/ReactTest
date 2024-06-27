@@ -3,20 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function ModalMunicipio ({ fecharModal, dados, idElement }) {
-    //FUNÇÕES DE ABRIR E FECHAR// 
-    const [modalAberto, setModalAberto] = useState(true)
-    const [array, setArray] = useState([])
-    const [id, setId] = useState('')
-    const [itemSelecionado, setItemSelecionado] = useState(null)
+    // FUNÇÕES DE ABRIR E FECHAR
+    const [modalAberto, setModalAberto] = useState(true);
+    const [array, setArray] = useState([]);
+    const [id, setId] = useState('');
+    const [itemSelecionado, setItemSelecionado] = useState(null);
 
     const CloseModal = () => {
-        fecharModal()
-    }
+        fecharModal();
+    };
+
     const toggleModal = () => {
         setModalAberto(!modalAberto);
-    }
+    };
 
-    //FUNÇÃO PARA FORMATAR OS DADOS//
+    // FUNÇÃO PARA FORMATAR OS DADOS
     const dadosArray = () => {
         const formattedArray = dados.map(item => {
             return {
@@ -29,21 +30,21 @@ function ModalMunicipio ({ fecharModal, dados, idElement }) {
                 situacao: item.situacao
             };
         });
+        console.log("Formatted Array:", formattedArray); // Adicionado para depuração
         setArray(formattedArray);
     };
 
-    //CHAMADA DA FUNÇÃO DE FORMATAÇÃO DE DADOS//
+    // CHAMADA DA FUNÇÃO DE FORMATAÇÃO DE DADOS
     useEffect(() => {
         dadosArray(); // Chamar a função dadosArray para formatar os dados
     }, [dados]);
 
-    //ATUALIZAR O ITEM SELECIONADO QUANDO O ID MUDAR//
+    // ATUALIZAR O ITEM SELECIONADO QUANDO O ID MUDAR
     useEffect(() => {
-        // Procurar o item correspondente ao ID
         const itemEncontrado = array.find(item => item.id === idElement);
+        console.log("Item Encontrado:", itemEncontrado); // Adicionado para depuração
         setItemSelecionado(itemEncontrado);
     }, [idElement, array]);
-
 
     return (
         <div className="ModalPais" style={{ display: modalAberto ? "block" : "none" }}>
@@ -60,9 +61,9 @@ function ModalMunicipio ({ fecharModal, dados, idElement }) {
                         <li>id: {itemSelecionado.id}</li>
                         <li>Pais: {itemSelecionado.pais}</li>
                         <li>Municipio: {itemSelecionado.municipio}</li>
-                        <li>UF: {itemSelecionado.uf}</li>
-                        <li>DDD: {itemSelecionado.ddd}</li>
-                        <li>IBGE: {itemSelecionado.ibge}</li>
+                        <li>UF: {itemSelecionado.UF}</li>
+                        <li>DDD: {itemSelecionado.DDD}</li>
+                        <li>IBGE: {itemSelecionado.IBGE}</li>
                         <li>Situação: {itemSelecionado.situacao ? 'Ativo' : 'Inativo'}</li>
                     </ul>
                 )}
