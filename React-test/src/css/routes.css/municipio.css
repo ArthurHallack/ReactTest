@@ -4,7 +4,7 @@
 
 #TelaMunicipio{
     display: flex;
-    fl/workspaces/ReactTest/React-test/src/css/routes.cssex-direction: column;
+    flex-direction: column;
     align-items: center;
     gap: 3rem;
 }
