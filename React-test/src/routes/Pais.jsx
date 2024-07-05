@@ -55,6 +55,7 @@ function PaisCrud() {
     const [idSelecionado, setIdSelecionado] = useState(null)
     const [showFilterBtns, setShowFilterBtns] = useState(false)
     const [veriFiltro, setveriFiltro] = useState (false)
+    const [confirmVisivel, setconfirmVisivel] = useState (false)
 
     // EFFECTS
     useEffect (()=>{
