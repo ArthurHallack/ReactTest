@@ -51,7 +51,7 @@ function ModalMunicipio ({ fecharModal, dados, idElement }) {
             <div className="ModalTop">
                 <span>
                     <i>consulta</i>
-                    <h1>Pais</h1>
+                    <h1>Municipio</h1>
                 </span>
                 <FontAwesomeIcon icon={faXmark} onClick={CloseModal} />
             </div>

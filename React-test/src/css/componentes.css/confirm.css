@@ -1,8 +1,46 @@
-*{
-    margin: 0%;
-    padding: 0%;
-}
 
 #Container-Confirm{
     display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffff;
+    width: 25rem;
+    height: 6rem;
+    border: 1px solid;
+    border-radius: 3px;
+    padding-bottom: 5px;
+    left: 35%;
+    right: 35%;
+    top: 35%;
+}
+
+#Container-ConfirmBTNs{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.BTNs-ContainerConfirm{
+    height: 1.5rem;
+    width: 4rem;
+    border: none;
+    cursor: pointer;
+}
+
+#Btn-Confirm-True{
+    background-color: #51c151;
+}
+
+#Btn-Confirm-True:hover{
+    background-color: #90f590;
+}
+
+#Btn-Confirm-false{
+    background-color: #ed3232;
+}
+
+#Btn-Confirm-false:hover{
+    background-color: #ff5f5f;
 }
