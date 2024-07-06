@@ -56,6 +56,7 @@ function PaisCrud() {
     const [showFilterBtns, setShowFilterBtns] = useState(false)
     const [veriFiltro, setveriFiltro] = useState (false)
     const [confirmVisivel, setconfirmVisivel] = useState (false)
+    const [arrayConfirm, setarrayConfirm] = useState ([])
 
     // EFFECTS
     useEffect (()=>{
@@ -245,18 +246,16 @@ function PaisCrud() {
     }
     //EXCLUIR
     const Exclui = async (element) => {
-        try {
-            console.log("Excluindo país:", element);
-            await ApiDelete(element.id);
-            setPaises(prevPaises => prevPaises.filter(pais => pais.id !== element.id));
-            // Atualiza o estado do arrayFiltro removendo o país excluído
-            setarrayFiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id));
-            console.log("País excluído com sucesso:", element);
-        } catch (error) {
-            console.error("Erro ao excluir país:", error);
-        }
+
+        setconfirmVisivel(true)
+        setarrayConfirm(element)
+
     };
     
+    function excluir (element){
+        setPaises(prevPaises => prevPaises.filter(pais => pais.id !== element.id))
+        setarrayFiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id))
+    }
 
     //RENDERIZAR A LISTA
     async function RenderGetAll() {
@@ -374,10 +373,21 @@ function PaisCrud() {
         
     }
 
+    //FUNÇÕES DA CONFIRMAÇÃO AO EXCLUIR
+
+    function fecharConfirm () {
+        setconfirmVisivel(false)
+    }
+
+    function mensagemErro (element) {
+        setMsgerro(element.msgerro)
+    }
+
     return (
         <div id="direction-pais">
             <NavBar/>
             <AlertE error ={msgerro} handleError={handleError}/>
+            <MsgConfirm estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <div id="Tela-Pais">
                 <h1 id="Titulo-Pais">Pais</h1>
                 <div id="divBTN-ADD" >
