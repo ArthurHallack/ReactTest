@@ -11,7 +11,6 @@ import ModalPais from "../components/ModalPais"
 import AlertE from "../components/Msg"
 import MsgConfirm from "../components/confirm"
 import { GetAll } from "../functions/GetAllPais"
-import { ApiDelete } from "../functions/DeletePais"
 import { FiltroGet } from "../functions/GetFiltro"
 
 const stylo = {

@@ -12,12 +12,8 @@ export async function ApiDeleteMunicipio (id) {
                 'Authorization': BasicAuth
             },
         })
-        if (!dados.ok){
-
-            throw new Error('Erro ao enviar dados para a API')
-        }else {
-            console.log ("Dados deletados com sucesso!")
-        }
+        const dadosjson = await dados.json()
+        return dadosjson
     }catch (error){
         console.error('Erro:', error)
     }

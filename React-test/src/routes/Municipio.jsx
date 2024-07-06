@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import NavBar from "../components/Nav";
 import ModalMunicipio from "../components/ModalMunicipio";
 import AlertE from "../components/Msg";
-import MsgConfirm from "../components/confirm"
+import MsgConfirmMunici from "../components/confirmMunici";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faBroom } from "@fortawesome/free-solid-svg-icons"
@@ -476,7 +476,7 @@ function Municipio () {
         <div id="TelaMunicipio">
             <NavBar/>
             <AlertE error ={msgerro} handleError={handleError}/>
-            <MsgConfirm estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
+            <MsgConfirmMunici estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <div id="SecTop">
                 <h1>Municipio</h1>
                 <div id="SecTopBTN">
