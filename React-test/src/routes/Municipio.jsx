@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import NavBar from "../components/Nav";
 import ModalMunicipio from "../components/ModalMunicipio";
 import AlertE from "../components/Msg";
+import MsgConfirm from "../components/confirm"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faBroom } from "@fortawesome/free-solid-svg-icons"
@@ -65,6 +66,8 @@ function Municipio () {
     const [modalAberto, setModalAberto] = useState(false)
     const [idSelecionado, setIdSelecionado] = useState(null)
     const [listaVisivel, setListaVisivel] = useState(true)
+    const [confirmVisivel, setconfirmVisivel] = useState (false)
+    const [arrayConfirm, setarrayConfirm] = useState ([])
 
     //EFFECTS 
      useEffect(()=>{
@@ -400,17 +403,16 @@ function Municipio () {
 
     //EXCLUIR
     const Exclui = async (element) => {
-        try {
-            console.log("Excluindo país:", element);
-            await ApiDeleteMunicipio(element.id);
-            setPaises(prevPaises => prevPaises.filter(pais => pais.id !== element.id));
-            // Atualiza o estado do arrayFiltro removendo o país excluído
-            setarrayFiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id));
-            console.log("País excluído com sucesso:", element);
-        } catch (error) {
-            console.error("Erro ao excluir país:", error);
-        }
+
+        setconfirmVisivel(true)
+        setarrayConfirm(element)
+
     };
+    
+    function excluir (element){
+        setPaises(prevPaises => prevPaises.filter(pais => pais.id !== element.id))
+        setarrayFiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id))
+    }
 
     //EDITAR
     async function EditPais (element) {
@@ -460,10 +462,21 @@ function Municipio () {
         
     }
 
+    //FUNÇÕES DA CONFIRMAÇÃO AO EXCLUIR
+
+    function fecharConfirm () {
+        setconfirmVisivel(false)
+    }
+
+    function mensagemErro (element) {
+        setMsgerro(element.msgerro)
+    }
+
     return(
         <div id="TelaMunicipio">
             <NavBar/>
             <AlertE error ={msgerro} handleError={handleError}/>
+            <MsgConfirm estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <div id="SecTop">
                 <h1>Municipio</h1>
                 <div id="SecTopBTN">
