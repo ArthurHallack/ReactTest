@@ -1,6 +1,9 @@
 import React, { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
+import NavBar from "../components/Nav";
+
+import '../css/routes.css/cadastro.css'
 
 const StyleCadastro = {
     width: "25rem"
@@ -41,7 +44,7 @@ function SignIn() {
                     <input type="password" ref={RefCadastro3} className="inputCadastro"/>
                     <button type="submit" onClick={Gravar} id="cadastroBTN">Cadastrar</button>
                 </div>
-        </form>
+            </form>
         </div>
     )
 }

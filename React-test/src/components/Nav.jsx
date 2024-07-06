@@ -33,7 +33,7 @@ function NavBar () {
                 break;
             case "2":
                 // Implemente ações para o id 2
-                navigate('/Usuario');
+                navigate('/Cadastro');
                 break;
             case "3":
                 setShowAuxNav(true);
