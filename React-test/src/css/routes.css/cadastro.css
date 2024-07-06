@@ -1,10 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 #Tela-Cadastro{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 45rem;
+    height: 100vh;
   }
   
   #Form-Cadastro{
@@ -14,8 +19,8 @@
     justify-content: space-between;
     background-color: #ffffff6a;
     border-radius: 5px;
-    width: 60rem;
-    height: 28rem;
+    width: 65rem;
+    height: 36rem;
   }
   
   #Conteudo-Cadastro {
@@ -26,7 +31,7 @@
     background-color: #ffffff;
     border-radius: 0 5px 5px 0;
     height: 100%;
-    width: 20rem;
+    width: 25rem;
     gap: 1rem;
   }
   

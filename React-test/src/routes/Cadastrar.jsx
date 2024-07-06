@@ -33,10 +33,11 @@ function SignIn() {
 
     return (
         <div id="Tela-Cadastro">
+            <NavBar/>
             <form id="Form-Cadastro">
                 <img src={engrenagemImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
                 <div id="Conteudo-Cadastro">
-                    <label>Usuário</label>
+                    <label>Email</label>
                     <input type="text" ref={RefCadastro1} className="inputCadastro"/>
                     <label>Senha</label>
                     <input type="password" ref={RefCadastro2} className="inputCadastro"/>
