@@ -34,14 +34,43 @@
     width: 25rem;
     gap: 1rem;
   }
+
+  .Single-input{
+    width: 12rem;
+    margin: 10px 0;
+    position: relative;
+  }
+
+  .Single-input label{
+    font-size: 16px;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    color: rgb(150, 150, 150);
+    cursor: text;
+    transition: 0.5s ease-in-out;
+  }
   
   .inputCadastro{
-    border-radius: 10px;
-    border: double;
-    border-color: #cccccc;
-    width: 12rem;
-    height: 1.2rem;
-    margin-top: -0.5rem;
+    width: 100%;
+    padding: 5px;
+    color: rgb(150, 150, 150) ;
+    border: 0;
+    border-bottom: 2px solid rgb(200, 200, 200);
+    outline: 0;
+    font-size:  16px;
+  }
+
+  .inputCadastro:focus,
+  .inputCadastro:valid{
+    border-bottom: 2px solid cornflowerblue;
+  }
+
+  .inputCadastro:focus ~ label,
+  .inputCadastro:valid ~ label{
+    transform: translateY(-24px);
+    font-size: 12px;
+    color: cornflowerblue;
   }
   
   #IMG-cadastro{
