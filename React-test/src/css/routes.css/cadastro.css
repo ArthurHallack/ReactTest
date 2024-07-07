@@ -20,23 +20,60 @@
     background-color: #ffffff6a;
     border-radius: 5px;
     width: 65rem;
-    height: 36rem;
+    height: 37rem;
   }
   
   #Conteudo-Cadastro {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding-left: 3rem;
     background-color: #ffffff;
     border-radius: 0 5px 5px 0;
     height: 100%;
-    width: 25rem;
+    width: 23rem;
     gap: 1rem;
   }
 
+  #BtnsTopCadastro{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: -1rem;
+  }
+
+  #BtnsTopCadastro h1{
+    font-size: 30px;
+    margin-left: 1rem;
+  }
+
+  #BtnsTopCadastro span {
+    width: 8rem;
+    cursor: pointer;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    
+  }
+
+  #BtnPF{
+    border-bottom: 2px solid cornflowerblue;
+    border-right: 2px solid cornflowerblue;
+    color: cornflowerblue;
+
+  }
+
+  #BtnPJ{
+    border-bottom: 1px solid;
+  }
+
   .Single-input{
-    width: 12rem;
+    width: 15rem;
     margin: 10px 0;
     position: relative;
   }
@@ -72,12 +109,27 @@
     font-size: 12px;
     color: cornflowerblue;
   }
-  
+
+  #labelSit{
+
+  }
+
+  #DivCadastroBTN{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: -1rem;
+  }
+
+  #cadastroBTN{
+    width: 17rem;
+    border-radius: 15px;
+  }
+
+/*IMG*/
+
   #IMG-cadastro{
     margin-left: 8rem;
   }
   
-  #cadastroBTN{
-    width: 7rem;
-    border-radius: 25px;
-  }
