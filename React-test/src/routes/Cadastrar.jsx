@@ -1,7 +1,8 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
+import { AlertS } from "../components/Msg";
 
 import '../css/routes.css/cadastro.css'
 
@@ -18,25 +19,43 @@ function SignIn() {
     const RefCadastro6 = useRef()//Situação
     const navigate = useNavigate()
 
+    const [msgsucess, setMsgsucess] = useState (null)
+    const [ConfSenha, setConfiSenha] = useState (null)
+
+
     const Gravar = (e) => {
         e.preventDefault()
-        var Usuario = RefCadastro1.current.value
-        var confirmacao = RefCadastro2.current.value
-        var Senha = RefCadastro3.current.value
-        if (Senha === confirmacao) {
-
-            localStorage.setItem("loginCadastro", Usuario)
-            localStorage.setItem("senhaCadastro", Senha)
-            navigate('/')
-
-        } else {
-            alert("Confirmação de senha incorreta")
+        var Email = RefCadastro1.current.value
+        var Senha = RefCadastro2.current.value
+        var Csenha = RefCadastro3.current.value
+        var Nome = RefCadastro4.current.value
+        var Celular = RefCadastro5.current.value
+        var Situacao = RefCadastro6.current.checked
+        
+        if (Senha === Csenha) {
+            var data = {
+                "id": 0,
+	            "email": Email,
+	            "nome": Nome,
+	            "celular": Celular,
+	            "senha_email": Senha,
+	            "situacao": Situacao
+            }
         }
+
+
+    }
+
+    //Sucess MSG
+
+    function handleSuccess () {
+        setMsgsucess(null)
     }
 
     return (
         <div id="Tela-Cadastro">
             <NavBar/>
+            <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <form id="Form-Cadastro">
                 <img src={engrenagemImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
                 <div id="Conteudo-Cadastro">

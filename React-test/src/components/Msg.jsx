@@ -30,12 +30,30 @@ function AlertE({ error, handleError }) {
     );
 }
 
-function AlertS ({ success }) {
+function AlertS ({ success, handleSuccess }) {
+
+    const [visivel, setVisivel] = useState(false); // Inicializa visivel como false
+
+    useEffect(() => {
+        if (success) {
+            console.log(success);
+            setVisivel(true); // Mostra o alerta se houver sucesso
+        } else {
+            setVisivel(false); // Esconde o alerta se não houver sucesso
+        }
+    }, [success]); // Executa o useEffect sempre que sucesso mudar
+
+    const close = () => {
+        setVisivel(false); // Define visivel como false ao clicar no botão
+        handleSuccess()
+    };
+
     return(
-        <div>
-            <p>{success}</p>
+        <div className={`msg-containerS ${visivel ? '' : 'escondido'}`}>
+            <p className="msg">Realizado Com Sucesso</p>
+            <FontAwesomeIcon icon={faXmark} onClick={close} className="xmark" />
         </div>
     )
 }
 
-export default AlertE
+export { AlertE, AlertS }

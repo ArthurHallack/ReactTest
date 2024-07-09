@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import NavBar from "../components/Nav";
 import ModalMunicipio from "../components/ModalMunicipio";
-import AlertE from "../components/Msg";
+import { AlertE } from "../components/Msg";
 import MsgConfirmMunici from "../components/confirmMunici";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
