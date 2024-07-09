@@ -50,7 +50,7 @@ function AlertS ({ success, handleSuccess }) {
 
     return(
         <div className={`msg-containerS ${visivel ? '' : 'escondido'}`}>
-            <p className="msg">Realizado Com Sucesso</p>
+            <p className="msg"><FontAwesomeIcon icon={faCircleExclamation} id="icon" />Realizado com Sucesso</p>
             <FontAwesomeIcon icon={faXmark} onClick={close} className="xmark" />
         </div>
     )

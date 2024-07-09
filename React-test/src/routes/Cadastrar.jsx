@@ -41,7 +41,15 @@ function SignIn() {
 	            "senha_email": Senha,
 	            "situacao": Situacao
             }
+            RefCadastro1.current.value=""
+            RefCadastro2.current.value=""
+            RefCadastro3.current.value=""
+            RefCadastro4.current.value=""
+            RefCadastro5.current.value=""
+            RefCadastro6.current.checked=false
+            
         }
+        setMsgsucess(true)
 
 
     }
