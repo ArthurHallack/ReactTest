@@ -32,7 +32,7 @@ function SignIn() {
         if(msgerro=="Informação Já Cadastrada"){
             console.log("oi")
         } else if (msgerro=="E-mail inválido"){
-            console.log("oi")
+            //window.document.getElementById('Email').style.borderBottom="2px solid rgb(254, 80, 61)"
         }
     },[msgerro])//mensagem de erro
 
