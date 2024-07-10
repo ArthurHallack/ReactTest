@@ -1,4 +1,4 @@
-async function Cadastrar (data) {
+export async function Cadastrar (data) {
     var url = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmUSUARIO/GRAVA'
     const Username = 'INTEGRASIS';
     const PassWord = '32P@&sB@rr0S';
