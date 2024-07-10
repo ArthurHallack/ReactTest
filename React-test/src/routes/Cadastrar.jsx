@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
-import { AlertS } from "../components/Msg";
+import { AlertS, AlertE } from "../components/Msg";
 import { Cadastrar } from "../functions/cadastro/cadastrar";
 
 import '../css/routes.css/cadastro.css'
@@ -20,11 +20,24 @@ function SignIn() {
     const RefCadastro6 = useRef()//Situação
     const navigate = useNavigate()
 
+    //relacionadas ao gravar
     const [msgsucess, setMsgsucess] = useState (null)
+    const [msgerro, setMsgerro] = useState (null)
     const [ConfSenha, setConfiSenha] = useState (null)
 
 
-    const Gravar = (e) => {
+    //effects
+
+    useEffect(()=>{
+        if(msgerro=="Informação Já Cadastrada"){
+            console.log("oi")
+        } else if (msgerro=="E-mail inválido"){
+            console.log("oi")
+        }
+    },[msgerro])//mensagem de erro
+
+
+    const Gravar = async (e) => {
         e.preventDefault()
         var Email = RefCadastro1.current.value
         var Senha = RefCadastro2.current.value
@@ -32,6 +45,8 @@ function SignIn() {
         var Nome = RefCadastro4.current.value
         var Celular = RefCadastro5.current.value
         var Situacao = RefCadastro6.current.checked
+        var AtualData = new Date();
+        var FormDataAtual = AtualData.toISOString().split('T')[0];
         
         if (Senha === Csenha) {
             var data = {
@@ -40,8 +55,20 @@ function SignIn() {
 	            "nome": Nome,
 	            "celular": Celular,
 	            "senha_email": Senha,
-	            "situacao": Situacao
+	            "situacao": Situacao,
+                "inc_usuario": 1,
+	            "alt_usuario": 1,
+	            "alt_dhsis": FormDataAtual,
+	            "modulo_regs": []
             }
+            var dados = await Cadastrar(data)
+
+            if(dados.retorno===1){
+                setMsgsucess(true)
+            }else{
+                setMsgerro(dados.msgerro)
+            }
+
             RefCadastro1.current.value=""
             RefCadastro2.current.value=""
             RefCadastro3.current.value=""
@@ -49,8 +76,9 @@ function SignIn() {
             RefCadastro5.current.value=""
             RefCadastro6.current.checked=false
             
+        }else {
+            setMsgerro("Confirmação de senha Incorrreta")
         }
-        setMsgsucess(true)
 
 
     }
@@ -61,10 +89,15 @@ function SignIn() {
         setMsgsucess(null)
     }
 
+    function handleError () {
+        setMsgerro(null)
+    }
+
     return (
         <div id="Tela-Cadastro">
             <NavBar/>
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
+            <AlertE error ={msgerro} handleError={handleError}/>
             <form id="Form-Cadastro">
                 <img src={engrenagemImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
                 <div id="Conteudo-Cadastro">
