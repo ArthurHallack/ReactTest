@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
 import { AlertS } from "../components/Msg";
+import { Cadastrar } from "../functions/cadastro/cadastrar";
 
 import '../css/routes.css/cadastro.css'
 
