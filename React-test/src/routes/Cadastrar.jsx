@@ -63,7 +63,7 @@ function SignIn() {
             }
             var dados = await Cadastrar(data)
 
-            if(dados.retorno===1){
+            if(dados.msgerro===""){
                 setMsgsucess(true)
             }else{
                 setMsgerro(dados.msgerro)
@@ -108,27 +108,27 @@ function SignIn() {
                     </div>
                     <div className="Single-input">
                         <input type="text" ref={RefCadastro1} className="inputCadastro" id="Email" required/>
-                        <label for="Email">Email</label>
+                        <label htmlFor="Email">Email</label>
                     </div>
                     <div className="Single-input">
                         <input type="text" ref={RefCadastro4} className="inputCadastro" id="Nome" required/>
-                        <label for="Nome">Nome</label>
+                        <label htmlFor="Nome">Nome</label>
                     </div>
                     <div className="Single-input">
                         <input type="tel" ref={RefCadastro5} className="inputCadastro" id="Celular" required/>
-                        <label for="Celular">Celular</label>
+                        <label htmlFor="Celular">Celular</label>
                     </div>
                     <div className="Single-input">
                         <input type="password" ref={RefCadastro2} className="inputCadastro" id="Senha" required/>
-                        <label for="Senha">Senha</label>
+                        <label htmlFor="Senha">Senha</label>
                     </div>
                     <div className="Single-input">
                         <input type="password" ref={RefCadastro3} className="inputCadastro" id="Csenha" required/>
-                        <label for="Csenha">Confirme sua Senha</label>
+                        <label htmlFor="Csenha">Confirme sua Senha</label>
                     </div>
                     <div className="Single-input" id="DivInputSit">
                         <input type="checkbox" ref={RefCadastro6} className="inputCadastro" id="Sit" required/>
-                        <label for="Sit" id="labelSit">Situação</label>
+                        <label htmlFor="Sit" id="labelSit">Situação</label>
                     </div>
                     <div id="DivCadastroBTN">
                         <button type="submit" onClick={Gravar} id="cadastroBTN">Cadastrar</button>
