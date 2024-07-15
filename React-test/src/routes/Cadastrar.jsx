@@ -104,7 +104,7 @@ function SignIn() {
                     <div id="BtnsTopCadastro">
                         <span id="BtnPF">Pessoa Fisica</span>
                         <span id="BtnPJ">Pessoa Juridica</span>
-                        <h1>Pessoa Fisica</h1>
+                        <h1>Usuario</h1>
                     </div>
                     <div className="Single-input">
                         <input type="text" ref={RefCadastro1} className="inputCadastro" id="Email" required/>
