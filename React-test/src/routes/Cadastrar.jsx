@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
+import MsgConfirmUser from "../components/confirmUser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faBroom } from "@fortawesome/free-solid-svg-icons"
@@ -12,7 +13,7 @@ import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-sv
 import { AlertS, AlertE } from "../components/Msg";
 import { Cadastrar } from "../functions/usuario/cadastrar";
 import { GetAllusuario } from "../functions/usuario/usuarioGetAll";
-import { ApiDeleteUser } from "../functions/usuario/DeleteUsuario";
+
 import '../css/routes.css/cadastro.css'
 
 const StyleCadastro = {
@@ -34,7 +35,8 @@ function SignIn() {
     const [ConfSenha, setConfiSenha] = useState (null)
 
     //relacionados a componentes 
-
+    const [confirmVisivel, setconfirmVisivel] = useState (false)
+    const [arrayConfirm, setarrayConfirm] = useState ([])
 
     //relacionados a lista de usuarios
 
@@ -63,7 +65,7 @@ function SignIn() {
 
     })
 
-
+    //RELACINADAS AO FORMULARIO------------------------------------------------------------------------------------------------------------------------------------------------
     const Gravar = async (e) => {
         e.preventDefault()
         var Email = RefCadastro1.current.value
@@ -119,6 +121,7 @@ function SignIn() {
     function handleError () {
         setMsgerro(null)
     }
+    //FIM DAS RELACIONADAS AO FORMULARIO---------------------------------------------------------------------------------------------------------------------------------------
 
     //relacionadas aos botões iniciais
 
@@ -131,11 +134,35 @@ function SignIn() {
         window.document.getElementById('Table-Usuario').style.display="none"
     }
 
+    //FUNÇÕES DA MSG DE CONFIRMAÇÃO AO EXCLUIR
+
+    function fecharConfirm () {
+        setconfirmVisivel(false)
+    }
+
+    function mensagemErro (element) {
+        setMsgerro(element.msgerro)
+    }
+
+    function excluir (element){
+        setUsuario(prevUsers => prevUsers.filter(user => user.id !== element.id))
+    }
+
+    const Exclui = async (element) => {
+
+        setconfirmVisivel(true)
+        setarrayConfirm(element)
+
+    }
+
+
+
     return (
         <div id="Tela-Cadastro">
             <NavBar/>
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
+            <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
@@ -198,7 +225,7 @@ function SignIn() {
                                         <div className="BTNs-tdList-Users">
                                             <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
-                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
                                         </div>
                                     </li>
                                 </ul>
