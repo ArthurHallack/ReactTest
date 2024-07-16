@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
 import { AlertS, AlertE } from "../components/Msg";
-import { Cadastrar } from "../functions/cadastro/cadastrar";
-
+import { Cadastrar } from "../functions/usuario/cadastrar";
+import { GetAllusuario } from "../functions/usuario/usuarioGetAll";
 import '../css/routes.css/cadastro.css'
 
 const StyleCadastro = {

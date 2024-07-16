@@ -16,7 +16,7 @@ export const NavData = [
 
     {
         id: "2",
-        title: "Cadastro",
+        title: "Usuario",
         icon: <FontAwesomeIcon icon={faUser} />
     },
 
