@@ -2,9 +2,17 @@ import React, { useRef, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilter } from "@fortawesome/free-solid-svg-icons"
+import { faBroom } from "@fortawesome/free-solid-svg-icons"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-svg-icons"
 import { AlertS, AlertE } from "../components/Msg";
 import { Cadastrar } from "../functions/usuario/cadastrar";
 import { GetAllusuario } from "../functions/usuario/usuarioGetAll";
+import { ApiDeleteUser } from "../functions/usuario/DeleteUsuario";
 import '../css/routes.css/cadastro.css'
 
 const StyleCadastro = {
@@ -25,6 +33,13 @@ function SignIn() {
     const [msgerro, setMsgerro] = useState (null)
     const [ConfSenha, setConfiSenha] = useState (null)
 
+    //relacionados a componentes 
+
+
+    //relacionados a lista de usuarios
+
+    const [Usuario, setUsuario] = useState ([]) //lista de usuarios
+
 
     //effects
 
@@ -35,6 +50,18 @@ function SignIn() {
             //window.document.getElementById('Email').style.borderBottom="2px solid rgb(254, 80, 61)"
         }
     },[msgerro])//mensagem de erro
+
+    useEffect (()=>{
+        async function fetchData () {
+            const data = await GetAllusuario()
+            setUsuario(data)
+        }
+        fetchData()
+    },[]) //Responsavel pela Lista de usuarios a ser renderizada
+
+    useEffect (()=>{
+
+    })
 
 
     const Gravar = async (e) => {
@@ -93,11 +120,29 @@ function SignIn() {
         setMsgerro(null)
     }
 
+    //relacionadas aos botões iniciais
+
+    function ADD () {
+        window.document.getElementById('Tela-Cadastro').style.justifyContent="center"
+        //aparecer
+        window.document.getElementById('Form-Cadastro').style.display="flex"
+        //desaparecer
+        window.document.getElementById('SecTop').style.display="none"
+        window.document.getElementById('Table-Usuario').style.display="none"
+    }
+
     return (
         <div id="Tela-Cadastro">
             <NavBar/>
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
+            <div id="SecTop">
+                <h1>Usuarios</h1>
+                <div id="SecTopBTN">
+                    <button onClick={ADD}><FontAwesomeIcon icon={faPlus} /></button>
+                    <button ><FontAwesomeIcon icon={faFilter} /></button>
+                </div>
+            </div>
             <form id="Form-Cadastro">
                 <img src={engrenagemImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
                 <div id="Conteudo-Cadastro">
@@ -135,6 +180,36 @@ function SignIn() {
                     </div>
                 </div>
             </form>
+            <div id="Table-Usuario">
+                <div id="HudUsuario">
+                    <ul>
+                        <li id="HudIdU">ID</li>
+                        <li id="HudNomeU">Nome</li>
+                    </ul>
+                </div>
+                <div id="Conteudo-Usuario-Container">
+                    <div id="Table-Usuario-Interno">
+                        <div id="Table-Usuario1">
+                            {Usuario.map((usuario,index)=>(
+                                <ul key={usuario.id} className={`Todo-List-Users ${usuario.hidden ? 'hidden' : ''}`}>
+                                    <li className="Todo-List-li id-tdListU">{usuario.id}</li>
+                                    <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList-Users">
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pais)}}/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            ))}
+                        </div>
+                        <div id="Table-Usuario2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
