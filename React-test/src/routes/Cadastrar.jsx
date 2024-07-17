@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import NavBar from "../components/Nav";
 import MsgConfirmUser from "../components/confirmUser";
+import UserInfo from "../components/userInfo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from "@fortawesome/free-solid-svg-icons"
 import { faBroom } from "@fortawesome/free-solid-svg-icons"
@@ -94,6 +95,13 @@ function SignIn() {
 
             if(dados.msgerro===""){
                 setMsgsucess(true)
+                window.document.getElementById('Tela-Cadastro').style.justifyContent=""
+                //aparecer
+                window.document.getElementById('SecTop').style.display="flex"
+                window.document.getElementById('Table-Usuario').style.display="flex"
+                //desaparecer
+                window.document.getElementById('Form-Cadastro').style.display="none"
+
             }else{
                 setMsgerro(dados.msgerro)
             }
@@ -155,6 +163,14 @@ function SignIn() {
 
     }
 
+    // relacinadas ao BTN de informações e editar
+
+    function infos () {
+        window.document.getElementById('SecTop').style.display="none"
+        window.document.getElementById('Form-Cadastro').style.display="none"
+        window.document.getElementById('Table-Usuario').style.display="none"
+    }
+
 
 
     return (
@@ -163,6 +179,7 @@ function SignIn() {
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
+            <UserInfo/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
@@ -223,7 +240,7 @@ function SignIn() {
                                     <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList-Users">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={infos}/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
                                         </div>

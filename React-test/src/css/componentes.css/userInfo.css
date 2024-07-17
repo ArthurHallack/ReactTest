@@ -1,0 +1,46 @@
+#UserArea{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 15%;
+    height: 70vh;
+    width: 70%;
+    gap: 1rem;
+}
+
+#Controler{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 14rem;
+    background-color: #ffffff6a;
+}
+
+#Controler ul{
+    display: flex;
+    flex-direction: column;
+}
+
+#Container-dados{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff6a;
+}
+
+#Container-edit{
+    display: none;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff6a;
+}
+
+#Container-permisoes{
+    display: none;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff6a;
+}
