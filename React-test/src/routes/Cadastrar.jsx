@@ -38,6 +38,7 @@ function SignIn() {
     //relacionados a componentes 
     const [confirmVisivel, setconfirmVisivel] = useState (false)
     const [arrayConfirm, setarrayConfirm] = useState ([])
+    const [idClicado, setidClicado] = useState ([])//id clicado na função infos do usuario
 
     //relacionados a lista de usuarios
 
@@ -165,10 +166,14 @@ function SignIn() {
 
     // relacinadas ao BTN de informações e editar
 
-    function infos () {
+    function infos (id) {
+        //deve desaparecer
         window.document.getElementById('SecTop').style.display="none"
         window.document.getElementById('Form-Cadastro').style.display="none"
         window.document.getElementById('Table-Usuario').style.display="none"
+
+        setidClicado(id)
+
     }
 
 
@@ -179,7 +184,7 @@ function SignIn() {
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
-            <UserInfo/>
+            <UserInfo idUser={idClicado}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
@@ -240,7 +245,7 @@ function SignIn() {
                                     <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList-Users">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={infos}/>
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{infos(usuario.id)}}/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
                                         </div>

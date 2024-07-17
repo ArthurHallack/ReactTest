@@ -4,8 +4,23 @@ import { FichaUsuario } from "../functions/usuario/fichaUsuario";
 
 import '../css/componentes.css/userInfo.css'
 
-function UserInfo () {
+function UserInfo ({idUser}) {
 
+    //States 
+    const [dadosUsuario, setdadosUsuario] = useState ([])
+    //Effects
+    useEffect(()=>{
+        const fetchdata = async ()=>{
+            const data = await FichaUsuario(idUser)
+            setdadosUsuario(data)
+        }
+
+        fetchdata()
+        
+    },[idUser])
+
+
+    //functions
     function showdata () {
         //deve aparecer
         window.document.getElementById('Container-dados').style.display="flex"
@@ -34,19 +49,26 @@ function UserInfo () {
         <div id="UserArea">
             <div id="Controler">
                 <ul>                   
-                    <li onClick={showdata}>Dados</li>
-                    <li onClick={showedit}>Edição</li>
-                    <li onClick={showcontainer}>Permisões</li>
+                    <li className= "BtnControler" onClick={showdata}>Dados</li>
+                    <li className= "BtnControler" onClick={showedit}>Edição</li>
+                    <li className= "BtnControler" onClick={showcontainer}>Permisões</li>
                 </ul>
             </div>
             <div id="Container-dados">
-                <h1>Yoshaaa</h1>
+                <ul>
+                    <li>ID: {dadosUsuario.id}</li>
+                    <li>Nome: {dadosUsuario.nome}</li>
+                    <li>Email: {dadosUsuario.email}</li>
+                    <li>Tel: {dadosUsuario.celular}</li>
+                    <li>Senha: {dadosUsuario.senha_email}</li>
+                    <li>Situação: {dadosUsuario.situacao}</li>
+                </ul>
             </div>
             <div id="Container-edit">
                 <h1>Mudada</h1>
             </div>
             <div id="Container-permisoes">
-                <h1>kakoshina</h1>
+                <h1>Em breve</h1>
             </div>
         </div>
     )
