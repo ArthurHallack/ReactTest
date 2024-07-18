@@ -5,10 +5,33 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav () {
+function UserNav ({add, estado, fechar}) {
+    //effects
+    useEffect(()=>{
+        if(add===true){
+            window.document.getElementById('add').style.backgroundColor="#161622"
+            window.document.getElementById('add').style.color="white"
+            window.document.getElementById('add').style.border="1px solid #ffff"
+        }
+    },[add])
+
+    useEffect(()=>{
+        if(estado===true){
+            window.document.getElementById('navUser').style.display="flex"
+        }else {
+            window.document.getElementById('navUser').style.display="none"
+        }
+    },[estado])
+
+    //functions
+    function home () {
+        fechar()
+    }
+
+
     return(
         <div id="navUser">
-            <div id="home" className="navItem"><FontAwesomeIcon icon={faHouseChimney} /></div>
+            <div id="home" className="navItem" onClick={home}><FontAwesomeIcon icon={faHouseChimney} /></div>
             <div className="space"></div>
             <div id="add" className="navItem"><FontAwesomeIcon icon={faPlus} /></div>
             <div className="space"></div>

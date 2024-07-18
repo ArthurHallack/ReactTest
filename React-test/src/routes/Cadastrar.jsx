@@ -40,6 +40,9 @@ function SignIn() {
     const [arrayConfirm, setarrayConfirm] = useState ([])
     const [idClicado, setidClicado] = useState ([])//id clicado na função infos do usuario
 
+    const [formAddVisivel, setformAddVisivel] = useState (false)
+    const [userNav, setuserNav] = useState (false)
+
     //relacionados a lista de usuarios
 
     const [Usuario, setUsuario] = useState ([]) //lista de usuarios
@@ -64,8 +67,22 @@ function SignIn() {
     },[]) //Responsavel pela Lista de usuarios a ser renderizada
 
     useEffect (()=>{
-
-    })
+        if(formAddVisivel===true){
+            window.document.getElementById('Tela-Cadastro').style.justifyContent="center"
+            //aparecer
+            window.document.getElementById('Form-Cadastro').style.display="flex"
+            //desaparecer
+            window.document.getElementById('SecTop').style.display="none"
+            window.document.getElementById('Table-Usuario').style.display="none"
+        }else {
+            window.document.getElementById('Tela-Cadastro').style.justifyContent=""
+            //aparecer
+            window.document.getElementById('SecTop').style.display="flex"
+            window.document.getElementById('Table-Usuario').style.display="flex"
+            //desaparecer
+            window.document.getElementById('Form-Cadastro').style.display="none"
+        }
+    },[formAddVisivel])// faz o formulario de add aparecer e o resto sumir
 
     //RELACINADAS AO FORMULARIO------------------------------------------------------------------------------------------------------------------------------------------------
     const Gravar = async (e) => {
@@ -96,12 +113,8 @@ function SignIn() {
 
             if(dados.msgerro===""){
                 setMsgsucess(true)
-                window.document.getElementById('Tela-Cadastro').style.justifyContent=""
-                //aparecer
-                window.document.getElementById('SecTop').style.display="flex"
-                window.document.getElementById('Table-Usuario').style.display="flex"
-                //desaparecer
-                window.document.getElementById('Form-Cadastro').style.display="none"
+                setformAddVisivel(false)
+                setuserNav(false)
 
             }else{
                 setMsgerro(dados.msgerro)
@@ -130,17 +143,27 @@ function SignIn() {
     function handleError () {
         setMsgerro(null)
     }
+    //-----
+
+    function formAddTrue () {
+        setformAddVisivel(true)
+    }
+
+    function formAddFalse () {
+        setformAddVisivel(false)
+    }
+
+    function estadoNavUserF () {
+        setuserNav(false)
+    }
+
     //FIM DAS RELACIONADAS AO FORMULARIO---------------------------------------------------------------------------------------------------------------------------------------
 
     //relacionadas aos botões iniciais
 
     function ADD () {
-        window.document.getElementById('Tela-Cadastro').style.justifyContent="center"
-        //aparecer
-        window.document.getElementById('Form-Cadastro').style.display="flex"
-        //desaparecer
-        window.document.getElementById('SecTop').style.display="none"
-        window.document.getElementById('Table-Usuario').style.display="none"
+        setformAddVisivel(true)
+        setuserNav(true)
     }
 
     //FUNÇÕES DA MSG DE CONFIRMAÇÃO AO EXCLUIR
@@ -166,16 +189,6 @@ function SignIn() {
 
     // relacinadas ao BTN de informações e editar
 
-    function infos (id) {
-        //deve desaparecer
-        window.document.getElementById('SecTop').style.display="none"
-        window.document.getElementById('Form-Cadastro').style.display="none"
-        window.document.getElementById('Table-Usuario').style.display="none"
-
-        setidClicado(id)
-
-    }
-
 
 
     return (
@@ -184,7 +197,7 @@ function SignIn() {
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
-            <UserNav/>
+            <UserNav add ={formAddVisivel} estado ={userNav} fechar ={estadoNavUserF}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
@@ -245,7 +258,7 @@ function SignIn() {
                                     <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList-Users">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{infos(usuario.id)}}/>
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
                                         </div>
