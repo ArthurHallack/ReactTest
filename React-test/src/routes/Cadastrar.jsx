@@ -157,6 +157,10 @@ function SignIn() {
         setuserNav(false)
     }
 
+    function reset () {
+        setformAddVisivel(false)
+    }
+
     //FIM DAS RELACIONADAS AO FORMULARIO---------------------------------------------------------------------------------------------------------------------------------------
 
     //relacionadas aos botões iniciais
@@ -197,7 +201,7 @@ function SignIn() {
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
-            <UserNav add ={formAddVisivel} estado ={userNav} fechar ={estadoNavUserF}/>
+            <UserNav add ={formAddVisivel} estado ={userNav} fechar ={estadoNavUserF} reset ={reset}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">

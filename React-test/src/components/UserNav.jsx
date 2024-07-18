@@ -5,7 +5,7 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav ({add, estado, fechar}) {
+function UserNav ({add, estado, fechar, reset}) {
     //effects
     useEffect(()=>{
         if(add===true){
@@ -26,6 +26,7 @@ function UserNav ({add, estado, fechar}) {
     //functions
     function home () {
         fechar()
+        reset()
     }
 
 
