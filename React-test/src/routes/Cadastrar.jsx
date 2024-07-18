@@ -41,6 +41,7 @@ function SignIn() {
     const [idClicado, setidClicado] = useState ([])//id clicado na função infos do usuario
 
     const [formAddVisivel, setformAddVisivel] = useState (false)
+    const [formDataVisivel, setformDataVisivel] = useState (false)
     const [userNav, setuserNav] = useState (false)
 
     //relacionados a lista de usuarios
@@ -201,7 +202,7 @@ function SignIn() {
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
-            <UserNav add ={formAddVisivel} estado ={userNav} fechar ={estadoNavUserF} reset ={reset}/>
+            <UserNav add ={formAddVisivel} data={formDataVisivel} estado ={userNav} fechar ={estadoNavUserF} reset ={reset}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">

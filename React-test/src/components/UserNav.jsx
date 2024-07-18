@@ -5,7 +5,7 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav ({add, estado, fechar, reset}) {
+function UserNav ({add, data, estado, fechar, reset}) {
     //effects
     useEffect(()=>{
         if(add===true){
@@ -14,6 +14,19 @@ function UserNav ({add, estado, fechar, reset}) {
             window.document.getElementById('add').style.border="1px solid #ffff"
         }
     },[add])
+
+    useEffect(()=>{
+        if(data===true){
+            //em destaque
+            window.document.getElementById('data').style.backgroundColor="#161622"
+            window.document.getElementById('data').style.color="white"
+            window.document.getElementById('data').style.border="1px solid #ffff"
+            //apagados
+            window.document.getElementById('add').style.backgroundColor=""
+            window.document.getElementById('permi').style.backgroundColor=""
+            window.document.getElementById('edit').style.backgroundColor=""
+        }
+    },[data])
 
     useEffect(()=>{
         if(estado===true){
@@ -29,14 +42,26 @@ function UserNav ({add, estado, fechar, reset}) {
         reset()
     }
 
+    function data () {
+        //em destaque
+        window.document.getElementById('data').style.backgroundColor="#161622"
+        window.document.getElementById('data').style.color="white"
+        window.document.getElementById('data').style.border="1px solid #ffff"
+        //apagados
+        window.document.getElementById('add').style.backgroundColor=""
+        window.document.getElementById('add').style.color=""
+        window.document.getElementById('add').style.border="1px double"
+
+    }
+
 
     return(
         <div id="navUser">
             <div id="home" className="navItem" onClick={home}><FontAwesomeIcon icon={faHouseChimney} /></div>
             <div className="space"></div>
-            <div id="add" className="navItem"><FontAwesomeIcon icon={faPlus} /></div>
+            <div id="add" className="navItem" ><FontAwesomeIcon icon={faPlus} /></div>
             <div className="space"></div>
-            <div id="data" className="navItem"><FontAwesomeIcon icon={faDatabase} /></div>
+            <div id="data" className="navItem" onClick={data}><FontAwesomeIcon icon={faDatabase} /></div>
             <div className="space"></div>
             <div id="permi" className="navItem"><FontAwesomeIcon icon={faUnlock} /></div>
             <div className="space"></div>
