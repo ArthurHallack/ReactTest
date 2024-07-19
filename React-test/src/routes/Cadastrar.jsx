@@ -14,6 +14,7 @@ import { faTrash, faPenToSquare, faFolderOpen } from "@fortawesome/free-solid-sv
 import { AlertS, AlertE } from "../components/Msg";
 import { Cadastrar } from "../functions/usuario/cadastrar";
 import { GetAllusuario } from "../functions/usuario/usuarioGetAll";
+import { FichaUsuario } from "../functions/usuario/fichaUsuario";
 
 import '../css/routes.css/cadastro.css'
 
@@ -39,8 +40,6 @@ function SignIn() {
     const [confirmVisivel, setconfirmVisivel] = useState (false)
     const [arrayConfirm, setarrayConfirm] = useState ([])
 
-    const [idClicado, setidClicado] = useState ([])//id clicado na função infos do usuario
-
     const [formAddVisivel, setformAddVisivel] = useState (false)
     const [formDataVisivel, setformDataVisivel] = useState (false)
     const [userNav, setuserNav] = useState (false)
@@ -50,12 +49,14 @@ function SignIn() {
 
     const [Usuario, setUsuario] = useState ([]) //lista de usuarios
 
+    const [DadosDoUsuario, setDadosDoUsuario] = useState ([]) //dados do usuario
+
 
     //effects
 
     useEffect(()=>{
         if(msgerro=="Informação Já Cadastrada"){
-            console.log("oi")
+            
         } else if (msgerro=="E-mail inválido"){
             //window.document.getElementById('Email').style.borderBottom="2px solid rgb(254, 80, 61)"
         }
@@ -92,6 +93,18 @@ function SignIn() {
             window.document.getElementById('Form-Cadastro').style.display="none"
         }
     },[ListaVisivel])//responsavel por controlar a aparição da lista
+
+    useEffect(()=>{
+        if(formDataVisivel===true){
+            window.document.getElementById('Tela-Cadastro').style.justifyContent="center"
+            //aparecer
+            window.document.getElementById('Form-Data').style.display="flex"
+            //desaparecer
+            window.document.getElementById('SecTop').style.display="none"
+            window.document.getElementById('Table-Usuario').style.display="none"
+            window.document.getElementById('Form-Cadastro').style.display="none"
+        }
+    },[formDataVisivel])
 
     
 
@@ -218,6 +231,13 @@ function SignIn() {
 
     // relacinadas ao BTN de informações e editar
 
+    async function infos (id) {
+        var informacoes = await FichaUsuario(id)
+        setDadosDoUsuario(informacoes)
+        setListaVisivel(false)
+        setformAddVisivel(false)
+        setformDataVisivel(true)
+    }
 
 
     return (
@@ -294,7 +314,7 @@ function SignIn() {
                                     <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList-Users">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{infos(usuario.id)}}/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
                                         </div>
