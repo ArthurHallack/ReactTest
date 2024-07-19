@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
+import informaImg from "../img/informa.png"
 import NavBar from "../components/Nav";
 import MsgConfirmUser from "../components/confirmUser";
 import UserNav from "../components/UserNav";
@@ -293,7 +294,7 @@ function SignIn() {
                 </div>
             </form>
             <form id="Form-Data">
-                <img src={engrenagemImg} alt="engrenagem"  id="IMG-Data" style={StyleCadastro}/>
+                <img src={informaImg} alt="engrenagem"  id="IMG-Data" style={StyleCadastro}/>
                 <div id="Conteudo-Data">
                     <h1>YOSHAAAAA</h1>
                 </div>
