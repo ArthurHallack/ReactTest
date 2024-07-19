@@ -5,28 +5,64 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav ({add, data, estado, fechar, reset}) {
+function UserNav ({add, addF, addT, data, dataT, dataF, estado, fechar, listaT, listaF}) {
+
+    //add é se o form add esta sendo exibido 
+    //addF função que seta add como false
+    //addT função que seta add como true
+    //data é se o form data esta sendo exibido
+    //dataT função que seta data como true
+    //dataF função que seta data como false
+    //estado é o estado desse componente 
+    //fechar é uma finção que serve para fechar esse componente
+    //listaT função que seta o estado da lista como true
+    //listaT função que seta o estado da lista como false
+
     //effects
     useEffect(()=>{
         if(add===true){
+            //em destaque
             window.document.getElementById('add').style.backgroundColor="#161622"
             window.document.getElementById('add').style.color="white"
             window.document.getElementById('add').style.border="1px solid #ffff"
+            //apagados
+            window.document.getElementById('permi').style.backgroundColor=""
+            window.document.getElementById('permi').style.color=""
+            window.document.getElementById('permi').style.border="1px double"
+
+            window.document.getElementById('edit').style.backgroundColor=""
+            window.document.getElementById('edit').style.color=""
+            window.document.getElementById('edit').style.border="1px double"
+
+            window.document.getElementById('data').style.backgroundColor=""
+            window.document.getElementById('data').style.color=""
+            window.document.getElementById('data').style.border="1px double"
         }
-    },[add])
+    },[add])// faz o btn add ficar em destaque 
 
     useEffect(()=>{
         if(data===true){
+            addF()
             //em destaque
             window.document.getElementById('data').style.backgroundColor="#161622"
             window.document.getElementById('data').style.color="white"
             window.document.getElementById('data').style.border="1px solid #ffff"
             //apagados
             window.document.getElementById('add').style.backgroundColor=""
+            window.document.getElementById('add').style.color=""
+            window.document.getElementById('add').style.border="1px double"
+
             window.document.getElementById('permi').style.backgroundColor=""
+            window.document.getElementById('permi').style.color=""
+            window.document.getElementById('permi').style.border="1px double"
+
             window.document.getElementById('edit').style.backgroundColor=""
+            window.document.getElementById('edit').style.color=""
+            window.document.getElementById('edit').style.border="1px double"
+            
+            
         }
-    },[data])
+    },[data])//faz o btn data ficar em destaque 
 
     useEffect(()=>{
         if(estado===true){
@@ -34,24 +70,19 @@ function UserNav ({add, data, estado, fechar, reset}) {
         }else {
             window.document.getElementById('navUser').style.display="none"
         }
-    },[estado])
+    },[estado])//faz o componente aparecer e desaparecer se o estado for true ou false
 
     //functions
     function home () {
         fechar()
-        reset()
-    }
+        listaT()
+        dataF()
+        addF()
+    }// fecha e traz a lista de volta
 
-    function data () {
-        //em destaque
-        window.document.getElementById('data').style.backgroundColor="#161622"
-        window.document.getElementById('data').style.color="white"
-        window.document.getElementById('data').style.border="1px solid #ffff"
-        //apagados
-        window.document.getElementById('add').style.backgroundColor=""
-        window.document.getElementById('add').style.color=""
-        window.document.getElementById('add').style.border="1px double"
-
+    function dataBTN () {
+        dataT()
+        addF()
     }
 
 
@@ -61,7 +92,7 @@ function UserNav ({add, data, estado, fechar, reset}) {
             <div className="space"></div>
             <div id="add" className="navItem" ><FontAwesomeIcon icon={faPlus} /></div>
             <div className="space"></div>
-            <div id="data" className="navItem" onClick={data}><FontAwesomeIcon icon={faDatabase} /></div>
+            <div id="data" className="navItem" onClick={dataBTN}><FontAwesomeIcon icon={faDatabase} /></div>
             <div className="space"></div>
             <div id="permi" className="navItem"><FontAwesomeIcon icon={faUnlock} /></div>
             <div className="space"></div>

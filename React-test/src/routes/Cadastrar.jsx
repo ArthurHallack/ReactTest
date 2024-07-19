@@ -38,11 +38,13 @@ function SignIn() {
     //relacionados a componentes 
     const [confirmVisivel, setconfirmVisivel] = useState (false)
     const [arrayConfirm, setarrayConfirm] = useState ([])
+
     const [idClicado, setidClicado] = useState ([])//id clicado na função infos do usuario
 
     const [formAddVisivel, setformAddVisivel] = useState (false)
     const [formDataVisivel, setformDataVisivel] = useState (false)
     const [userNav, setuserNav] = useState (false)
+    const [ListaVisivel, setListaVisivel] = useState (true)
 
     //relacionados a lista de usuarios
 
@@ -75,15 +77,23 @@ function SignIn() {
             //desaparecer
             window.document.getElementById('SecTop').style.display="none"
             window.document.getElementById('Table-Usuario').style.display="none"
-        }else {
+        }else{
+             window.document.getElementById('Form-Cadastro').style.display="none"
+        }
+    },[formAddVisivel])// faz o formulario de add aparecer
+
+    useEffect (()=>{
+        if (ListaVisivel===true){
+            //deve aparecer
             window.document.getElementById('Tela-Cadastro').style.justifyContent=""
-            //aparecer
             window.document.getElementById('SecTop').style.display="flex"
             window.document.getElementById('Table-Usuario').style.display="flex"
             //desaparecer
             window.document.getElementById('Form-Cadastro').style.display="none"
         }
-    },[formAddVisivel])// faz o formulario de add aparecer e o resto sumir
+    },[ListaVisivel])//responsavel por controlar a aparição da lista
+
+    
 
     //RELACINADAS AO FORMULARIO------------------------------------------------------------------------------------------------------------------------------------------------
     const Gravar = async (e) => {
@@ -154,13 +164,26 @@ function SignIn() {
         setformAddVisivel(false)
     }
 
+    function formDataTrue () {
+        setformDataVisivel(true)
+    }
+
+    function formDataFalse () {
+        setformDataVisivel(false)
+    }
+
     function estadoNavUserF () {
         setuserNav(false)
     }
 
-    function reset () {
-        setformAddVisivel(false)
+    function listaVisivelT () {
+        setListaVisivel(true)
     }
+
+    function listaVisivelF () {
+        setListaVisivel(false)
+    }
+
 
     //FIM DAS RELACIONADAS AO FORMULARIO---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -169,6 +192,7 @@ function SignIn() {
     function ADD () {
         setformAddVisivel(true)
         setuserNav(true)
+        listaVisivelF()
     }
 
     //FUNÇÕES DA MSG DE CONFIRMAÇÃO AO EXCLUIR
@@ -202,7 +226,8 @@ function SignIn() {
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
-            <UserNav add ={formAddVisivel} data={formDataVisivel} estado ={userNav} fechar ={estadoNavUserF} reset ={reset}/>
+            <UserNav add ={formAddVisivel} addF ={formAddFalse} addT ={formAddTrue} data={formDataVisivel} dataT ={formDataTrue} dataF ={formDataFalse}
+            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
