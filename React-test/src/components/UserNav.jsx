@@ -85,12 +85,17 @@ function UserNav ({add, addF, addT, data, dataT, dataF, estado, fechar, listaT, 
         addF()
     }
 
+    function addBTN () {
+        addT()
+        dataF()
+    }
+
 
     return(
         <div id="navUser">
             <div id="home" className="navItem" onClick={home}><FontAwesomeIcon icon={faHouseChimney} /></div>
             <div className="space"></div>
-            <div id="add" className="navItem" ><FontAwesomeIcon icon={faPlus} /></div>
+            <div id="add" className="navItem" onClick={addBTN}><FontAwesomeIcon icon={faPlus} /></div>
             <div className="space"></div>
             <div id="data" className="navItem" onClick={dataBTN}><FontAwesomeIcon icon={faDatabase} /></div>
             <div className="space"></div>

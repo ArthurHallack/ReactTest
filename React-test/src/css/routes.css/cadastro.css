@@ -295,7 +295,26 @@
     border-radius: 0 5px 5px 0;
     height: 100%;
     width: 23rem;
-    gap: 1rem;
+    gap: 2rem;
+  }
+
+  #Titulo-DataForm h1{
+    font-size: 1.8rem;
+    margin-top: -2rem;
+  }
+
+  #Infos-Data{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .Campo-Data{
+    width: 15rem;
+  }
+
+  .Label-Data{
+    font-size: 1.1rem;
   }
 
   /*IMG*/

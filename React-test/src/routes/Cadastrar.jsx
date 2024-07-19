@@ -104,7 +104,9 @@ function SignIn() {
             window.document.getElementById('SecTop').style.display="none"
             window.document.getElementById('Table-Usuario').style.display="none"
             window.document.getElementById('Form-Cadastro').style.display="none"
-        }
+        }else{
+            window.document.getElementById('Form-Data').style.display="none"
+       }
     },[formDataVisivel])
 
     
@@ -238,6 +240,7 @@ function SignIn() {
         setListaVisivel(false)
         setformAddVisivel(false)
         setformDataVisivel(true)
+        setuserNav(true)
     }
 
 
@@ -260,8 +263,6 @@ function SignIn() {
                 <img src={engrenagemImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
                 <div id="Conteudo-Cadastro">
                     <div id="BtnsTopCadastro">
-                        <span id="BtnPF">Pessoa Fisica</span>
-                        <span id="BtnPJ">Pessoa Juridica</span>
                         <h1>Usuario</h1>
                     </div>
                     <div className="Single-input">
@@ -296,7 +297,35 @@ function SignIn() {
             <form id="Form-Data">
                 <img src={informaImg} alt="engrenagem"  id="IMG-Data" style={StyleCadastro}/>
                 <div id="Conteudo-Data">
-                    <h1>YOSHAAAAA</h1>
+                    <div id="Titulo-DataForm">
+                        <h1>Informações Gerais</h1>
+                    </div>
+                    <div id="Infos-Data">
+                        <div className="Campo-Data">
+                            <label htmlFor="" className="Label-Data">ID: </label>
+                            <span className="span-data">{DadosDoUsuario.id}</span>
+                        </div>
+                        <div className="Campo-Data">
+                            <label htmlFor="" className="Label-Data">Nome: </label>
+                            <span className="span-data">{DadosDoUsuario.nome}</span>
+                        </div>
+                        <div className="Campo-Data">
+                            <label htmlFor="" className="Label-Data">Email: </label>
+                            <span className="span-data">{DadosDoUsuario.email}</span>
+                        </div>
+                        <div className="Campo-Data">
+                            <label htmlFor="" className="Label-Data">Celular: </label>
+                            <span className="span-data">{DadosDoUsuario.celular}</span>
+                        </div>
+                        <div className="Campo-Data">
+                            <label htmlFor="" className="Label-Data">Senha: </label>
+                            <span>{DadosDoUsuario.senha_email}</span>
+                        </div>
+                        <div className="Campo-Data">
+                            <label htmlFor="" className="Label-Data">Situação: </label>
+                            <span className="span-data">{DadosDoUsuario.situacao}</span>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div id="Table-Usuario">
