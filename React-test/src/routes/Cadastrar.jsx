@@ -328,6 +328,12 @@ function SignIn() {
                     </div>
                 </div>
             </form>
+            <form id="Form-Permi">
+                <img src={informaImg} alt="engrenagem"  id="IMG-Permi" style={StyleCadastro}/>
+                <div id="Conteudo-Permi">
+                    <h1>Em breve</h1>
+                </div>
+            </form>
             <div id="Table-Usuario">
                 <div id="HudUsuario">
                     <ul>

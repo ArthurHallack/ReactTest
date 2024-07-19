@@ -322,3 +322,9 @@
   #IMG-Data{
     margin-left: 8rem;
   }
+
+  /*FORM PERMIÇÕES*/
+
+  #Form-Permi{
+    display: none;
+  }
