@@ -149,8 +149,8 @@
 }
 
 
-  /*FORMULARIO*/
-
+  /*FORMULARIOS*/
+  /*CADASTRO*/
   #Form-Cadastro{
     display: none;
     flex-direction: row;
@@ -272,3 +272,8 @@
     margin-left: 8rem;
   }
   
+
+  /*DATA*/
+  #Form-Data{
+    display: none;
+  }
