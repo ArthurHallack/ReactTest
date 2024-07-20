@@ -5,7 +5,7 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav ({add, addF, addT, data, dataT, dataF, estado, fechar, listaT, listaF}) {
+function UserNav ({add, addF, addT, data, dataT, dataF, permiT, permiF, estado, fechar, listaT, listaF}) {
 
     //add é se o form add esta sendo exibido 
     //addF função que seta add como false
@@ -13,6 +13,8 @@ function UserNav ({add, addF, addT, data, dataT, dataF, estado, fechar, listaT, 
     //data é se o form data esta sendo exibido
     //dataT função que seta data como true
     //dataF função que seta data como false
+    //permiT função que seta Permi como True
+    //permiF função que seta Permi como false
     //estado é o estado desse componente 
     //fechar é uma finção que serve para fechar esse componente
     //listaT função que seta o estado da lista como true
@@ -90,6 +92,14 @@ function UserNav ({add, addF, addT, data, dataT, dataF, estado, fechar, listaT, 
         dataF()
     }
 
+    function permiBTN () {
+
+    }
+
+    function editBTN () {
+
+    }
+
 
     return(
         <div id="navUser">
@@ -99,9 +109,9 @@ function UserNav ({add, addF, addT, data, dataT, dataF, estado, fechar, listaT, 
             <div className="space"></div>
             <div id="data" className="navItem" onClick={dataBTN}><FontAwesomeIcon icon={faDatabase} /></div>
             <div className="space"></div>
-            <div id="permi" className="navItem"><FontAwesomeIcon icon={faUnlock} /></div>
+            <div id="permi" className="navItem" onClick={permiBTN}><FontAwesomeIcon icon={faUnlock} /></div>
             <div className="space"></div>
-            <div id="edit" className="navItem"><FontAwesomeIcon icon={faPenToSquare} /></div>
+            <div id="edit" className="navItem" onClick={editBTN}><FontAwesomeIcon icon={faPenToSquare} /></div>
         </div>
     )
 }

@@ -43,6 +43,8 @@ function SignIn() {
 
     const [formAddVisivel, setformAddVisivel] = useState (false)
     const [formDataVisivel, setformDataVisivel] = useState (false)
+    const [formPermiVisivel, setformPermiVisivel] = useState (false)
+    const [formEditVisivel, setformEditVisivel] = useState (false)
     const [userNav, setuserNav] = useState (false)
     const [ListaVisivel, setListaVisivel] = useState (true)
 
@@ -188,6 +190,14 @@ function SignIn() {
         setformDataVisivel(false)
     }
 
+    function FormPermiTrue () {
+        setformPermiVisivel(true)
+    }
+
+    function FormPermiFalse () {
+        setformPermiVisivel(false)
+    }
+
     function estadoNavUserF () {
         setuserNav(false)
     }
@@ -251,7 +261,7 @@ function SignIn() {
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <UserNav add ={formAddVisivel} addF ={formAddFalse} addT ={formAddTrue} data={formDataVisivel} dataT ={formDataTrue} dataF ={formDataFalse}
-            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF}/>
+            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF} permiT ={FormPermiTrue} permiF ={FormPermiFalse}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
