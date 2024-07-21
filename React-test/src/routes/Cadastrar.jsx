@@ -109,7 +109,21 @@ function SignIn() {
         }else{
             window.document.getElementById('Form-Data').style.display="none"
        }
-    },[formDataVisivel])
+    },[formDataVisivel])// faz o formulario de data aparecer
+
+    useEffect(()=>{
+        if(formPermiVisivel===true){
+            window.document.getElementById('Tela-Cadastro').style.justifyContent="center"
+            //aparecer
+            window.document.getElementById('Form-Permi').style.display="flex"
+            //desaparecer
+            window.document.getElementById('SecTop').style.display="none"
+            window.document.getElementById('Table-Usuario').style.display="none"
+            window.document.getElementById('Form-Cadastro').style.display="none"
+        }else{
+            window.document.getElementById('Form-Permi').style.display="none"
+        }
+    },[formPermiVisivel])
 
     
 
@@ -261,7 +275,7 @@ function SignIn() {
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <UserNav add ={formAddVisivel} addF ={formAddFalse} addT ={formAddTrue} data={formDataVisivel} dataT ={formDataTrue} dataF ={formDataFalse}
-            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF} permiT ={FormPermiTrue} permiF ={FormPermiFalse}/>
+            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF} permi ={formPermiVisivel} permiT ={FormPermiTrue} permiF ={FormPermiFalse}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">

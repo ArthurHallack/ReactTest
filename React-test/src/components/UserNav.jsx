@@ -5,7 +5,7 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav ({add, addF, addT, data, dataT, dataF, permiT, permiF, estado, fechar, listaT, listaF}) {
+function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, estado, fechar, listaT, listaF}) {
 
     //add é se o form add esta sendo exibido 
     //addF função que seta add como false
@@ -13,6 +13,7 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permiT, permiF, estado, 
     //data é se o form data esta sendo exibido
     //dataT função que seta data como true
     //dataF função que seta data como false
+    //permi estado atual do form permissões
     //permiT função que seta Permi como True
     //permiF função que seta Permi como false
     //estado é o estado desse componente 
@@ -67,6 +68,28 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permiT, permiF, estado, 
     },[data])//faz o btn data ficar em destaque 
 
     useEffect(()=>{
+        if(permi===true){
+            //em destaque
+            window.document.getElementById('permi').style.backgroundColor="#161622"
+            window.document.getElementById('permi').style.color="white"
+            window.document.getElementById('permi').style.border="1px solid #ffff"
+            //apagados
+
+            window.document.getElementById('add').style.backgroundColor=""
+            window.document.getElementById('add').style.color=""
+            window.document.getElementById('add').style.border="1px double"
+
+            window.document.getElementById('data').style.backgroundColor=""
+            window.document.getElementById('data').style.color=""
+            window.document.getElementById('data').style.border="1px double"
+
+            window.document.getElementById('edit').style.backgroundColor=""
+            window.document.getElementById('edit').style.color=""
+            window.document.getElementById('edit').style.border="1px double"
+        }
+    },[permi])
+
+    useEffect(()=>{
         if(estado===true){
             window.document.getElementById('navUser').style.display="flex"
         }else {
@@ -80,20 +103,25 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permiT, permiF, estado, 
         listaT()
         dataF()
         addF()
+        permiF()
     }// fecha e traz a lista de volta
 
     function dataBTN () {
         dataT()
         addF()
+        permiF()
     }
 
     function addBTN () {
         addT()
         dataF()
+        permiF()
     }
 
     function permiBTN () {
-
+        permiT()
+        dataF()
+        addF()
     }
 
     function editBTN () {
