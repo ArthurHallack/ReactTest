@@ -327,4 +327,30 @@
 
   #Form-Permi{
     display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff6a;
+    border-radius: 5px;
+    width: 65rem;
+    height: 37rem;
+  }
+
+  #Conteudo-Permi{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 3rem;
+    background-color: #ffffff;
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+    width: 23rem;
+    gap: 2rem;
+  }
+
+  /*IMG*/
+
+  #IMG-Permi{
+    margin-left: 8rem;
   }
