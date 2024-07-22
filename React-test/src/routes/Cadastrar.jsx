@@ -18,6 +18,7 @@ import { AlertS, AlertE } from "../components/Msg";
 import { Cadastrar } from "../functions/usuario/cadastrar";
 import { GetAllusuario } from "../functions/usuario/usuarioGetAll";
 import { FichaUsuario } from "../functions/usuario/fichaUsuario";
+import { FiltroGetUsuario } from "../functions/usuario/usuarioFiltro"
 
 import '../css/routes.css/cadastro.css'
 
@@ -39,6 +40,13 @@ function SignIn() {
     const RefEdit4 = useRef()//Nome
     const RefEdit5 = useRef()//Celular
     const RefEdit6 = useRef()//Situação
+    const RefFiltro = useRef()//Situação Filtro
+    const RefFiltroNome = useRef()//Nome Filtro
+    const RefFiltroEmail = useRef()//Email Filtro
+    const RefFiltroCell = useRef()//Celular Filtro
+    const [SituaçãoValue, setSituacaoValue] = useState ("")
+    const [NomeValue, setNomeValue] = useState ("")
+    const [EmailValue, setEmailValue] = useState ("")
 
     //relacionadas ao gravar
     const [msgsucess, setMsgsucess] = useState (null)
@@ -53,13 +61,16 @@ function SignIn() {
     const [formDataVisivel, setformDataVisivel] = useState (false)
     const [formPermiVisivel, setformPermiVisivel] = useState (false)
     const [formEditVisivel, setformEditVisivel] = useState (false)
+    const [formFiltroVisivel, setformFiltroVisivel] = useState (false)
     const [userNav, setuserNav] = useState (false)
     const [ListaVisivel, setListaVisivel] = useState (true)
+    const [Lista2Visivel, setLista2Visivel] = useState (false)
 
     //relacionados a lista de usuarios
 
     const [Usuario, setUsuario] = useState ([]) //lista de usuarios
     const [UsuarioAtualizado, setUsuarioAtualizado] = useState (false) //lista de usuarios atualizada ?
+    const [UsuarioFiltro, setUsuarioFiltro] = useState ([]) //lista de usuarios do filtro
 
     const [DadosDoUsuario, setDadosDoUsuario] = useState ([]) //dados do usuario
 
@@ -112,14 +123,37 @@ function SignIn() {
 
     useEffect (()=>{
         if (ListaVisivel===true){
-            //deve aparecer
             window.document.getElementById('Tela-Cadastro').style.justifyContent=""
+            //deve aparecer         
             window.document.getElementById('SecTop').style.display="flex"
             window.document.getElementById('Table-Usuario').style.display="flex"
             //desaparecer
             window.document.getElementById('Form-Cadastro').style.display="none"
+            window.document.getElementById('Form-Data').style.display="none"
+            window.document.getElementById('Form-Permi').style.display="none"
+            window.document.getElementById('Form-Edit').style.display="none"
+            window.document.getElementById('Form-Filtro').style.display="none"
         }
     },[ListaVisivel])//responsavel por controlar a aparição da lista
+
+    useEffect (()=>{
+        if (Lista2Visivel===true){
+            window.document.getElementById('Tela-Cadastro').style.justifyContent=""
+            //deve aparecer         
+            window.document.getElementById('SecTop').style.display="flex"
+            window.document.getElementById('Table-Usuario').style.display="flex"
+            window.document.getElementById('Table-Usuario2').style.display="flex"
+            window.document.getElementById('SecTopBTN').style.display="flex"
+            //desaparecer
+            window.document.getElementById('Form-Cadastro').style.display="none"
+            window.document.getElementById('Form-Data').style.display="none"
+            window.document.getElementById('Form-Permi').style.display="none"
+            window.document.getElementById('Form-Edit').style.display="none"
+            window.document.getElementById('Form-Filtro').style.display="none"
+            window.document.getElementById('Table-Usuario1').style.display="none"
+        }
+    },[Lista2Visivel])//responsavel por controlar a aparição da lista do filtro
+
 
     useEffect(()=>{
         if(formDataVisivel===true){
@@ -169,7 +203,21 @@ function SignIn() {
         }else{
             window.document.getElementById('Form-Edit').style.display="none"
         }
-    },[formEditVisivel])
+    },[formEditVisivel])// faz o formulario de permi aparecer
+
+    useEffect(()=>{
+        if(formFiltroVisivel===true){
+            //aparecer
+            window.document.getElementById('Form-Filtro').style.display="flex"
+            window.document.getElementById('SecTop').style.display="flex"
+            //desaparecer
+            window.document.getElementById('SecTopBTN').style.display="none"
+            window.document.getElementById('Table-Usuario').style.display="none"
+            window.document.getElementById('Form-Cadastro').style.display="none"
+            window.document.getElementById('Form-Permi').style.display="none"
+            window.document.getElementById('Form-Edit').style.display="none"
+        }
+    },[formFiltroVisivel])
 
     
 
@@ -370,6 +418,55 @@ function SignIn() {
         setuserNav(true)
     }
 
+    // relacionadas ao filtrar 
+
+    function filtro () {
+        RefFiltroNome.current.value = NomeValue
+        RefFiltroEmail.current.value = EmailValue
+        RefFiltro.current.value = SituaçãoValue
+        setformFiltroVisivel(true)
+        setformAddVisivel(false)
+        setformDataVisivel(false)
+        setformPermiVisivel(false)
+        setformEditVisivel(false)
+        setuserNav(false)
+        setLista2Visivel(false)
+    }
+
+    async function filtrar (e) {
+        e.preventDefault()
+        var data = {    
+            "chave": "",
+            "nome": RefFiltroNome.current.value,
+            "celular": "",
+            "email": RefFiltroEmail.current.value,
+            "situacao": RefFiltro.current.value,
+            "alt_dhsis_maior": "",
+	        "alt_dhsis_menor": ""
+        }
+
+        var dados = await FiltroGetUsuario(data)
+        var dadosJson = await dados.json()
+        console.log(dadosJson)
+        console.log(data)
+
+        setUsuarioFiltro(dadosJson)
+        setLista2Visivel(true)
+        setformFiltroVisivel(false)
+    }
+
+    function limpar () {
+        window.location.reload()
+    }
+
+    function close () {
+        if(Lista2Visivel===true){
+            Lista2Visivel(true)
+        }else{
+            ListaVisivel(true)
+        }
+    }
+
     return (
         <div id="Tela-Cadastro">
             <NavBar/>
@@ -383,7 +480,7 @@ function SignIn() {
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
                     <button onClick={ADD}><FontAwesomeIcon icon={faPlus} /></button>
-                    <button ><FontAwesomeIcon icon={faFilter} /></button>
+                    <button onClick={filtro}><FontAwesomeIcon icon={faFilter} /></button>
                 </div>
             </div>
             <form id="Form-Cadastro">
@@ -492,6 +589,32 @@ function SignIn() {
                     </div>
                 </div>
             </form>
+            <form id="Form-Filtro">
+                <p><i>Selecionar Informações</i></p>
+                <div id="Form-Filtro2">
+                    <fieldset className="Fieldset-Usuario-Form">
+                        <label>Nome</label>
+                        <input type="text" className="InputsFormUsuario" ref={RefFiltroNome}/>
+                    </fieldset>
+                    <fieldset className="Fieldset-Usuario-Form">
+                        <label>Email</label>
+                        <input type="text" className="InputsFormUsuario" ref={RefFiltroEmail}/>
+                    </fieldset>
+                    <fieldset className="Fieldset-Usuario-Form">
+                        <label>Situação</label>
+                        <select name="Situacao" id="SituacaoFiltro" ref={RefFiltro} onChange={()=>{setSituacaoValue(RefFiltro.current.value)}}>
+                            <option value="">Selecionar</option>
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
+                        </select>
+                    </fieldset>
+                    <div id="BTNS-Form-Usuario-Filtro">
+                        <button onClick={filtrar}><FontAwesomeIcon icon={faFilter} /></button>
+                        <button onClick={limpar}><FontAwesomeIcon icon={faBroom} /></button>
+                        <button onClick={close}><FontAwesomeIcon icon={faXmark}/></button>
+                    </div>
+                </div>
+            </form>
             <div id="Table-Usuario">
                 <div id="HudUsuario">
                     <ul>
@@ -517,7 +640,19 @@ function SignIn() {
                             ))}
                         </div>
                         <div id="Table-Usuario2">
-
+                            {UsuarioFiltro.map((usuario, index)=>(
+                                <ul key={usuario.id} className={`Todo-List-Users ${usuario.hidden ? 'hidden' : ''}`}>
+                                    <li className="Todo-List-li id-tdListU">{usuario.id}</li>
+                                    <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList-Users">
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{infos(usuario.id)}}/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{editarUsuario(usuario.id)}}/>
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            ))}
                         </div>
                     </div>
                 </div>
