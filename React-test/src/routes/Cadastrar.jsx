@@ -59,6 +59,7 @@ function SignIn() {
     //relacionados a lista de usuarios
 
     const [Usuario, setUsuario] = useState ([]) //lista de usuarios
+    const [UsuarioAtualizado, setUsuarioAtualizado] = useState (false) //lista de usuarios atualizada ?
 
     const [DadosDoUsuario, setDadosDoUsuario] = useState ([]) //dados do usuario
 
@@ -80,6 +81,21 @@ function SignIn() {
         }
         fetchData()
     },[]) //Responsavel pela Lista de usuarios a ser renderizada
+
+    useEffect (()=>{
+        async function fetchData () {
+           if(UsuarioAtualizado===true){
+            const data = await GetAllusuario()
+            setUsuario(data)
+            setMsgsucess(true)
+            setformAddVisivel(false)
+            setuserNav(false)
+            setListaVisivel(true)
+            setUsuarioAtualizado(false)
+           }
+        }
+        fetchData()
+    },[UsuarioAtualizado])
 
     useEffect (()=>{
         if(formAddVisivel===true){
@@ -185,10 +201,7 @@ function SignIn() {
             var dados = await Cadastrar(data)
 
             if(dados.msgerro===""){
-                setMsgsucess(true)
-                setformAddVisivel(false)
-                setuserNav(false)
-
+                setUsuarioAtualizado(true)
             }else{
                 setMsgerro(dados.msgerro)
             }
