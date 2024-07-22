@@ -225,10 +225,10 @@ function SignIn() {
 	        "senha_email": Senha,
 	        "situacao": Situacao,
 	        "inc_usuario": 1,
-	        "inc_dusuario": "? DESCONHECIDO ?",
+	        "inc_dusuario": "",
 	        "inc_dhsis": DadosDoUsuario.inc_dhsis,
 	        "alt_usuario": 1,
-	        "alt_dusuario": "? DESCONHECIDO ?",
+	        "alt_dusuario": "",
 	        "alt_dhsis": FormDataAtual,
 	        "modulo_regs": []
             }
