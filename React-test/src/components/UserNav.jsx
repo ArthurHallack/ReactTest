@@ -5,7 +5,7 @@ import { faPlus, faDatabase, faPenToSquare, faUnlock } from "@fortawesome/free-s
 
 import '../css/componentes.css/userNav.css'
 
-function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, estado, fechar, listaT, listaF}) {
+function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, edit, editT, editF, estado, fechar, listaT, listaF}) {
 
     //add é se o form add esta sendo exibido 
     //addF função que seta add como false
@@ -20,6 +20,9 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, e
     //fechar é uma finção que serve para fechar esse componente
     //listaT função que seta o estado da lista como true
     //listaT função que seta o estado da lista como false
+    //edit é o estado atual do formulario de editar
+    //editT é a função que troca o estado e edit para True
+    //editF é a função que troca o estado e edit para False
 
     //effects
     useEffect(()=>{
@@ -65,7 +68,7 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, e
             
             
         }
-    },[data])//faz o btn data ficar em destaque 
+    },[data])//faz o btn data data ficar em destaque 
 
     useEffect(()=>{
         if(permi===true){
@@ -87,7 +90,30 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, e
             window.document.getElementById('edit').style.color=""
             window.document.getElementById('edit').style.border="1px double"
         }
-    },[permi])
+    },[permi])////faz o btn data permi ficar em destaque 
+
+    useEffect(()=>{
+        if(edit===true){
+            //em destaque
+            window.document.getElementById('edit').style.backgroundColor="#161622"
+            window.document.getElementById('edit').style.color="white"
+            window.document.getElementById('edit').style.border="1px solid #ffff"
+            //apagados
+
+            window.document.getElementById('add').style.backgroundColor=""
+            window.document.getElementById('add').style.color=""
+            window.document.getElementById('add').style.border="1px double"
+
+            window.document.getElementById('data').style.backgroundColor=""
+            window.document.getElementById('data').style.color=""
+            window.document.getElementById('data').style.border="1px double"
+
+            window.document.getElementById('permi').style.backgroundColor=""
+            window.document.getElementById('permi').style.color=""
+            window.document.getElementById('permi').style.border="1px double"
+
+        }
+    },[edit])////faz o btn edit permi ficar em destaque 
 
     useEffect(()=>{
         if(estado===true){
@@ -104,28 +130,35 @@ function UserNav ({add, addF, addT, data, dataT, dataF, permi, permiT, permiF, e
         dataF()
         addF()
         permiF()
+        editF()
     }// fecha e traz a lista de volta
 
     function dataBTN () {
         dataT()
         addF()
         permiF()
+        editF()
     }
 
     function addBTN () {
         addT()
         dataF()
         permiF()
+        editF()
     }
 
     function permiBTN () {
         permiT()
         dataF()
         addF()
+        editF()
     }
 
     function editBTN () {
-
+        editT()
+        permiF()
+        dataF()
+        addF()
     }
 
 

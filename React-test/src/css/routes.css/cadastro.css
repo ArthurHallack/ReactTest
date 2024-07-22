@@ -354,3 +354,38 @@
   #IMG-Permi{
     margin-left: 8rem;
   }
+
+  /*FORM EDITAR*/
+    #Form-Edit{
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ffffff6a;
+      border-radius: 5px;
+      width: 65rem;
+      height: 37rem;
+    }
+
+    #BtnsTopEdit{
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      flex-direction: row;
+      justify-content: flex-start;
+      margin-left: -1rem;
+    }
+
+    #BtnsTopEdit h1{
+      font-size: 30px;
+      margin-left: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    #editarBTN{
+      width: 17rem;
+      border-radius: 15px;
+    }
+  /*IMG/

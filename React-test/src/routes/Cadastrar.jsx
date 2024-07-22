@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import engrenagemImg from "../img/engrenagem.png"
 import cadeadoImg from "../img/cadeado.png"
 import informaImg from "../img/informa.png"
+import editarImg from "../img/editar.png"
 import NavBar from "../components/Nav";
 import MsgConfirmUser from "../components/confirmUser";
 import UserNav from "../components/UserNav";
@@ -32,6 +33,12 @@ function SignIn() {
     const RefCadastro5 = useRef()//Celular
     const RefCadastro6 = useRef()//Situação
     const navigate = useNavigate()
+    const RefEdit1 = useRef()//Email
+    const RefEdit2 = useRef()//Senha
+    const RefEdit3 = useRef()//Csenha
+    const RefEdit4 = useRef()//Nome
+    const RefEdit5 = useRef()//Celular
+    const RefEdit6 = useRef()//Situação
 
     //relacionadas ao gravar
     const [msgsucess, setMsgsucess] = useState (null)
@@ -124,7 +131,29 @@ function SignIn() {
         }else{
             window.document.getElementById('Form-Permi').style.display="none"
         }
-    },[formPermiVisivel])
+    },[formPermiVisivel])// faz o formulario de permi aparecer
+
+    useEffect(()=>{
+        if(formEditVisivel===true){
+            window.document.getElementById('Tela-Cadastro').style.justifyContent="center"
+            //aparecer
+            window.document.getElementById('Form-Edit').style.display="flex"
+            //desaparecer
+            window.document.getElementById('SecTop').style.display="none"
+            window.document.getElementById('Table-Usuario').style.display="none"
+            window.document.getElementById('Form-Cadastro').style.display="none"
+            window.document.getElementById('Form-Permi').style.display="none"
+
+            RefEdit1.current.value = DadosDoUsuario.email//Email
+            RefEdit2.current.value = DadosDoUsuario.senha_email//Senha
+            RefEdit4.current.value = DadosDoUsuario.nome//Nome
+            RefEdit5.current.value = DadosDoUsuario.celular//Celular
+            RefEdit6.current.checked = DadosDoUsuario.situacao//Situação
+
+        }else{
+            window.document.getElementById('Form-Edit').style.display="none"
+        }
+    },[formEditVisivel])
 
     
 
@@ -178,6 +207,45 @@ function SignIn() {
 
     }
 
+    const Confirmar = async (e)=>{
+        e.preventDefault()
+        var Email = RefEdit1.current.value
+        var Senha = RefEdit2.current.value
+        var Nome = RefEdit4.current.value
+        var Celular = RefEdit5.current.value
+        var Situacao = RefEdit6.current.checked
+        var AtualData = new Date();
+        var FormDataAtual = AtualData.toISOString().split('T')[0]
+
+        var data = {
+            "id": DadosDoUsuario.id,
+	        "email": Email,
+	        "nome": Nome,
+	        "celular": Celular,
+	        "senha_email": Senha,
+	        "situacao": Situacao,
+	        "inc_usuario": 1,
+	        "inc_dusuario": "? DESCONHECIDO ?",
+	        "inc_dhsis": DadosDoUsuario.inc_dhsis,
+	        "alt_usuario": 1,
+	        "alt_dusuario": "? DESCONHECIDO ?",
+	        "alt_dhsis": FormDataAtual,
+	        "modulo_regs": []
+            }
+
+            var dados = await Cadastrar(data)
+
+            if (dados.msgerro===""){
+                setMsgsucess(true)
+                setListaVisivel(true)
+                setformAddVisivel(false)
+                setformEditVisivel(false)
+                setuserNav(false)
+            }else{
+                setMsgerro(dados.msgerro)
+            }
+        }
+
     //Sucess MSG
 
     function handleSuccess () {
@@ -211,6 +279,14 @@ function SignIn() {
 
     function FormPermiFalse () {
         setformPermiVisivel(false)
+    }
+
+    function FormEditTrue () {
+        setformEditVisivel(true)
+    }
+
+    function FormEditFalse () {
+        setformEditVisivel(false)
     }
 
     function estadoNavUserF () {
@@ -265,9 +341,21 @@ function SignIn() {
         setListaVisivel(false)
         setformAddVisivel(false)
         setformDataVisivel(true)
+        setformPermiVisivel(false)
+        setformEditVisivel(false)
         setuserNav(true)
     }
 
+    async function editarUsuario (id) {
+        var informacoes = await FichaUsuario(id)
+        setDadosDoUsuario(informacoes)
+        setListaVisivel(false)
+        setformAddVisivel(false)
+        setformDataVisivel(false)
+        setformPermiVisivel(false)
+        setformEditVisivel(true)
+        setuserNav(true)
+    }
 
     return (
         <div id="Tela-Cadastro">
@@ -276,7 +364,8 @@ function SignIn() {
             <AlertE error ={msgerro} handleError={handleError}/>
             <MsgConfirmUser estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <UserNav add ={formAddVisivel} addF ={formAddFalse} addT ={formAddTrue} data={formDataVisivel} dataT ={formDataTrue} dataF ={formDataFalse}
-            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF} permi ={formPermiVisivel} permiT ={FormPermiTrue} permiF ={FormPermiFalse}/>
+            estado ={userNav} fechar ={estadoNavUserF} listaT ={listaVisivelT} listaF ={listaVisivelF} permi ={formPermiVisivel} permiT ={FormPermiTrue} permiF ={FormPermiFalse}
+            edit ={formEditVisivel} editT ={FormEditTrue} editF ={FormEditFalse}/>
             <div id="SecTop">
                 <h1>Usuarios</h1>
                 <div id="SecTopBTN">
@@ -288,7 +377,7 @@ function SignIn() {
                 <img src={engrenagemImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
                 <div id="Conteudo-Cadastro">
                     <div id="BtnsTopCadastro">
-                        <h1>Usuario</h1>
+                        <h1 id="h1Cadastro">Usuario</h1>
                     </div>
                     <div className="Single-input">
                         <input type="text" ref={RefCadastro1} className="inputCadastro" id="Email" required/>
@@ -359,6 +448,37 @@ function SignIn() {
                     <h1>Em breve</h1>
                 </div>
             </form>
+            <form id="Form-Edit">
+                <img src={editarImg} alt="engrenagem"  id="IMG-cadastro" style={StyleCadastro}/>
+                <div id="Conteudo-Cadastro">
+                    <div id="BtnsTopEdit">
+                        <h1 id="h1Edit">Editar</h1>
+                    </div>
+                    <div className="Single-input">
+                        <input type="text" ref={RefEdit1} className="inputCadastro" id="Email" required/>
+                        <label htmlFor="Email">Email</label>
+                    </div>
+                    <div className="Single-input">
+                        <input type="text" ref={RefEdit4} className="inputCadastro" id="Nome" required/>
+                        <label htmlFor="Nome">Nome</label>
+                    </div>
+                    <div className="Single-input">
+                        <input type="tel" ref={RefEdit5} className="inputCadastro" id="Celular" required/>
+                        <label htmlFor="Celular">Celular</label>
+                    </div>
+                    <div className="Single-input">
+                        <input type="password" ref={RefEdit2} className="inputCadastro" id="Senha" required/>
+                        <label htmlFor="Senha">Senha</label>
+                    </div>
+                    <div className="Single-input" id="DivInputSit">
+                        <input type="checkbox" ref={RefEdit6} className="inputCadastro" id="Sit" required/>
+                        <label htmlFor="Sit" id="labelSit">Situação</label>
+                    </div>
+                    <div id="DivCadastroBTN">
+                        <button type="submit" onClick={Confirmar} id="editarBTN">Confirmar</button>
+                    </div>
+                </div>
+            </form>
             <div id="Table-Usuario">
                 <div id="HudUsuario">
                     <ul>
@@ -376,7 +496,7 @@ function SignIn() {
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList-Users">
                                             <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{infos(usuario.id)}}/>
-                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{editarUsuario(usuario.id)}}/>
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(usuario)}}/>
                                         </div>
                                     </li>
