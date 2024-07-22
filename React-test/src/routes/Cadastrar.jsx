@@ -229,7 +229,7 @@ function SignIn() {
 	        "inc_dhsis": DadosDoUsuario.inc_dhsis,
 	        "alt_usuario": 1,
 	        "alt_dusuario": "",
-	        "alt_dhsis": FormDataAtual,
+	        "alt_dhsis": DadosDoUsuario.alt_dhsis,
 	        "modulo_regs": []
             }
 
