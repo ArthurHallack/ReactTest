@@ -552,7 +552,7 @@ function SignIn() {
                         </div>
                         <div className="Campo-Data">
                             <label htmlFor="" className="Label-Data">Situação: </label>
-                            <span className="span-data">{DadosDoUsuario.situacao}</span>
+                            <span className="span-data">{DadosDoUsuario.situacao ? 'Ativo' : 'Inativo'}</span>
                         </div>
                     </div>
                 </div>
