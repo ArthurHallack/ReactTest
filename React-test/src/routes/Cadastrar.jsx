@@ -64,6 +64,7 @@ function SignIn() {
     const [formFiltroVisivel, setformFiltroVisivel] = useState (false)
     const [userNav, setuserNav] = useState (false)
     const [ListaVisivel, setListaVisivel] = useState (true)
+    const [listaVisivel, setlistaVisivel] = useState(true)
     const [Lista2Visivel, setLista2Visivel] = useState (false)
 
     //relacionados a lista de usuarios
@@ -385,6 +386,7 @@ function SignIn() {
 
     function excluir (element){
         setUsuario(prevUsers => prevUsers.filter(user => user.id !== element.id))
+        setUsuarioFiltro(prevarrayFiltro => prevarrayFiltro.filter(user => user.id !== element.id))
     }
 
     const Exclui = async (element) => {
@@ -459,12 +461,15 @@ function SignIn() {
         window.location.reload()
     }
 
-    function close () {
-        if(Lista2Visivel===true){
-            Lista2Visivel(true)
-        }else{
-            ListaVisivel(true)
-        }
+    function close (e) {
+        e.preventDefault()
+       setListaVisivel(true)
+       setformFiltroVisivel(false)
+
+       window.document.getElementById('Table-Usuario').style.display="flex"
+       window.document.getElementById('SecTopBTN').style.display="flex"
+
+       window.document.getElementById('Form-Filtro').style.display="none"
     }
 
     return (
@@ -641,7 +646,7 @@ function SignIn() {
                         </div>
                         <div id="Table-Usuario2">
                             {UsuarioFiltro.map((usuario, index)=>(
-                                <ul key={usuario.id} className={`Todo-List-Users ${usuario.hidden ? 'hidden' : ''}`}>
+                                <ul key={usuario.id} className={`Todo-List-Users ${usuario.hidden ? 'hidden' : ''} ${usuario.situacao ? 'red-list' : ''}`} style={{ display: listaVisivel ? "flex" : "none" }}>
                                     <li className="Todo-List-li id-tdListU">{usuario.id}</li>
                                     <li className="Todo-List-li nome-tdListU">{usuario.nome}</li>
                                     <li className="li-td-btn">
