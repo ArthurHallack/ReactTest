@@ -11,6 +11,7 @@ import Grafico from './routes/Grafico.jsx'
 import Config from './routes/Config.jsx'
 import Municipio from './routes/Municipio.jsx'
 import Aeroporto from './routes/Aeroporto.jsx'
+import PFCadastro from './routes/CadastroPf.jsx'
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/Aeroporto",
     element: <Aeroporto/>
+  },
+  {
+    path: "/Cadastro/PF",
+    element: <PFCadastro/>
   }
 ])
 
