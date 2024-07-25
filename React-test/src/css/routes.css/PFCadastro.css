@@ -1,4 +1,202 @@
 #Tela-PFCadaastro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+#SecTop-PF{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5rem;
+}
+
+#BTNsTopPF{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+/*Filtro Form*/
+
+#Form-FilterPF{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    background-color: #ffffff6a;
+    width: 80rem;
+    min-width: 85%;
+    max-width: 85%;
+    height: 13rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 1rem;
+    margin-top: 5%;
+    border-radius: 5px;
+}
+
+#DivFiltroPF{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
-    height: 100vh;
+}
+
+#secInputsFiltro{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#secInputsFiltro fieldset {
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+#secInputsFiltro label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+#secInputsFiltro input {
+    border: none;
+    border-radius: 2px;
+    height: 1.5rem;
+}
+
+#OpSituacaoPF{
+    width: 8rem;
+    height: 1.6rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+#BTNsFiltroPF{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+/*Dados Pessoais Form*/
+
+#Form-DadosPessoais{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff6a;
+    width: 80rem;
+    min-width: 65%;
+    max-width: 65%;
+    height: 20rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5%;
+    gap: 1rem;
+    border-radius: 5px;
+}
+
+#CamposFormPF-DP{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+}
+
+#CamposFormPF-DP input{
+    border: none;
+    border-radius: 2px;
+    height: 1.5rem;
+}
+
+.FieldDadosPessoais{
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+#CamposNomePF-DP{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.nomesPF-DP{
+    width: 20rem;
+}
+
+#CamposOutrosPF-DP{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.outrosPF-DP{
+    width: 15rem;
+}
+
+#CamposMenoresPF-DP{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.menoresPF-DP{
+    width: 10rem;
+}
+
+#OpCivilPF{
+    width: 8rem;
+    height: 1.6rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+#DataInputPF-DP{
+    width: 8rem;
+    height: 1.6rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+#OpGeneroPF{
+    width: 8rem;
+    height: 1.6rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.CheckPF-DP{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    
+}
+
+.CheckPF-DP div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: baseline;
+    gap: 7px;
+
+}
+
+#BTNsDadosPessoais{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 1rem;
 }
