@@ -3,10 +3,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import { AlertS, AlertE } from "../components/Msg";
+import { GetAllPF } from "../functions/pf/getAllPF";
 
 import '../css/routes.css/PFCadastro.css'
 
 function PFCadastro () {
+
+    //estados
+
+    const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
+    const [ListaPFfiltro, setListaPFfiltro] = useState ([])//lista do filtro sendo renderizada
+
+    //Effects
+
+    useEffect(()=>{
+        async function fetchData () {
+            const data = await GetAllPF()
+            setListaPF(data)
+        }
+        fetchData()
+    },[])
+
     return(
         <div id="Tela-PFCadaastro">
             <NavBar/>
@@ -158,6 +175,42 @@ function PFCadastro () {
                         <li>Nome Completo</li>
                         <li id="liNomeReserva">Nome para reservas</li>
                     </ul>
+                </div>
+                <div id="Conteudo-PF-Container">
+                    <div id="Table-PF">
+                        <div id="Table-PF1">
+                            {ListaPF.map((pf, index)=>(
+                                <ul key={pf.id} className={`Todo-List-PF ${pf.hidden ? 'hidden' : ''}`}>
+                                    <li className="Todo-List-li id-tdListPF">{pf.id}</li>
+                                    <li className="Todo-List-li NC-tdListPF">{pf.nome_completo}</li>
+                                    <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList">
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            ))}
+                        </div>
+                        <div id="Table-PF2">
+                            {ListaPFfiltro.map((pf, index)=>(
+                                <ul key={pf.id} className={`Todo-List-PF ${pf.hidden ? 'hidden' : ''} ${pf.situacao ? 'red-list' : ''}`}>
+                                    <li className="Todo-List-li id-tdListPF">{pf.id}</li>
+                                    <li className="Todo-List-li NC-tdListPF">{pf.nome_completo}</li>
+                                    <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
+                                    <li className="li-td-btn">
+                                        <div className="BTNs-tdList">
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
