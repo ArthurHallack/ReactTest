@@ -92,7 +92,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border: 2px solid;
     height: 20rem;
     gap: 1rem;
 }
@@ -209,6 +208,23 @@
     justify-content: flex-end;
     width: 100%;
     gap: 1rem;
+}
+
+/*FORM FICHA*/
+
+#FormFicha{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff6a;
+    width: 80rem;
+    min-width: 65%;
+    max-width: 65%;
+    height: 20rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    gap: 1rem;
+    border-radius: 5px;
 }
 
 /*LISTA PRINCIPAL*/

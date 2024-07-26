@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
@@ -11,7 +12,6 @@ import '../css/routes.css/PFCadastro.css'
 function PFCadastro () {
 
     //REfs
-
     const refNomeCompleto = useRef()
     const refNomeReserva = useRef()
     const refNomeCracha = useRef()
@@ -26,7 +26,14 @@ function PFCadastro () {
     const refNotificacao = useRef()
     const refSituacao = useRef()
 
+    //refs relacionadas ao filtro 
+    const nomeFiltro = useRef()
+    const cpfFiltro = useRef()
+    const generoFiltro = useRef()
+    const situacaoFiltro = useRef()
+
     //estados
+    const [fichaData, setfichaData] = useState ([])
 
     //estados relacionados aos dados pessoais
     const [nomeCompleto, setnomeCompleto] = useState ("")
@@ -98,6 +105,56 @@ function PFCadastro () {
         //desaparecer
         window.document.getElementById('ContedeuListPF').style.display="none"
         window.document.getElementById('BTNsTopPF').style.display="none"
+        window.document.getElementById('FormFicha').style.display="none"
+    }
+
+    //relacionadas a ficha
+
+    async function ficha (id) {
+        const data = await FichaPF(id)
+        setfichaData(data)
+
+        //aparecer
+        window.document.getElementById('InfoAreaPF').style.display="flex"
+        window.document.getElementById('FormFicha').style.display="flex"        
+        //desaparecer
+        window.document.getElementById('ContedeuListPF').style.display="none"
+        window.document.getElementById('BTNsTopPF').style.display="none"
+        window.document.getElementById('Form-DadosPessoais').style.display="none"
+    }
+
+    function fecharFicha (e) {
+        e.preventDefault()
+
+        //aparecer
+        window.document.getElementById('BTNsTopPF').style.display="flex"
+        window.document.getElementById('ContedeuListPF').style.display="flex"
+        //desaparecer
+        window.document.getElementById('InfoAreaPF').style.display="none"       
+        window.document.getElementById('FormFicha').style.display="none" 
+    }
+
+    //relacionadas ao filtro 
+
+    function filtro () {
+        //aparecer
+        window.document.getElementById('Form-FilterPF').style.display="flex"        
+        //desaparecer
+        window.document.getElementById('ContedeuListPF').style.display="none"
+        window.document.getElementById('BTNsTopPF').style.display="none"
+    }
+
+    function fecharFiltro (e) {
+        e.preventDefault()
+        //aparecer   
+        window.document.getElementById('ContedeuListPF').style.display="flex"
+        window.document.getElementById('BTNsTopPF').style.display="flex"    
+        //desaparecer
+        window.document.getElementById('Form-FilterPF').style.display="none" 
+    }
+
+    function limparFiltro () {
+        window.location.reload()
     }
 
     return(
@@ -109,14 +166,13 @@ function PFCadastro () {
                 <h1>Pessoa Fisica</h1>
                 <div id="BTNsTopPF">
                     <button><FontAwesomeIcon icon={faPlus} /></button>
-                    <button><FontAwesomeIcon icon={faFilter} /></button>
+                    <button><FontAwesomeIcon icon={faFilter} onClick={filtro}/></button>
                 </div>
             </div>
             <div id="InfoAreaPF">
                 <form id="Form-DadosPessoais">
                     <div>
                         <p><i>Selecionar Informações</i></p>
-
                     </div>
                     <div id="CamposFormPF-DP">
                         <div id="CamposNomePF-DP">
@@ -207,6 +263,75 @@ function PFCadastro () {
                         <button><FontAwesomeIcon icon={faXmark}/></button>
                     </div>
                 </form>
+                <form id="FormFicha">
+                    <div>
+                        <p><i>Informações Gerais</i></p>
+                    </div>
+                    <div id="CamposFormPF-DP">
+                        <div id="CamposNomePF-DP">
+                            <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                <label>Nome Completo: </label>
+                                <span>{fichaData.nome_completo}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                <label>Nome para Reserva: </label>
+                                <span>{fichaData.nome_reserva}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                <label>Nome para crachá: </label>
+                                <span>{fichaData.nome_reserva}</span>
+                            </fieldset>
+                        </div>
+                        <div id="CamposOutrosPF-DP">
+                            <fieldset className="FieldDadosPessoais outrosPF-DP">
+                                <label>RG: </label>
+                                <span>{fichaData.rg}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais outrosPF-DP">
+                                <label>CPF: </label>
+                                <span>{fichaData.cpf}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais outrosPF-DP">
+                                <label>Data de Nascimento</label>
+                                <span>{fichaData.dt_nascimento}</span>
+                            </fieldset>
+                        </div>
+                        <div id="CamposMenoresPF-DP">
+                            <fieldset className="FieldDadosPessoais menoresPF-DP">
+                                <label>Nacionalidade: </label>
+                                <span>{fichaData.nacionalidade}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais menoresPF-DP">
+                                <label>Estado Civil: </label>
+                                <span>{fichaData.estado_civil}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais menoresPF-DP">
+                                <label>Gênero: </label>
+                                <span>{fichaData.genero}</span>
+                            </fieldset>                            
+                            <fieldset className="FieldDadosPessoais">
+                                <label>Fornecedor: </label>
+                                <span>{fichaData.fornecedor}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais">
+                                <label>Estrangeira: </label>
+                                <span>{fichaData.estrangeira}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais">
+                                <label>Notificação: </label>
+                                <span>{fichaData.notificacao}</span>
+                            </fieldset>
+                            <fieldset className="FieldDadosPessoais">
+                                <label>Situação: </label>
+                                <span>{fichaData.situacao}</span>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div id="BTNsDadosPessoais">
+                        <button><FontAwesomeIcon icon={faCheck} onClick={fecharFicha}/></button>
+                        <button><FontAwesomeIcon icon={faXmark}/></button>
+                    </div>
+                </form>
                 <div id="AreaImgPF">
                     <img src="" alt="" />
                     <input type="file" placeholder="" />
@@ -218,19 +343,19 @@ function PFCadastro () {
                     <div id="secInputsFiltro">
                         <fieldset>
                             <label>Nome Completo</label>
-                            <input type="text" />
+                            <input type="text" ref={nomeFiltro}/>
                         </fieldset>
                         <fieldset>
                             <label>CPF</label>
-                            <input type="text" />
+                            <input type="text" ref={cpfFiltro}/>
                         </fieldset>
                         <fieldset>
                             <label>Gênero</label>
-                            <input type="text" />
+                            <input type="text" ref={generoFiltro}/>
                         </fieldset>
                         <fieldset>
                             <label>Situação</label>
-                            <select name="Situacao" id="OpSituacaoPF">
+                            <select name="Situacao" id="OpSituacaoPF" ref={situacaoFiltro}>
                                     <option value="">Selecionar</option>
                                     <option value="1">Ativo</option>
                                     <option value="0">Inativo</option>
@@ -240,7 +365,7 @@ function PFCadastro () {
                     <div id="BTNsFiltroPF">
                         <button><FontAwesomeIcon icon={faFilter} /></button>
                         <button><FontAwesomeIcon icon={faBroom} /></button>
-                        <button><FontAwesomeIcon icon={faXmark}/></button>
+                        <button><FontAwesomeIcon icon={faXmark} onClick={fecharFiltro}/></button>
                     </div>
                 </div>
             </form>
@@ -262,7 +387,7 @@ function PFCadastro () {
                                     <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id)}}/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
                                         </div>
@@ -279,7 +404,7 @@ function PFCadastro () {
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
                                             <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
-                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
                                         </div>
                                     </li>
