@@ -4,12 +4,44 @@ import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpe
 import NavBar from "../components/Nav"
 import { AlertS, AlertE } from "../components/Msg";
 import { GetAllPF } from "../functions/pf/getAllPF";
+import { FichaPF } from "../functions/pf/fichaPF";
 
 import '../css/routes.css/PFCadastro.css'
 
 function PFCadastro () {
 
+    //REfs
+
+    const refNomeCompleto = useRef()
+    const refNomeReserva = useRef()
+    const refNomeCracha = useRef()
+    const refRG = useRef()
+    const refCPF = useRef()
+    const refNacionalidade = useRef()
+    const refDataNascimento = useRef()
+    const refEstadoCivil = useRef()
+    const refGenero = useRef()
+    const refFornecedor = useRef()
+    const refEstrangeira = useRef()
+    const refNotificacao = useRef()
+    const refSituacao = useRef()
+
     //estados
+
+    //estados relacionados aos dados pessoais
+    const [nomeCompleto, setnomeCompleto] = useState ("")
+    const [nomeReserva, setnomeReserva] = useState ("")
+    const [nomeCracha, setnomeCracha] = useState ("")
+    const [RG, setRG] = useState ("")
+    const [CPF, setCPF] = useState ("")
+    const [Nacionalidade, setNacionalidade] = useState ("")
+    const [DataNascimento, setDataNascimento] = useState ("")
+    const [estadoCivil, setestadoCivil] = useState ("")
+    const [Genero, setGenero] = useState ("")
+    const [Fornecedor, setFornecedor] = useState (false)
+    const [Estrangeira, setEstrangeira] = useState (false)
+    const [Notificação, setNotificação] = useState (false)
+    const [Situacao, setSituacao] = useState(false)
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFfiltro, setListaPFfiltro] = useState ([])//lista do filtro sendo renderizada
@@ -23,6 +55,50 @@ function PFCadastro () {
         }
         fetchData()
     },[])
+
+    //functions
+
+    //fechar interno do form dados pessoais
+    function fechar (e) {
+        e.preventDefault()
+
+        //aparecer
+        window.document.getElementById('BTNsTopPF').style.display="flex"
+        window.document.getElementById('ContedeuListPF').style.display="flex"
+        //desaparecer
+        window.document.getElementById('InfoAreaPF').style.display="none"       
+        window.document.getElementById('Form-DadosPessoais').style.display="none" 
+    }
+
+    //relacionadas ao editar
+
+    async function edit (id) {
+
+        const data = await FichaPF(id)
+
+        refNomeCompleto.current.value = data.nome_completo
+        refNomeCracha.current.value = data.nome_cracha
+        refNomeReserva.current.value = data.nome_reserva
+        refRG.current.value = data.rg
+        refCPF.current.value = data.cpf
+        refNacionalidade.current.value = data.nacionalidade
+
+        refDataNascimento.current.value = data.dt_nascimento
+
+        refEstadoCivil.current.value = data.estado_civil
+        refGenero.current.value = data.genero
+        refFornecedor.current.checked = data.fornecedor
+        refEstrangeira.current.checked = data.estrangeira
+        refNotificacao.current.checked = data.notificacao
+        refSituacao.current.checked = data.situacao
+
+        //aparecer
+        window.document.getElementById('InfoAreaPF').style.display="flex"
+        window.document.getElementById('Form-DadosPessoais').style.display="flex"
+        //desaparecer
+        window.document.getElementById('ContedeuListPF').style.display="none"
+        window.document.getElementById('BTNsTopPF').style.display="none"
+    }
 
     return(
         <div id="Tela-PFCadaastro">
@@ -46,39 +122,39 @@ function PFCadastro () {
                         <div id="CamposNomePF-DP">
                             <fieldset className="FieldDadosPessoais nomesPF-DP">
                                 <label>Nome Completo</label>
-                                <input type="text" />
+                                <input type="text" ref={refNomeCompleto}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais nomesPF-DP">
                                 <label>Nome p/ reserva</label>
-                                <input type="text" />
+                                <input type="text" ref={refNomeReserva}/>
                             </fieldset >
                             <fieldset className="FieldDadosPessoais nomesPF-DP">
                                 <label>Nome p/ crachá</label>
-                                <input type="text" />
+                                <input type="text" ref={refNomeCracha}/>
                             </fieldset>
                         </div>
                         <div id="CamposOutrosPF-DP">
                             <fieldset className="FieldDadosPessoais outrosPF-DP"> 
                                 <label>RG</label>
-                                <input type="text" />
+                                <input type="number" ref={refRG}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>CPF</label>
-                                <input type="text" />
+                                <input type="number" ref={refCPF}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>Nacionalidade</label>
-                                <input type="text" />
+                                <input type="text" ref={refNacionalidade}/>
                             </fieldset>
                         </div>
                         <div id="CamposMenoresPF-DP">
                             <fieldset className="FieldDadosPessoais menoresPF-DP">
                                 <label>Data de Nascimento</label>
-                                <input type="date" id="DataInputPF-DP"/>
+                                <input type="date" id="DataInputPF-DP" ref={refDataNascimento}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais menoresPF-DP">
                                 <label>Estado Civil</label>
-                                <select name="Situacao" id="OpCivilPF">
+                                <select name="Situacao" id="OpCivilPF" ref={refEstadoCivil}>
                                         <option value="">Selecionar</option>
                                         <option value="1">SOLTEIRO</option>
                                         <option value="2">CASADO</option>
@@ -89,7 +165,7 @@ function PFCadastro () {
                             </fieldset>
                             <fieldset className="FieldDadosPessoais menoresPF-DP">
                                 <label>Gênero</label>
-                                <select name="Situacao" id="OpGeneroPF">
+                                <select name="Situacao" id="OpGeneroPF" ref={refGenero}>
                                         <option value="">Selecionar</option>
                                         <option value="1">MASCULINO</option>
                                         <option value="2">FEMININO</option>
@@ -99,35 +175,35 @@ function PFCadastro () {
                             <fieldset className="CheckPF-DP">
                                 <label>Fornecedor</label>
                                 <div>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" ref={refFornecedor}/>
                                     <p>Sim</p>
                                 </div>                            
                             </fieldset>
                             <fieldset className="CheckPF-DP">
                                 <label>Estrangeira</label>
                                 <div>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" ref={refEstrangeira}/>
                                     <p>Sim</p>
                                 </div>
                             </fieldset>
                             <fieldset className="CheckPF-DP">
                                 <label>Notificação</label>
                                 <div>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" ref={refNotificacao}/>
                                     <p>Sim, receber</p>
                                 </div>
                             </fieldset>
                             <fieldset className="CheckPF-DP">
                                 <label>Situação</label>
                                 <div>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" ref={refSituacao}/>
                                     <p>Ativo</p>
                                 </div>
                             </fieldset>
                         </div>
                     </div>
                     <div id="BTNsDadosPessoais">
-                        <button><FontAwesomeIcon icon={faCheck} /></button>
+                        <button><FontAwesomeIcon icon={faCheck} onClick={fechar}/></button>
                         <button><FontAwesomeIcon icon={faXmark}/></button>
                     </div>
                 </form>
@@ -187,7 +263,7 @@ function PFCadastro () {
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
                                             <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
-                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
                                         </div>
                                     </li>
