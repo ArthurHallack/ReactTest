@@ -137,6 +137,7 @@ function PFCadastro () {
     //relacionadas ao filtro 
 
     function filtro () {
+        console.log("Yoshaaa")
         //aparecer
         window.document.getElementById('Form-FilterPF').style.display="flex"        
         //desaparecer
@@ -166,7 +167,7 @@ function PFCadastro () {
                 <h1>Pessoa Fisica</h1>
                 <div id="BTNsTopPF">
                     <button><FontAwesomeIcon icon={faPlus} /></button>
-                    <button><FontAwesomeIcon icon={faFilter} onClick={filtro}/></button>
+                    <button onClick={filtro}><FontAwesomeIcon icon={faFilter}/></button>
                 </div>
             </div>
             <div id="InfoAreaPF">
@@ -328,7 +329,7 @@ function PFCadastro () {
                         </div>
                     </div>
                     <div id="BTNsDadosPessoais">
-                        <button><FontAwesomeIcon icon={faCheck} onClick={fecharFicha}/></button>
+                        <button onClick={fecharFicha}><FontAwesomeIcon icon={faCheck} /></button>
                         <button><FontAwesomeIcon icon={faXmark}/></button>
                     </div>
                 </form>
