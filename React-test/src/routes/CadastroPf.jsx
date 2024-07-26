@@ -137,7 +137,6 @@ function PFCadastro () {
     //relacionadas ao filtro 
 
     function filtro () {
-        console.log("Yoshaaa")
         //aparecer
         window.document.getElementById('Form-FilterPF').style.display="flex"        
         //desaparecer
@@ -284,29 +283,29 @@ function PFCadastro () {
                             </fieldset>
                         </div>
                         <div id="CamposOutrosPF-DP">
-                            <fieldset className="FieldDadosPessoais outrosPF-DP">
+                            <fieldset className="FieldDadosPessoais outrosPF-ficha">
                                 <label>RG: </label>
                                 <span>{fichaData.rg}</span>
                             </fieldset>
-                            <fieldset className="FieldDadosPessoais outrosPF-DP">
+                            <fieldset className="FieldDadosPessoais outrosPF-ficha">
                                 <label>CPF: </label>
                                 <span>{fichaData.cpf}</span>
                             </fieldset>
-                            <fieldset className="FieldDadosPessoais outrosPF-DP">
+                            <fieldset className="FieldDadosPessoais outrosPF-ficha">
                                 <label>Data de Nascimento</label>
                                 <span>{fichaData.dt_nascimento}</span>
                             </fieldset>
                         </div>
-                        <div id="CamposMenoresPF-DP">
-                            <fieldset className="FieldDadosPessoais menoresPF-DP">
+                        <div id="CamposMenoresPF-Ficha">
+                            <fieldset className="FieldDadosPessoais menoresPF-Ficha">
                                 <label>Nacionalidade: </label>
                                 <span>{fichaData.nacionalidade}</span>
                             </fieldset>
-                            <fieldset className="FieldDadosPessoais menoresPF-DP">
+                            <fieldset className="FieldDadosPessoais menoresPF-Ficha">
                                 <label>Estado Civil: </label>
                                 <span>{fichaData.estado_civil}</span>
                             </fieldset>
-                            <fieldset className="FieldDadosPessoais menoresPF-DP">
+                            <fieldset className="FieldDadosPessoais menoresPF-Ficha">
                                 <label>Gênero: </label>
                                 <span>{fichaData.genero}</span>
                             </fieldset>                            

@@ -324,6 +324,22 @@
     width: 19rem;
 }
 
+/*form ficha*/
+
+.outrosPF-ficha{
+    width: 20rem;
+}
+
+.menoresPF-Ficha{
+    width: 10rem;
+}
+
+#CamposMenoresPF-Ficha{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
 /*IMG PF*/
 
 #AreaImgPF{
