@@ -365,8 +365,8 @@ function PFCadastro () {
                     </div>
                     <div id="BTNsFiltroPF">
                         <button><FontAwesomeIcon icon={faFilter} /></button>
-                        <button><FontAwesomeIcon icon={faBroom} /></button>
-                        <button><FontAwesomeIcon icon={faXmark} onClick={fecharFiltro}/></button>
+                        <button onClick={limparFiltro}><FontAwesomeIcon icon={faBroom} /></button>
+                        <button onClick={fecharFiltro}><FontAwesomeIcon icon={faXmark} /></button>
                     </div>
                 </div>
             </form>
