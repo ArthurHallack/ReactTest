@@ -7,7 +7,7 @@ import MsgConfirmPF from "../components/confirmPF "
 import { AlertS, AlertE } from "../components/Msg";
 import { GetAllPF } from "../functions/pf/getAllPF";
 import { FichaPF } from "../functions/pf/fichaPF";
-import { ApiDeletePF } from "../functions/pf/excluiPF"
+import { FiltroGetPF } from "../functions/pf/filtroPF"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -39,6 +39,7 @@ function PFCadastro () {
     const [confirmVisivel, setconfirmVisivel] = useState (false)
     const [arrayConfirm, setarrayConfirm] = useState ([])
     const [msgerro, setMsgerro] = useState (null)
+    const [msgsucess, setMsgsucess] = useState (null)
 
     //estados relacionados aos dados pessoais
     const [nomeCompleto, setnomeCompleto] = useState ("")
@@ -149,6 +150,32 @@ function PFCadastro () {
         window.document.getElementById('BTNsTopPF').style.display="none"
     }
 
+    async function Filtrar (e) {
+        e.preventDefault()
+        var data = {
+            "chave": "",
+	        "nome": nomeFiltro.current.value,
+	        "situacao": situacaoFiltro.current.value,
+            "cpf": cpfFiltro.current.value,
+            "genero": generoFiltro.current.value,
+	        "alt_dhsis_maior": "",
+	        "alt_dhsis_menor": ""
+        }
+
+        var dados = await FiltroGetPF (data)
+        var dadosPesquisa = await dados.json()
+
+        setListaPFfiltro(dadosPesquisa)
+
+        //aparecer
+        window.document.getElementById('ContedeuListPF').style.display="flex"
+        window.document.getElementById('BTNsTopPF').style.display="flex"          
+        window.document.getElementById('Table-PF2').style.display="flex"     
+        //desaparecer
+        window.document.getElementById('Table-PF1').style.display="none"
+        window.document.getElementById('Form-FilterPF').style.display="none"
+    }
+
     function fecharFiltro (e) {
         e.preventDefault()
         //aparecer   
@@ -160,6 +187,15 @@ function PFCadastro () {
 
     function limparFiltro () {
         window.location.reload()
+    }
+
+    //relacionadas as mensagens
+    function handleError () {
+        setMsgerro(null)
+    }
+
+    function handleSuccess () {
+        setMsgsucess(null)
     }
 
     //relacionadas a excluir
@@ -185,8 +221,8 @@ function PFCadastro () {
     return(
         <div id="Tela-PFCadaastro">
             <NavBar/>
-            <AlertE/>
-            <AlertS/>
+            <AlertE error ={msgerro} handleError={handleError}/>
+            <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <MsgConfirmPF estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <div id="SecTop-PF">
                 <h1>Pessoa Fisica</h1>
@@ -377,7 +413,12 @@ function PFCadastro () {
                         </fieldset>
                         <fieldset>
                             <label>Gênero</label>
-                            <input type="text" ref={generoFiltro}/>
+                                <select name="Situacao" id="OpGeneroFiltro" ref={generoFiltro}>
+                                        <option value="">Selecionar</option>
+                                        <option value="1">MASCULINO</option>
+                                        <option value="2">FEMININO</option>
+                                        <option value="3">OUTROS</option>
+                                </select>
                         </fieldset>
                         <fieldset>
                             <label>Situação</label>
@@ -389,7 +430,7 @@ function PFCadastro () {
                         </fieldset>
                     </div>
                     <div id="BTNsFiltroPF">
-                        <button><FontAwesomeIcon icon={faFilter} /></button>
+                        <button onClick={Filtrar}><FontAwesomeIcon icon={faFilter} /></button>
                         <button onClick={limparFiltro}><FontAwesomeIcon icon={faBroom} /></button>
                         <button onClick={fecharFiltro}><FontAwesomeIcon icon={faXmark} /></button>
                     </div>
@@ -422,16 +463,16 @@ function PFCadastro () {
                             ))}
                         </div>
                         <div id="Table-PF2">
-                            {ListaPFfiltro.map((pf, index)=>(
+                            {ListaPFfiltro.map((pf) => (
                                 <ul key={pf.id} className={`Todo-List-PF ${pf.hidden ? 'hidden' : ''} ${pf.situacao ? 'red-list' : ''}`}>
                                     <li className="Todo-List-li id-tdListPF">{pf.id}</li>
                                     <li className="Todo-List-li NC-tdListPF">{pf.nome_completo}</li>
                                     <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
-                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
-                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pf)}}/>
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={() => edit(pf.id)} />
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={() => Exclui(pf)} />
                                         </div>
                                     </li>
                                 </ul>

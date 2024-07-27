@@ -79,6 +79,14 @@
     cursor: pointer;
 }
 
+#OpGeneroFiltro{
+    width: 8rem;
+    height: 1.6rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
 #BTNsFiltroPF{
     display: flex;
     flex-direction: row;
