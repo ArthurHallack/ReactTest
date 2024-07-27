@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
+import MsgConfirmPF from "../components/confirmPF "
 import { AlertS, AlertE } from "../components/Msg";
 import { GetAllPF } from "../functions/pf/getAllPF";
 import { FichaPF } from "../functions/pf/fichaPF";
+import { ApiDeletePF } from "../functions/pf/excluiPF"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -34,6 +36,9 @@ function PFCadastro () {
 
     //estados
     const [fichaData, setfichaData] = useState ([])
+    const [confirmVisivel, setconfirmVisivel] = useState (false)
+    const [arrayConfirm, setarrayConfirm] = useState ([])
+    const [msgerro, setMsgerro] = useState (null)
 
     //estados relacionados aos dados pessoais
     const [nomeCompleto, setnomeCompleto] = useState ("")
@@ -157,11 +162,32 @@ function PFCadastro () {
         window.location.reload()
     }
 
+    //relacionadas a excluir
+
+    const Exclui = async (element) => {
+        setconfirmVisivel(true)
+        setarrayConfirm(element)
+    }
+
+    function excluir (element){
+        setListaPF(prevPaises => prevPaises.filter(pais => pais.id !== element.id))
+        setListaPFfiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id))
+    }
+
+    function fecharConfirm () {
+        setconfirmVisivel(false)
+    }
+
+    function mensagemErro (element) {
+        setMsgerro(element.msgerro)
+    }
+
     return(
         <div id="Tela-PFCadaastro">
             <NavBar/>
             <AlertE/>
             <AlertS/>
+            <MsgConfirmPF estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
             <div id="SecTop-PF">
                 <h1>Pessoa Fisica</h1>
                 <div id="BTNsTopPF">
@@ -389,7 +415,7 @@ function PFCadastro () {
                                         <div className="BTNs-tdList">
                                             <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id)}}/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
-                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pf)}}/>
                                         </div>
                                     </li>
                                 </ul>
@@ -405,7 +431,7 @@ function PFCadastro () {
                                         <div className="BTNs-tdList">
                                             <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais"/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
-                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
+                                            <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pf)}}/>
                                         </div>
                                     </li>
                                 </ul>
