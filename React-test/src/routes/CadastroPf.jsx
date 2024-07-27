@@ -139,6 +139,17 @@ function PFCadastro () {
         window.document.getElementById('InfoAreaPF').style.display="none"       
         window.document.getElementById('FormFicha').style.display="none" 
     }
+    //relacionadas a adição de novos cadastros 
+
+    async function add () {
+        //aparecer
+        window.document.getElementById('CamposFormPF-DP').style.display="flex"        
+        window.document.getElementById('InfoAreaPF').style.display="flex"        
+        //desaparecer
+        window.document.getElementById('ContedeuListPF').style.display="none"
+        window.document.getElementById('BTNsTopPF').style.display="none" 
+        window.document.getElementById('FormFicha').style.display="none" 
+    }
 
     //relacionadas ao filtro 
 
@@ -227,7 +238,7 @@ function PFCadastro () {
             <div id="SecTop-PF">
                 <h1>Pessoa Fisica</h1>
                 <div id="BTNsTopPF">
-                    <button><FontAwesomeIcon icon={faPlus} /></button>
+                    <button onClick={add}><FontAwesomeIcon icon={faPlus} /></button>
                     <button onClick={filtro}><FontAwesomeIcon icon={faFilter}/></button>
                 </div>
             </div>
