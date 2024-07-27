@@ -71,6 +71,12 @@ function PFCadastro () {
 
     //functions
 
+    function ConvertMaiusculo (ref) {
+        if(ref.current){
+            ref.current.value = ref.current.value.toUpperCase()
+        }
+     }
+
     //fechar interno do form dados pessoais
     function fechar (e) {
         e.preventDefault()
@@ -142,6 +148,21 @@ function PFCadastro () {
     //relacionadas a adição de novos cadastros 
 
     async function add () {
+        refNomeCompleto.current.value = ""
+        refNomeCracha.current.value = ""
+        refNomeReserva.current.value = ""
+        refRG.current.value = ""
+        refCPF.current.value = ""
+        refNacionalidade.current.value = ""
+
+        refDataNascimento.current.value = ""
+
+        refEstadoCivil.current.value = ""
+        refGenero.current.value = ""
+        refFornecedor.current.checked = false
+        refEstrangeira.current.checked = false
+        refNotificacao.current.checked = false
+        refSituacao.current.checked = false
         //aparecer
         window.document.getElementById('CamposFormPF-DP').style.display="flex"        
         window.document.getElementById('InfoAreaPF').style.display="flex"        
@@ -251,15 +272,21 @@ function PFCadastro () {
                         <div id="CamposNomePF-DP">
                             <fieldset className="FieldDadosPessoais nomesPF-DP">
                                 <label>Nome Completo</label>
-                                <input type="text" ref={refNomeCompleto}/>
+                                <input type="text" ref={refNomeCompleto} onChange={()=>{
+                                    ConvertMaiusculo(refNomeCompleto)
+                                }}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais nomesPF-DP">
                                 <label>Nome p/ reserva</label>
-                                <input type="text" ref={refNomeReserva}/>
+                                <input type="text" ref={refNomeReserva} onChange={()=>{
+                                    ConvertMaiusculo(refNomeReserva)
+                                }}/>
                             </fieldset >
                             <fieldset className="FieldDadosPessoais nomesPF-DP">
                                 <label>Nome p/ crachá</label>
-                                <input type="text" ref={refNomeCracha}/>
+                                <input type="text" ref={refNomeCracha} onChange={()=>{
+                                    ConvertMaiusculo(refNomeCracha)
+                                }}/>
                             </fieldset>
                         </div>
                         <div id="CamposOutrosPF-DP">
@@ -273,7 +300,9 @@ function PFCadastro () {
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>Nacionalidade</label>
-                                <input type="text" ref={refNacionalidade}/>
+                                <input type="text" ref={refNacionalidade} onChange={()=>{
+                                    ConvertMaiusculo(refNacionalidade)
+                                }}/>
                             </fieldset>
                         </div>
                         <div id="CamposMenoresPF-DP">
