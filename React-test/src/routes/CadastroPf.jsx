@@ -66,9 +66,7 @@ function PFCadastro () {
     useEffect(()=>{
         async function fetchData () {
             const data = await GetAllPF()
-            const naci = await NaciPesquisa()
             setListaPF(data)
-            setListaNacionalidade(naci)
         }
         fetchData()
     },[])
@@ -85,9 +83,11 @@ function PFCadastro () {
         var valorInput = refNacionalidade.current.value
         if(valorInput.length >= 3){
             var Data = valorInput
-            
+            var Dados = await NaciPesquisa(Data)
+            setListaNacionalidade(Dados)
+            window.document.getElementById('DivListNaci').style.display='flex'
         } else if (valorInput <= 2) {
-            window.document.getElementById('DivListPais').style.display='none'
+            window.document.getElementById('DivListNaci').style.display='none'
         }
     }
 
@@ -385,16 +385,20 @@ function PFCadastro () {
                                 <label>Nacionalidade</label>
                                 <input type="text" ref={refNacionalidade} onChange={()=>{
                                     ConvertMaiusculo(refNacionalidade)
+                                    ListNaci()
                                 }}/>
                                 <div id="DivListNaci">
                                     <ul id="ListaNaci">
-                                        {ListaNacionalidade.map((val,key)=>{
-                                            return(
-                                                <li className="ListaNaciLI">{val.descricao}</li>
-                                            )
+                                        {ListaNacionalidade.map((val) => {
+                                            return (
+                                                <li key={val.id} className="ListaNaciLI">
+                                                    {val.descricao}
+                                                </li>
+                                            );
                                         })}
                                     </ul>
                                 </div>
+
                             </fieldset>
                         </div>
                         <div id="CamposMenoresPF-DP">

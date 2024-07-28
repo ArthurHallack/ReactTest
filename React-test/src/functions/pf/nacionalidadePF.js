@@ -1,23 +1,27 @@
-export async function NaciPesquisa () {
-
-    const Caminho = 'http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/PESQUISA/PAIS/'
+export async function NaciPesquisa(data) {
+    const Caminho = `http://remote.integrasis.com.br:8082/datasnap/rest/TsmPAIS/PESQUISA/NACIONALIDADE/${data}`;
     const Username = 'INTEGRASIS';
     const PassWord = '32P@&sB@rr0S';
     const BasicAuth = 'Basic ' + btoa(Username + ':' + PassWord);
 
-    try{
-        const dados = await fetch (Caminho,{
+    try {
+        const response = await fetch(Caminho, {
             method: 'GET',
             headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': BasicAuth
-                },
-        })
+                'Content-Type': 'application/json',
+                'Authorization': BasicAuth
+            }
+        });
 
-        const dadosPesquisa = await dados.json()
-        return dadosPesquisa
+        if (!response.ok) {
+            throw new Error(`Erro na resposta: ${response.statusText}`);
+        }
 
-    }catch(error){
-        alert.error('Erro:', error)
+        const dadosPesquisa = await response.json();
+        return dadosPesquisa;
+
+    } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+        throw error;
     }
 }
