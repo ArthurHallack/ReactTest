@@ -361,3 +361,20 @@
     align-items: center;
     justify-content: center;
 }
+
+input[type="file"]{
+    display: none;
+}
+
+#LabelUpload {
+    display: inline-block;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 15px 17px;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 1.5px;
+}

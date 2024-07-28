@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpen, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpen, faXmark, faUpload} from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import MsgConfirmPF from "../components/confirmPF "
 import { AlertS, AlertE } from "../components/Msg";
@@ -505,7 +505,8 @@ function PFCadastro () {
                 </form>
                 <div id="AreaImgPF">
                     <img src="" alt="" />
-                    <input type="file" placeholder="" />
+                    <input type="file" id="uploadBtn"/>
+                    <label htmlFor="uploadBtn" id="LabelUpload"><FontAwesomeIcon icon={faUpload} />Upload File</label>
                 </div>
             </div>
             <form id="Form-FilterPF">
