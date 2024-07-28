@@ -107,6 +107,10 @@ function PFCadastro () {
 
     async function edit (id) {
 
+        var valorNaci = refNacionalidade.current.value
+        var valorReal = ListaNacionalidade.find(naci=> naci.descricao === valorNaci)
+        var idCorrespondente = valorReal ? valorReal.id : null
+
         const data = await FichaPF(id)
 
         refNomeCompleto.current.value = data.nome_completo
@@ -208,6 +212,7 @@ function PFCadastro () {
       }
 
     async function add () {
+
         refNomeCompleto.current.value = ""
         refNomeCracha.current.value = ""
         refNomeReserva.current.value = ""
@@ -224,6 +229,10 @@ function PFCadastro () {
         refNotificacao.current.checked = false
         refSituacao.current.checked = false
 
+        var valorNaci = refNacionalidade.current.value
+        var valorReal = ListaNacionalidade.find(naci=> naci.descricao === valorNaci)
+        var idCorrespondente = valorReal ? valorReal.id : null
+
         var data = {
             "id": 0,
             "nome_completo": refNomeCompleto.current.value,
@@ -232,7 +241,7 @@ function PFCadastro () {
             "genero": refGenero.current.value,
             "estado_civil": refEstadoCivil.current.value,
             "dt_nascimento": refDataNascimento.current.value,
-            "nac_id_pais": 1,
+            "nac_id_pais": idCorrespondente,
             "nacionalidade": refNacionalidade.current.value,
             "estrangeira": refEstrangeira.current.checked,
             "cpf": refCPF.current.value,
