@@ -8,6 +8,7 @@ import { AlertS, AlertE } from "../components/Msg";
 import { GetAllPF } from "../functions/pf/getAllPF";
 import { FichaPF } from "../functions/pf/fichaPF";
 import { FiltroGetPF } from "../functions/pf/filtroPF"
+import { NaciPesquisa } from "../functions/pf/nacionalidadePF"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -58,13 +59,16 @@ function PFCadastro () {
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFfiltro, setListaPFfiltro] = useState ([])//lista do filtro sendo renderizada
+    const [ListaNacionalidade, setListaNacionalidade] = useState ([])//lista de nacionalidades cadastradas
 
     //Effects
 
     useEffect(()=>{
         async function fetchData () {
             const data = await GetAllPF()
+            const naci = await NaciPesquisa()
             setListaPF(data)
+            setListaNacionalidade(naci)
         }
         fetchData()
     },[])
@@ -76,6 +80,16 @@ function PFCadastro () {
             ref.current.value = ref.current.value.toUpperCase()
         }
      }
+
+     async function ListNaci () {
+        var valorInput = refNacionalidade.current.value
+        if(valorInput.length >= 3){
+            var Data = valorInput
+            
+        } else if (valorInput <= 2) {
+            window.document.getElementById('DivListPais').style.display='none'
+        }
+    }
 
     //fechar interno do form dados pessoais
     function fechar (e) {
@@ -372,6 +386,15 @@ function PFCadastro () {
                                 <input type="text" ref={refNacionalidade} onChange={()=>{
                                     ConvertMaiusculo(refNacionalidade)
                                 }}/>
+                                <div id="DivListNaci">
+                                    <ul id="ListaNaci">
+                                        {ListaNacionalidade.map((val,key)=>{
+                                            return(
+                                                <li className="ListaNaciLI">{val.descricao}</li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
                             </fieldset>
                         </div>
                         <div id="CamposMenoresPF-DP">

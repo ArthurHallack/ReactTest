@@ -121,6 +121,48 @@
     border-radius: 5px;
 }
 
+/*LISTA DE NACIONALIDADE*/
+
+#DivListNaci{
+    margin-top: 50px;
+    width: 15rem;
+    height: 5.2rem;
+    background-color: #ffffff;
+    position: absolute;
+    border-radius: 3px;
+    display: flex;
+    overflow: auto;
+}
+
+#ListaNaci{
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    border-radius: 3px;
+}
+
+#DivListNaci::-webkit-scrollbar{
+    display: none;
+}
+
+.ListaNaciLI{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1rem;
+    height: 1.8rem;
+    width: 15rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    cursor: context-menu;
+}
+
+.ListaNaciLI:hover {
+    background-color: #dbdbdb;
+}
+
+/*---------------------------------------------*/
+
 #CamposFormPF-DP{
     display: flex;
     flex-direction: column;
