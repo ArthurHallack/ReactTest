@@ -149,17 +149,31 @@ function PFCadastro () {
 
     const formatCPF = (cpf) => {
         // Remove qualquer caractere não numérico
-        cpf = cpf.replace(/\D/g, '');
+        cpf = cpf.replace(/\D/g, '')
     
         // Adiciona a máscara
-        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2')
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2')
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
     
-        return cpf;
+        return cpf
       }
 
-      const handleChange = (event) => {
+      const formatRG = (rg) => {
+        // Remove todos os caracteres não numéricos
+        rg = rg.replace(/\D/g, '');
+    
+        // Adiciona a máscara no formato XX.XXX.XXX-X
+        if (rg.length <= 9) {
+            rg = rg.replace(/^(\d{2})(\d{3})(\d{3})(\d{1})$/, '$1.$2.$3-$4');
+        } else {
+            rg = rg.replace(/^(\d{2})(\d{3})(\d{3})(\d{1})(\d)$/, '$1.$2.$3-$4/$5');
+        }
+    
+        return rg;
+    }
+
+      const handleChangeCPF = (event) => {
         const { value } = event.target;
         const formattedCPF = formatCPF(value);
     
@@ -167,8 +181,17 @@ function PFCadastro () {
         if (refCPF.current) {
           refCPF.current.value = formattedCPF;
         }
-        console.log (refCPF.current.value)
-      }  
+      }
+      
+      const handleChangeRG = (event) => {
+        const { value } = event.target;
+        const formattedRG = formatRG(value);
+    
+        // Atualiza o valor do input
+        if (refRG.current) {
+          refRG.current.value = formattedRG;
+        }
+      }
 
     async function add () {
         refNomeCompleto.current.value = ""
@@ -338,11 +361,11 @@ function PFCadastro () {
                         <div id="CamposOutrosPF-DP">
                             <fieldset className="FieldDadosPessoais outrosPF-DP"> 
                                 <label>RG</label>
-                                <input type="text" ref={refRG}/>
+                                <input type="text" ref={refRG} onChange={handleChangeRG}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>CPF</label>
-                                <input type="text" ref={refCPF} onChange={handleChange}/>
+                                <input type="text" ref={refCPF} onChange={handleChangeCPF}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>Nacionalidade</label>
