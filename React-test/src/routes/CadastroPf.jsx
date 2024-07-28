@@ -163,6 +163,29 @@ function PFCadastro () {
         refEstrangeira.current.checked = false
         refNotificacao.current.checked = false
         refSituacao.current.checked = false
+
+        var data = {
+            "id": 0,
+            "nome_completo": refNomeCompleto.current.value,
+            "nome_reserva": refNomeReserva.current.value,
+            "nome_cracha": refNomeCracha.current.value,
+            "genero": refGenero.current.value,
+            "estado_civil": refEstadoCivil.current.value,
+            "dt_nascimento": refDataNascimento.current.value,
+            "nac_id_pais": 1,
+            "nacionalidade": refNacionalidade.current.value,
+            "estrangeira": refEstrangeira.current.checked,
+            "cpf": refCPF.current.value,
+            "rg": refRG.current.value,
+            "rne": "",
+            "fornecedor": false,
+            "notificacao": false,
+            "situacao": true,
+            "inc_usuario": 1,
+            "alt_usuario": 0,
+            "alt_dhsis": "2024-07-17T11:00:00.000Z"
+        }
+
         //aparecer
         window.document.getElementById('CamposFormPF-DP').style.display="flex"        
         window.document.getElementById('InfoAreaPF').style.display="flex"        

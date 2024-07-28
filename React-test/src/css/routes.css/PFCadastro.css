@@ -297,6 +297,7 @@
 
 #Table-PF2{
     display: none;
+    flex-direction: column-reverse;
 }
 
 .Todo-List-PF{
