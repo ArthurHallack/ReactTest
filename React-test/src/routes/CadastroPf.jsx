@@ -9,6 +9,7 @@ import { GetAllPF } from "../functions/pf/getAllPF";
 import { FichaPF } from "../functions/pf/fichaPF";
 import { FiltroGetPF } from "../functions/pf/filtroPF"
 import { NaciPesquisa } from "../functions/pf/nacionalidadePF"
+import { SalvarPF } from "../functions/pf/savePF"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -43,6 +44,7 @@ function PFCadastro () {
     const [msgsucess, setMsgsucess] = useState (null)
 
     //estados relacionados aos dados pessoais
+    const [idValue, setidValue] = useState ('')
     const [nomeCompleto, setnomeCompleto] = useState ("")
     const [nomeReserva, setnomeReserva] = useState ("")
     const [nomeCracha, setnomeCracha] = useState ("")
@@ -91,6 +93,11 @@ function PFCadastro () {
         }
     }
 
+    function definir (descricao) {
+        refNacionalidade.current.value = descricao
+        window.document.getElementById('DivListNaci').style.display='none'
+    }
+
     //fechar interno do form dados pessoais
     function fechar (e) {
         e.preventDefault()
@@ -107,11 +114,8 @@ function PFCadastro () {
 
     async function edit (id) {
 
-        var valorNaci = refNacionalidade.current.value
-        var valorReal = ListaNacionalidade.find(naci=> naci.descricao === valorNaci)
-        var idCorrespondente = valorReal ? valorReal.id : null
-
         const data = await FichaPF(id)
+        setidValue(id)
 
         refNomeCompleto.current.value = data.nome_completo
         refNomeCracha.current.value = data.nome_cracha
@@ -229,6 +233,17 @@ function PFCadastro () {
         refNotificacao.current.checked = false
         refSituacao.current.checked = false
 
+        //aparecer
+        window.document.getElementById('CamposFormPF-DP').style.display="flex"        
+        window.document.getElementById('InfoAreaPF').style.display="flex"        
+        window.document.getElementById('Form-DadosPessoais').style.display="flex"        
+        //desaparecer
+        window.document.getElementById('ContedeuListPF').style.display="none"
+        window.document.getElementById('BTNsTopPF').style.display="none" 
+        window.document.getElementById('FormFicha').style.display="none" 
+    }
+
+    async function confirm () {
         var valorNaci = refNacionalidade.current.value
         var valorReal = ListaNacionalidade.find(naci=> naci.descricao === valorNaci)
         var idCorrespondente = valorReal ? valorReal.id : null
@@ -255,13 +270,44 @@ function PFCadastro () {
             "alt_dhsis": "2024-07-17T11:00:00.000Z"
         }
 
-        //aparecer
-        window.document.getElementById('CamposFormPF-DP').style.display="flex"        
-        window.document.getElementById('InfoAreaPF').style.display="flex"        
-        //desaparecer
-        window.document.getElementById('ContedeuListPF').style.display="none"
-        window.document.getElementById('BTNsTopPF').style.display="none" 
-        window.document.getElementById('FormFicha').style.display="none" 
+        var dataUpdate = {
+            "id": idValue,
+            "nome_completo": refNomeCompleto.current.value,
+            "nome_reserva": refNomeReserva.current.value,
+            "nome_cracha": refNomeCracha.current.value,
+            "genero": refGenero.current.value,
+            "estado_civil": refEstadoCivil.current.value,
+            "dt_nascimento": refDataNascimento.current.value,
+            "nac_id_pais": idCorrespondente,
+            "nacionalidade": refNacionalidade.current.value,
+            "estrangeira": refEstrangeira.current.checked,
+            "cpf": refCPF.current.value,
+            "rg": refRG.current.value,
+            "rne": "",
+            "fornecedor": false,
+            "notificacao": false,
+            "situacao": true,
+            "inc_usuario": 1,
+            "alt_usuario": 0,
+            "alt_dhsis": "2024-07-17T11:00:00.000Z"
+        }
+
+        if (idValue==''){
+            const Salvando = await SalvarPF(data)
+            if(Salvando.retorno===0){
+                setMsgsucess(true)
+            }else{
+                setMsgerro(Salvando.msgerro)
+            }
+        }else{
+            const SalvandoUp = await SalvarPF(dataUpdate)
+            if(SalvandoUp.retorno===0){
+                setMsgsucess(true)
+            }else{
+                setMsgerro(SalvandoUp.msgerro)
+            }
+        }
+
     }
 
     //relacionadas ao filtro 
@@ -400,7 +446,7 @@ function PFCadastro () {
                                     <ul id="ListaNaci">
                                         {ListaNacionalidade.map((val) => {
                                             return (
-                                                <li key={val.id} className="ListaNaciLI">
+                                                <li key={val.id} className="ListaNaciLI" onClick={()=>{definir(val.descricao)}}>
                                                     {val.descricao}
                                                 </li>
                                             );
@@ -466,8 +512,8 @@ function PFCadastro () {
                         </div>
                     </div>
                     <div id="BTNsDadosPessoais">
-                        <button><FontAwesomeIcon icon={faCheck} onClick={fechar}/></button>
-                        <button><FontAwesomeIcon icon={faXmark}/></button>
+                        <button onClick={confirm}><FontAwesomeIcon icon={faCheck}/></button>
+                        <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/></button>
                     </div>
                 </form>
                 <form id="FormFicha">
