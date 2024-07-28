@@ -147,6 +147,29 @@ function PFCadastro () {
     }
     //relacionadas a adição de novos cadastros 
 
+    const formatCPF = (cpf) => {
+        // Remove qualquer caractere não numérico
+        cpf = cpf.replace(/\D/g, '');
+    
+        // Adiciona a máscara
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    
+        return cpf;
+      }
+
+      const handleChange = (event) => {
+        const { value } = event.target;
+        const formattedCPF = formatCPF(value);
+    
+        // Atualiza o valor do input
+        if (refCPF.current) {
+          refCPF.current.value = formattedCPF;
+        }
+        console.log (refCPF.current.value)
+      }  
+
     async function add () {
         refNomeCompleto.current.value = ""
         refNomeCracha.current.value = ""
@@ -315,11 +338,11 @@ function PFCadastro () {
                         <div id="CamposOutrosPF-DP">
                             <fieldset className="FieldDadosPessoais outrosPF-DP"> 
                                 <label>RG</label>
-                                <input type="number" ref={refRG}/>
+                                <input type="text" ref={refRG}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>CPF</label>
-                                <input type="number" ref={refCPF}/>
+                                <input type="text" ref={refCPF} onChange={handleChange}/>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais outrosPF-DP">
                                 <label>Nacionalidade</label>
