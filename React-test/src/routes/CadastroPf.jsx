@@ -560,23 +560,23 @@ function PFCadastro () {
                             </fieldset>
                             <fieldset className="FieldDadosPessoais menoresPF-Ficha">
                                 <label>Gênero: </label>
-                                <span>{fichaData.genero}</span>
+                                <span>{fichaData.genero }</span>
                             </fieldset>                            
                             <fieldset className="FieldDadosPessoais">
                                 <label>Fornecedor: </label>
-                                <span>{fichaData.fornecedor}</span>
+                                <span>{fichaData.fornecedor ? 'Ativo' : 'Inativo'}</span>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais">
                                 <label>Estrangeira: </label>
-                                <span>{fichaData.estrangeira}</span>
+                                <span>{fichaData.estrangeira ? 'Ativo' : 'Inativo'}</span>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais">
                                 <label>Notificação: </label>
-                                <span>{fichaData.notificacao}</span>
+                                <span>{fichaData.notificacao ? 'Ativo' : 'Inativo'}</span>
                             </fieldset>
                             <fieldset className="FieldDadosPessoais">
                                 <label>Situação: </label>
-                                <span>{fichaData.situacao}</span>
+                                <span>{fichaData.situacao ? 'Ativo' : 'Inativo'}</span>
                             </fieldset>
                         </div>
                     </div>
