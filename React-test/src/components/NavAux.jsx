@@ -28,16 +28,31 @@ function NavAux ({ style, onMouseOut }) {
         <div id="Aux" style={{ position: 'absolute', top: style.top, left: style.left }} onMouseOut={handleMouseOut} ref={navAuxRef}>
             <span onClick={navegar}>Pais</span>
             <span onClick={navegar2}>Municipio</span>
-            <span onClick={navegar3}>Aeroporto</span>
         </div>
     );
 }
 
-function NavAuxP () {
+function NavAuxP ({ style, onMouseOut }) {
+    const navAuxRef = useRef(null);
+    const navigate = useNavigate();
+    const navegar = () => {
+        navigate('/Cadastro/PF');
+    }
+
+    const navegar2 = () => {
+        navigate('/Cadastro/PJ');
+    }
+
+    const handleMouseOut = (event) => {
+        if (!navAuxRef.current.contains(event.relatedTarget)) {
+            onMouseOut();
+        }
+    };
+    
     return(
-        <div>
-            <span>Pessoa F</span>
-            <span>Pessoa J</span>
+        <div id="Aux" style={{ position: 'absolute', top: style.top, left: style.left }} onMouseOut={handleMouseOut} ref={navAuxRef}>
+            <span onClick={navegar}>Pessoa F</span>
+            <span onClick={navegar2}>Pessoa J</span>
         </div>
     );
 }

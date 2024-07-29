@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavData } from "./NavData";
-import { NavAux } from "./NavAux";
+import { NavAux, NavAuxP } from "./NavAux";
 import PuserImg from "../img/Puser.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,7 @@ import '../css/componentes.css/nav.css';
 function NavBar () {
     const [isComponentVisible, setIsComponentVisible] = useState(false);
     const [showAuxNav, setShowAuxNav] = useState(false);
+    const [showAuxNavP, setShowAuxNavP] = useState(false);
     const [navAuxPosition, setNavAuxPosition] = useState({}); // Estado para armazenar as coordenadas do NavAux
     const navigate = useNavigate();
     const rotaG = ()=>{
@@ -36,18 +37,26 @@ function NavBar () {
                 navigate('/Usuario');
                 break;
             case "3":
-                setShowAuxNav(true);
+                navigate('/Cadastro/PF')
+                setShowAuxNavP(true);
                 setNavAuxPosition({
                     top: rect.top,
                     left: rect.right // Adicionando 1 rem (16px) para a direita em relação ao elemento clicado
                 });
                 break;
             case "4":
-                rotaG()
+                setShowAuxNav(true);
+                setNavAuxPosition({
+                    top: rect.top,
+                    left: rect.right // Adicionando 1 rem (16px) para a direita em relação ao elemento clicado
+                });
                 break;
             case "5":
-                rotaC()
+                rotaG()
                 break;
+            case "6":
+                rotaC()
+                break
 
             default:
                 // Ação padrão para outros ids
@@ -57,6 +66,7 @@ function NavBar () {
 
     const handleNavAuxMouseOut = () => {
         setShowAuxNav(false);
+        setShowAuxNavP(false);
     };
 
     return (
@@ -70,7 +80,7 @@ function NavBar () {
                 <ul id="NavList">
                     {NavData.map((val, key)=>{
                         return(
-                            <li className="row" key={val.id} onClick={(event) => handleItemClick(val.id, event)}>
+                            <li className="row" key={val.id} onClick={(event) => handleItemClick(val.id, event)} onMouseEnter={handleNavAuxMouseOut}>
                                 <div id="icon">
                                     {val.icon}
                                 </div>
@@ -83,6 +93,7 @@ function NavBar () {
                 </ul>
             </nav>
             {showAuxNav && <NavAux style={navAuxPosition} onMouseOut={handleNavAuxMouseOut} />} {/* Passar as coordenadas para o NavAux e adicionar evento onMouseOut */}
+            {showAuxNavP && <NavAuxP style={navAuxPosition} onMouseOut={handleNavAuxMouseOut} />} {/* Passar as coordenadas para o NavAux e adicionar evento onMouseOut */}
             <span id="BTN" onClick={ativarAnimacao}><FontAwesomeIcon icon={faBars}/></span>
         </div>
     )

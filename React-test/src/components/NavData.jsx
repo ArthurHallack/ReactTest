@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouseChimney } from "@fortawesome/free-solid-svg-icons"
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { faTableList } from "@fortawesome/free-solid-svg-icons";
 import { faGears } from "@fortawesome/free-solid-svg-icons";
 import { faChartPie } from "@fortawesome/free-solid-svg-icons";
@@ -20,20 +20,26 @@ export const NavData = [
         icon: <FontAwesomeIcon icon={faUser} />
     },
 
+    {
+        id:"3",
+        title: "Cadastro",
+        icon: <FontAwesomeIcon icon={faUserGroup} />
+    },
+
     {   
-        id: "3",
+        id: "4",
         title: "Tabelas",
         icon: <FontAwesomeIcon icon={faTableList} />
     },
 
     {
-        id: "4",
+        id: "5",
         title: "Graficos",
         icon: <FontAwesomeIcon icon={faChartPie} />
     },
 
     {
-        id: "5",
+        id: "6",
         title: "Configurações",
         icon: <FontAwesomeIcon icon={faGears} />
     }
