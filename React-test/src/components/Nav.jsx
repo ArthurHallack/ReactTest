@@ -37,7 +37,6 @@ function NavBar () {
                 navigate('/Usuario');
                 break;
             case "3":
-                navigate('/Cadastro/PF')
                 setShowAuxNavP(true);
                 setNavAuxPosition({
                     top: rect.top,
