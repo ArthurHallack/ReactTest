@@ -195,6 +195,11 @@ function PFCadastro () {
         return rg;
     }
 
+        function formatarData(data) {
+            const [ano, mes, dia] = data.split('-')
+            return `${dia}/${mes}/${ano}`
+        }
+
       const handleChangeCPF = (event) => {
         const { value } = event.target;
         const formattedCPF = formatCPF(value);
@@ -243,28 +248,33 @@ function PFCadastro () {
         window.document.getElementById('FormFicha').style.display="none" 
     }
 
-    async function confirm () {
+    async function confirm (e) {
+        e.preventDefault()
         var valorNaci = refNacionalidade.current.value
         var valorReal = ListaNacionalidade.find(naci=> naci.descricao === valorNaci)
         var idCorrespondente = valorReal ? valorReal.id : null
 
+        
+        const dataSelecionada = refDataNascimento.current.value
+        const dataFormatada = formatarData(dataSelecionada);
+
         var data = {
             "id": 0,
+            "fornecedor": refFornecedor.current.checked,
             "nome_completo": refNomeCompleto.current.value,
             "nome_reserva": refNomeReserva.current.value,
             "nome_cracha": refNomeCracha.current.value,
-            "genero": refGenero.current.value,
-            "estado_civil": refEstadoCivil.current.value,
-            "dt_nascimento": refDataNascimento.current.value,
-            "nac_id_pais": idCorrespondente,
-            "nacionalidade": refNacionalidade.current.value,
-            "estrangeira": refEstrangeira.current.checked,
             "cpf": refCPF.current.value,
             "rg": refRG.current.value,
-            "rne": "",
-            "fornecedor": false,
-            "notificacao": false,
-            "situacao": true,
+            "nacionalidade": refNacionalidade.current.value,
+            "nac_id_pais": idCorrespondente,
+            "dt_nascimento": dataFormatada,
+            "genero": refGenero.current.value,
+            "colgen_outros": "hide",
+            "estado_civil": refEstadoCivil.current.value,
+            "situacao": refSituacao.current.checked,                                                                                   
+            "notificacao": refNotificacao.current.checked,
+            "estrangeira": refEstrangeira.current.checked,            
             "inc_usuario": 1,
             "alt_usuario": 0,
             "alt_dhsis": "2024-07-17T11:00:00.000Z"
@@ -283,7 +293,6 @@ function PFCadastro () {
             "estrangeira": refEstrangeira.current.checked,
             "cpf": refCPF.current.value,
             "rg": refRG.current.value,
-            "rne": "",
             "fornecedor": false,
             "notificacao": false,
             "situacao": true,
@@ -402,189 +411,201 @@ function PFCadastro () {
                 </div>
             </div>
             <div id="InfoAreaPF">
-                <form id="Form-DadosPessoais">
-                    <div>
-                        <p><i>Selecionar Informações</i></p>
-                    </div>
-                    <div id="CamposFormPF-DP">
-                        <div id="CamposNomePF-DP">
-                            <fieldset className="FieldDadosPessoais nomesPF-DP">
-                                <label>Nome Completo</label>
-                                <input type="text" ref={refNomeCompleto} onChange={()=>{
-                                    ConvertMaiusculo(refNomeCompleto)
-                                }}/>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais nomesPF-DP">
-                                <label>Nome p/ reserva</label>
-                                <input type="text" ref={refNomeReserva} onChange={()=>{
-                                    ConvertMaiusculo(refNomeReserva)
-                                }}/>
-                            </fieldset >
-                            <fieldset className="FieldDadosPessoais nomesPF-DP">
-                                <label>Nome p/ crachá</label>
-                                <input type="text" ref={refNomeCracha} onChange={()=>{
-                                    ConvertMaiusculo(refNomeCracha)
-                                }}/>
-                            </fieldset>
+                <div id="inforAreaPF2">
+                    <form id="Form-DadosPessoais">
+                        <div>
+                            <p><i>Selecionar Informações</i></p>
                         </div>
-                        <div id="CamposOutrosPF-DP">
-                            <fieldset className="FieldDadosPessoais outrosPF-DP"> 
-                                <label>RG</label>
-                                <input type="text" ref={refRG} onChange={handleChangeRG}/>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais outrosPF-DP">
-                                <label>CPF</label>
-                                <input type="text" ref={refCPF} onChange={handleChangeCPF}/>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais outrosPF-DP">
-                                <label>Nacionalidade</label>
-                                <input type="text" ref={refNacionalidade} onChange={()=>{
-                                    ConvertMaiusculo(refNacionalidade)
-                                    ListNaci()
-                                }}/>
-                                <div id="DivListNaci">
-                                    <ul id="ListaNaci">
-                                        {ListaNacionalidade.map((val) => {
-                                            return (
-                                                <li key={val.id} className="ListaNaciLI" onClick={()=>{definir(val.descricao)}}>
-                                                    {val.descricao}
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </div>
+                        <div id="CamposFormPF-DP">
+                            <div id="CamposNomePF-DP">
+                                <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                    <label>Nome Completo</label>
+                                    <input type="text" ref={refNomeCompleto} onChange={()=>{
+                                        ConvertMaiusculo(refNomeCompleto)
+                                    }}/>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                    <label>Nome p/ reserva</label>
+                                    <input type="text" ref={refNomeReserva} onChange={()=>{
+                                        ConvertMaiusculo(refNomeReserva)
+                                    }}/>
+                                </fieldset >
+                                <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                    <label>Nome p/ crachá</label>
+                                    <input type="text" ref={refNomeCracha} onChange={()=>{
+                                        ConvertMaiusculo(refNomeCracha)
+                                    }}/>
+                                </fieldset>
+                            </div>
+                            <div id="CamposOutrosPF-DP">
+                                <fieldset className="FieldDadosPessoais outrosPF-DP"> 
+                                    <label>RG</label>
+                                    <input type="text" ref={refRG} onChange={handleChangeRG}/>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais outrosPF-DP">
+                                    <label>CPF</label>
+                                    <input type="text" ref={refCPF} onChange={handleChangeCPF}/>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais outrosPF-DP">
+                                    <label>Nacionalidade</label>
+                                    <input type="text" ref={refNacionalidade} onChange={()=>{
+                                        ConvertMaiusculo(refNacionalidade)
+                                        ListNaci()
+                                    }}/>
+                                    <div id="DivListNaci">
+                                        <ul id="ListaNaci">
+                                            {ListaNacionalidade.map((val) => {
+                                                return (
+                                                    <li key={val.id} className="ListaNaciLI" onClick={()=>{definir(val.descricao)}}>
+                                                        {val.descricao}
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
 
-                            </fieldset>
+                                </fieldset>
+                            </div>
+                            <div id="CamposMenoresPF-DP">
+                                <fieldset className="FieldDadosPessoais menoresPF-DP">
+                                    <label>Data de Nascimento</label>
+                                    <input type="date" id="DataInputPF-DP" ref={refDataNascimento}/>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais menoresPF-DP">
+                                    <label>Estado Civil</label>
+                                    <select name="Situacao" id="OpCivilPF" ref={refEstadoCivil}>
+                                            <option value="">Selecionar</option>
+                                            <option value="1">SOLTEIRO</option>
+                                            <option value="2">CASADO</option>
+                                            <option value="3">SEPARADO</option>
+                                            <option value="4">DIVORCIADO</option>
+                                            <option value="5">VIÚVO</option>
+                                    </select>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais menoresPF-DP">
+                                    <label>Gênero</label>
+                                    <select name="Situacao" id="OpGeneroPF" ref={refGenero}>
+                                            <option value="">Selecionar</option>
+                                            <option value="1">MASCULINO</option>
+                                            <option value="2">FEMININO</option>
+                                            <option value="3">OUTROS</option>
+                                    </select>
+                                </fieldset>
+                                <fieldset className="CheckPF-DP">
+                                    <label>Fornecedor</label>
+                                    <div>
+                                        <input type="checkbox" ref={refFornecedor}/>
+                                        <p>Sim</p>
+                                    </div>                            
+                                </fieldset>
+                                <fieldset className="CheckPF-DP">
+                                    <label>Estrangeira</label>
+                                    <div>
+                                        <input type="checkbox" ref={refEstrangeira}/>
+                                        <p>Sim</p>
+                                    </div>
+                                </fieldset>
+                                <fieldset className="CheckPF-DP">
+                                    <label>Notificação</label>
+                                    <div>
+                                        <input type="checkbox" ref={refNotificacao}/>
+                                        <p>Sim, receber</p>
+                                    </div>
+                                </fieldset>
+                                <fieldset className="CheckPF-DP">
+                                    <label>Situação</label>
+                                    <div>
+                                        <input type="checkbox" ref={refSituacao}/>
+                                        <p>Ativo</p>
+                                    </div>
+                                </fieldset>
+                            </div>
                         </div>
-                        <div id="CamposMenoresPF-DP">
-                            <fieldset className="FieldDadosPessoais menoresPF-DP">
-                                <label>Data de Nascimento</label>
-                                <input type="date" id="DataInputPF-DP" ref={refDataNascimento}/>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais menoresPF-DP">
-                                <label>Estado Civil</label>
-                                <select name="Situacao" id="OpCivilPF" ref={refEstadoCivil}>
-                                        <option value="">Selecionar</option>
-                                        <option value="1">SOLTEIRO</option>
-                                        <option value="2">CASADO</option>
-                                        <option value="3">SEPARADO</option>
-                                        <option value="4">DIVORCIADO</option>
-                                        <option value="5">VIÚVO</option>
-                                </select>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais menoresPF-DP">
-                                <label>Gênero</label>
-                                <select name="Situacao" id="OpGeneroPF" ref={refGenero}>
-                                        <option value="">Selecionar</option>
-                                        <option value="1">MASCULINO</option>
-                                        <option value="2">FEMININO</option>
-                                        <option value="3">OUTROS</option>
-                                </select>
-                            </fieldset>
-                            <fieldset className="CheckPF-DP">
-                                <label>Fornecedor</label>
-                                <div>
-                                    <input type="checkbox" ref={refFornecedor}/>
-                                    <p>Sim</p>
-                                </div>                            
-                            </fieldset>
-                            <fieldset className="CheckPF-DP">
-                                <label>Estrangeira</label>
-                                <div>
-                                    <input type="checkbox" ref={refEstrangeira}/>
-                                    <p>Sim</p>
-                                </div>
-                            </fieldset>
-                            <fieldset className="CheckPF-DP">
-                                <label>Notificação</label>
-                                <div>
-                                    <input type="checkbox" ref={refNotificacao}/>
-                                    <p>Sim, receber</p>
-                                </div>
-                            </fieldset>
-                            <fieldset className="CheckPF-DP">
-                                <label>Situação</label>
-                                <div>
-                                    <input type="checkbox" ref={refSituacao}/>
-                                    <p>Ativo</p>
-                                </div>
-                            </fieldset>
+                        <div id="BTNsDadosPessoais">
+                            <button onClick={confirm}><FontAwesomeIcon icon={faCheck}/></button>
+                            <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/></button>
+                        </div>
+                    </form>
+                    <form id="FormFicha">
+                        <div>
+                            <p><i>Informações Gerais</i></p>
+                        </div>
+                        <div id="CamposFormPF-DP">
+                            <div id="CamposNomePF-DP">
+                                <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                    <label>Nome Completo: </label>
+                                    <span>{fichaData.nome_completo}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                    <label>Nome para Reserva: </label>
+                                    <span>{fichaData.nome_reserva}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais nomesPF-DP">
+                                    <label>Nome para crachá: </label>
+                                    <span>{fichaData.nome_reserva}</span>
+                                </fieldset>
+                            </div>
+                            <div id="CamposOutrosPF-DP">
+                                <fieldset className="FieldDadosPessoais outrosPF-ficha">
+                                    <label>RG: </label>
+                                    <span>{fichaData.rg}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais outrosPF-ficha">
+                                    <label>CPF: </label>
+                                    <span>{fichaData.cpf}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais outrosPF-ficha">
+                                    <label>Data de Nascimento</label>
+                                    <span>{fichaData.dt_nascimento}</span>
+                                </fieldset>
+                            </div>
+                            <div id="CamposMenoresPF-Ficha">
+                                <fieldset className="FieldDadosPessoais menoresPF-Ficha">
+                                    <label>Nacionalidade: </label>
+                                    <span>{fichaData.nacionalidade}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais menoresPF-Ficha">
+                                    <label>Estado Civil: </label>
+                                    <span>{fichaData.estado_civil}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais menoresPF-Ficha">
+                                    <label>Gênero: </label>
+                                    <span>{fichaData.genero }</span>
+                                </fieldset>                            
+                                <fieldset className="FieldDadosPessoais">
+                                    <label>Fornecedor: </label>
+                                    <span>{fichaData.fornecedor ? 'Ativo' : 'Inativo'}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais">
+                                    <label>Estrangeira: </label>
+                                    <span>{fichaData.estrangeira ? 'Ativo' : 'Inativo'}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais">
+                                    <label>Notificação: </label>
+                                    <span>{fichaData.notificacao ? 'Ativo' : 'Inativo'}</span>
+                                </fieldset>
+                                <fieldset className="FieldDadosPessoais">
+                                    <label>Situação: </label>
+                                    <span>{fichaData.situacao ? 'Ativo' : 'Inativo'}</span>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id="BTNsDadosPessoais">
+                            <button onClick={fecharFicha}><FontAwesomeIcon icon={faCheck} /></button>
+                            <button><FontAwesomeIcon icon={faXmark}/></button>
+                        </div>
+                    </form>
+                    <div id="ContatoListPF">
+                        <div id="HudContatoPF">
+                            <span>Contatos</span>
+                        </div>
+                        <div id="Conteudo-PF-Contato">
+                            <div id="Table-PFcontato">
+                                
+                            </div>
                         </div>
                     </div>
-                    <div id="BTNsDadosPessoais">
-                        <button onClick={confirm}><FontAwesomeIcon icon={faCheck}/></button>
-                        <button onClick={fechar}><FontAwesomeIcon icon={faXmark}/></button>
-                    </div>
-                </form>
-                <form id="FormFicha">
-                    <div>
-                        <p><i>Informações Gerais</i></p>
-                    </div>
-                    <div id="CamposFormPF-DP">
-                        <div id="CamposNomePF-DP">
-                            <fieldset className="FieldDadosPessoais nomesPF-DP">
-                                <label>Nome Completo: </label>
-                                <span>{fichaData.nome_completo}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais nomesPF-DP">
-                                <label>Nome para Reserva: </label>
-                                <span>{fichaData.nome_reserva}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais nomesPF-DP">
-                                <label>Nome para crachá: </label>
-                                <span>{fichaData.nome_reserva}</span>
-                            </fieldset>
-                        </div>
-                        <div id="CamposOutrosPF-DP">
-                            <fieldset className="FieldDadosPessoais outrosPF-ficha">
-                                <label>RG: </label>
-                                <span>{fichaData.rg}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais outrosPF-ficha">
-                                <label>CPF: </label>
-                                <span>{fichaData.cpf}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais outrosPF-ficha">
-                                <label>Data de Nascimento</label>
-                                <span>{fichaData.dt_nascimento}</span>
-                            </fieldset>
-                        </div>
-                        <div id="CamposMenoresPF-Ficha">
-                            <fieldset className="FieldDadosPessoais menoresPF-Ficha">
-                                <label>Nacionalidade: </label>
-                                <span>{fichaData.nacionalidade}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais menoresPF-Ficha">
-                                <label>Estado Civil: </label>
-                                <span>{fichaData.estado_civil}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais menoresPF-Ficha">
-                                <label>Gênero: </label>
-                                <span>{fichaData.genero }</span>
-                            </fieldset>                            
-                            <fieldset className="FieldDadosPessoais">
-                                <label>Fornecedor: </label>
-                                <span>{fichaData.fornecedor ? 'Ativo' : 'Inativo'}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais">
-                                <label>Estrangeira: </label>
-                                <span>{fichaData.estrangeira ? 'Ativo' : 'Inativo'}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais">
-                                <label>Notificação: </label>
-                                <span>{fichaData.notificacao ? 'Ativo' : 'Inativo'}</span>
-                            </fieldset>
-                            <fieldset className="FieldDadosPessoais">
-                                <label>Situação: </label>
-                                <span>{fichaData.situacao ? 'Ativo' : 'Inativo'}</span>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div id="BTNsDadosPessoais">
-                        <button onClick={fecharFicha}><FontAwesomeIcon icon={faCheck} /></button>
-                        <button><FontAwesomeIcon icon={faXmark}/></button>
-                    </div>
-                </form>
+                </div>
                 <div id="AreaImgPF">
                     <img src="" alt="" />
                     <input type="file" id="uploadBtn"/>
