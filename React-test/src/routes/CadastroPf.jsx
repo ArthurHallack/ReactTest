@@ -597,7 +597,11 @@ function PFCadastro () {
                     </form>
                     <div id="ContatoListPF">
                         <div id="HudContatoPF">
-                            <span>Contatos</span>
+                            <ul>
+                                <li id="hudTipo">Tipo</li>
+                                <li id="hudEndere">Endereço</li>
+                                <li id="hudDescri">Descrição</li>
+                            </ul>
                         </div>
                         <div id="Conteudo-PF-Contato">
                             <div id="Table-PFcontato">

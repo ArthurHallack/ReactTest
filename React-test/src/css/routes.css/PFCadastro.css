@@ -135,12 +135,27 @@
     position: relative;
 }
 
-#HudContatoPF span {
+#HudContatoPF ul {
     display: flex;
+    flex-direction: row;
+    margin-left: 2rem;
+    color: #ffffff;
+}
+
+#HudContatoPF li {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    color: #ffffff;
-    margin-left: 4rem;
+}
+
+#hudTipo{
+    width: 10rem;
+}
+
+#hudEndere{
+    width: 19rem;
 }
 
 /*Dados Pessoais Form*/
