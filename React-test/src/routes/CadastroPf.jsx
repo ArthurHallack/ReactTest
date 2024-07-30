@@ -135,7 +135,7 @@ function PFCadastro () {
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
-        window.document.getElementById('Form-DadosPessoais').style.display="flex"
+        window.document.getElementById('Form-DadosPessoais').style.display="none"
         //desaparecer
         window.document.getElementById('ContedeuListPF').style.display="none"
         window.document.getElementById('BTNsTopPF').style.display="none"
@@ -593,6 +593,38 @@ function PFCadastro () {
                         <div id="BTNsDadosPessoais">
                             <button onClick={fecharFicha}><FontAwesomeIcon icon={faCheck} /></button>
                             <button><FontAwesomeIcon icon={faXmark}/></button>
+                        </div>
+                    </form>
+                    <form id="Form-AddContatos">
+                        <p><i>Selecionar Informações</i></p>
+                        <div id="DivContatosAdd">
+                            <div id="secInputsContatos">                                
+                                <fieldset id="fieldContatosTipo">
+                                    <label>Tipo</label>
+                                    <select name="Situacao" id="OpTipoPF" ref={refGenero}>
+                                        <option value="">Selecionar</option>
+                                        <option value="1">FONE</option>
+                                        <option value="2">CELULAR</option>
+                                        <option value="3">EMAIL</option>
+                                        <option value="4">FACEBOOK</option>
+                                        <option value="5">INSTAGRAM</option>
+                                        <option value="6">TWITTER</option>
+                                        <option value="7">OUTROS</option>
+                                    </select>
+                                </fieldset>
+                                <fieldset id="FieldContatosEndere">
+                                    <label>Endereço</label>
+                                    <input type="text" />
+                                </fieldset>
+                                <fieldset id="FieldContatosDescri">
+                                    <label>Descrição</label>
+                                    <input type="text" />
+                                </fieldset>                              
+                            </div>
+                            <div id="BTNsContatosPF">
+                                <button><FontAwesomeIcon icon={faCheck} /></button>
+                                <button><FontAwesomeIcon icon={faXmark} /></button>
+                            </div>
                         </div>
                     </form>
                     <div id="ContatoListPF">

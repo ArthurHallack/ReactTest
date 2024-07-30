@@ -158,6 +158,69 @@
     width: 19rem;
 }
 
+/*FORM ADD CONTATOS*/
+
+#Form-AddContatos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff6a;
+    width: 60rem;
+    height: 15rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    gap: 1rem;
+    border-radius: 5px;
+}
+
+#Form-AddContatos fieldset{
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+#DivContatosAdd{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: baseline;
+}
+
+#secInputsContatos{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#secInputsContatos input {
+    border: none;
+    border-radius: 2px;
+    height: 1.5rem;
+}
+
+#OpTipoPF{
+    width: 8rem;
+    height: 1.6rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+#FieldContatosEndere{
+    width: 15rem;
+}
+
+#FieldContatosDescri{
+    width: 15rem;
+}
+
+#BTNsContatosPF{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-left: 13rem;
+}
+
 /*Dados Pessoais Form*/
 
 #Form-DadosPessoais{
