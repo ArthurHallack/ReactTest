@@ -158,6 +158,25 @@
     width: 19rem;
 }
 
+.ListContatos{
+    display: flex;
+    flex-direction: row;
+}
+
+.dtipoContatos{
+    width: 10.1rem;
+    margin-left: 1.7rem;
+    width: 10.1rem;
+}
+
+.endereContatos{
+    width: 19rem;
+}
+
+.descriContatos{
+    width: 22rem;
+}
+
 /*FORM ADD CONTATOS*/
 
 #Form-AddContatos{

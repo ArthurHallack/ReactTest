@@ -650,10 +650,10 @@ function PFCadastro () {
                             <div id="Table-PFcontato">
                                 {Array.isArray(ListaContatos) && ListaContatos.length > 0 ? (
                                     ListaContatos.map((ct, index) => (
-                                        <ul key={index}>
-                                            <li>{ct.dtipo}</li>
-                                            <li>{ct.endereco}</li>
-                                            <li>{ct.descricao}</li>
+                                        <ul key={index} className="ListContatos">
+                                            <li className="dtipoContatos">{ct.dtipo}</li>
+                                            <li className="endereContatos">{ct.endereco}</li>
+                                            <li className="descriContatos">{ct.descricao}</li>
                                         </ul>
                                     ))
                                 ) : (
