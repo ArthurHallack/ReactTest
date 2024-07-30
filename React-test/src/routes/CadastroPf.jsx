@@ -75,10 +75,6 @@ function PFCadastro () {
         fetchData()
     },[])
 
-    useEffect(()=>{
-        console.log(ListaContatos)
-    },[ListaContatos])
-
     //functions
 
     function ConvertMaiusculo (ref) {
