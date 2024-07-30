@@ -75,6 +75,10 @@ function PFCadastro () {
         fetchData()
     },[])
 
+    useEffect(()=>{
+        console.log(ListaContatos)
+    },[ListaContatos])
+
     //functions
 
     function ConvertMaiusculo (ref) {
@@ -141,7 +145,8 @@ function PFCadastro () {
         }
         const data2 = await ContatosGet(corpo)
         const dadosjson = await data2.json()
-        setListaContatos(dadosjson)
+        const listaContatos = dadosjson.rcontato_regs || [];
+        setListaContatos(listaContatos)
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
@@ -647,7 +652,17 @@ function PFCadastro () {
                         </div>
                         <div id="Conteudo-PF-Contato">
                             <div id="Table-PFcontato">
-                            
+                                {Array.isArray(ListaContatos) && ListaContatos.length > 0 ? (
+                                    ListaContatos.map((ct, index) => (
+                                        <ul key={index}>
+                                            <li>{ct.dtipo}</li>
+                                            <li>{ct.endereco}</li>
+                                            <li>{ct.descricao}</li>
+                                        </ul>
+                                    ))
+                                ) : (
+                                    <p>Nenhum contato disponível</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -722,7 +737,7 @@ function PFCadastro () {
                             ))}
                         </div>
                         <div id="Table-PF2">
-                            {ListaPFfiltro.map((pf) => (
+                            {ListaPFfiltro.map((pf, index) => (
                                 <ul key={pf.id} className={`Todo-List-PF ${pf.hidden ? 'hidden' : ''} ${pf.situacao ? 'red-list' : ''}`}>
                                     <li className="Todo-List-li id-tdListPF">{pf.id}</li>
                                     <li className="Todo-List-li NC-tdListPF">{pf.nome_completo}</li>
