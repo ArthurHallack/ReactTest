@@ -10,6 +10,7 @@ import { FichaPF } from "../functions/pf/fichaPF";
 import { FiltroGetPF } from "../functions/pf/filtroPF"
 import { NaciPesquisa } from "../functions/pf/nacionalidadePF"
 import { SalvarPF } from "../functions/pf/savePF"
+import { ContatosGet } from "../functions/pf/getAllContatos"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -61,6 +62,7 @@ function PFCadastro () {
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFfiltro, setListaPFfiltro] = useState ([])//lista do filtro sendo renderizada
+    const [ListaContatos, setListaContatos] = useState ([])//lista de contatos do cliente sendo renderizada
     const [ListaNacionalidade, setListaNacionalidade] = useState ([])//lista de nacionalidades cadastradas
 
     //Effects
@@ -132,6 +134,14 @@ function PFCadastro () {
         refEstrangeira.current.checked = data.estrangeira
         refNotificacao.current.checked = data.notificacao
         refSituacao.current.checked = data.situacao
+
+        var corpo ={
+            "id_pfisica": id,
+	        "id_pjuridica": 0
+        }
+        const data2 = await ContatosGet(corpo)
+        const dadosjson = await data2.json()
+        setListaContatos(dadosjson)
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
@@ -637,7 +647,7 @@ function PFCadastro () {
                         </div>
                         <div id="Conteudo-PF-Contato">
                             <div id="Table-PFcontato">
-                                
+                            
                             </div>
                         </div>
                     </div>
