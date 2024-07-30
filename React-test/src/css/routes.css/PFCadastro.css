@@ -161,7 +161,7 @@
 /*FORM ADD CONTATOS*/
 
 #Form-AddContatos{
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     background-color: #ffffff6a;
@@ -172,6 +172,7 @@
     gap: 1rem;
     border-radius: 5px;
 }
+
 
 #Form-AddContatos fieldset{
     display: flex;

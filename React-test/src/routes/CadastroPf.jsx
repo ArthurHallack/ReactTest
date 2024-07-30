@@ -135,7 +135,7 @@ function PFCadastro () {
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
-        window.document.getElementById('Form-DadosPessoais').style.display="none"
+        window.document.getElementById('Form-DadosPessoais').style.display="flex"
         //desaparecer
         window.document.getElementById('ContedeuListPF').style.display="none"
         window.document.getElementById('BTNsTopPF').style.display="none"
