@@ -654,6 +654,12 @@ function PFCadastro () {
                                             <li className="dtipoContatos">{ct.dtipo}</li>
                                             <li className="endereContatos">{ct.endereco}</li>
                                             <li className="descriContatos">{ct.descricao}</li>
+                                            <li className="liBTNContatos">
+                                                <div className="divContatosBTNs">
+                                                    <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
+                                                    <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
+                                                </div>
+                                            </li>
                                         </ul>
                                     ))
                                 ) : (

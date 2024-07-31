@@ -123,6 +123,7 @@
     height: 15rem;
     background-color: #ffffff6a;
     border-radius: 5px 5px;
+    gap: 8px;
 }
 
 #HudContatoPF{
@@ -158,6 +159,12 @@
     width: 19rem;
 }
 
+#Table-PFcontato{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 .ListContatos{
     display: flex;
     flex-direction: row;
@@ -174,7 +181,12 @@
 }
 
 .descriContatos{
-    width: 22rem;
+    width: 27rem;
+}
+
+.divContatosBTNs{
+    display: flex;
+    flex-direction: row;
 }
 
 /*FORM ADD CONTATOS*/
