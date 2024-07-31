@@ -644,6 +644,7 @@ function PFCadastro () {
                                 <li id="hudTipo">Tipo</li>
                                 <li id="hudEndere">Endereço</li>
                                 <li id="hudDescri">Descrição</li>
+                                <li id="hudAdd"><FontAwesomeIcon icon={faPlus} id="addhud"/></li>
                             </ul>
                         </div>
                         <div id="Conteudo-PF-Contato">

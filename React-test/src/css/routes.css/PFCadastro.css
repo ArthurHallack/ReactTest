@@ -159,6 +159,14 @@
     width: 19rem;
 }
 
+#hudDescri{
+    width: 28rem;
+}
+
+#addhud{
+    cursor: pointer;
+}
+
 #Table-PFcontato{
     display: flex;
     flex-direction: column;
