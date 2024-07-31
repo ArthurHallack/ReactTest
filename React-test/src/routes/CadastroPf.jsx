@@ -37,6 +37,11 @@ function PFCadastro () {
     const generoFiltro = useRef()
     const situacaoFiltro = useRef()
 
+    //refs relacionadas ao form de contatos
+    const contatosTipo = useRef()
+    const contatosEndere = useRef()
+    const contatosDescri = useRef()
+
     //estados
     const [fichaData, setfichaData] = useState ([])
     const [confirmVisivel, setconfirmVisivel] = useState (false)
@@ -408,6 +413,17 @@ function PFCadastro () {
         setMsgerro(element.msgerro)
     }
 
+    //relacionada aos contatos em geral, tabela, forms etc..
+
+    function showContatosAdd () {
+        //aparecer
+        window.document.getElementById('Form-AddContatos').style.display="flex"
+        //desaparecer
+        window.document.getElementById('Form-DadosPessoais').style.display="none"
+        window.document.getElementById('FormFicha').style.display="none"
+        window.document.getElementById('Form-FilterPF').style.display="none"
+    }
+
     return(
         <div id="Tela-PFCadaastro">
             <NavBar/>
@@ -612,7 +628,7 @@ function PFCadastro () {
                             <div id="secInputsContatos">                                
                                 <fieldset id="fieldContatosTipo">
                                     <label>Tipo</label>
-                                    <select name="Situacao" id="OpTipoPF" ref={refGenero}>
+                                    <select name="Situacao" id="OpTipoPF" ref={contatosTipo}>
                                         <option value="">Selecionar</option>
                                         <option value="1">FONE</option>
                                         <option value="2">CELULAR</option>
@@ -625,11 +641,11 @@ function PFCadastro () {
                                 </fieldset>
                                 <fieldset id="FieldContatosEndere">
                                     <label>Endereço</label>
-                                    <input type="text" />
+                                    <input type="text" ref={contatosEndere}/>
                                 </fieldset>
                                 <fieldset id="FieldContatosDescri">
                                     <label>Descrição</label>
-                                    <input type="text" />
+                                    <input type="text" ref={contatosDescri}/>
                                 </fieldset>                              
                             </div>
                             <div id="BTNsContatosPF">
@@ -644,7 +660,7 @@ function PFCadastro () {
                                 <li id="hudTipo">Tipo</li>
                                 <li id="hudEndere">Endereço</li>
                                 <li id="hudDescri">Descrição</li>
-                                <li id="hudAdd"><FontAwesomeIcon icon={faPlus} id="addhud"/></li>
+                                <li id="hudAdd" onClick={showContatosAdd}><FontAwesomeIcon icon={faPlus} id="addhud"/></li>
                             </ul>
                         </div>
                         <div id="Conteudo-PF-Contato">
