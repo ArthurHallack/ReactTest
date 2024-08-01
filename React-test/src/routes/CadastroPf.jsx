@@ -125,6 +125,10 @@ function PFCadastro () {
 
     //relacionadas ao editar
 
+    async function editContato (){
+
+    }
+
     async function edit (id) {
 
         const data = await FichaPF(id)
@@ -171,6 +175,16 @@ function PFCadastro () {
     async function ficha (id) {
         const data = await FichaPF(id)
         setfichaData(data)
+
+        var corpo ={
+            "id_pfisica": id,
+	        "id_pjuridica": 0
+        }
+        const data2 = await ContatosGet(corpo)
+        const dadosjson = await data2.json()
+        const listaContatos = dadosjson.rcontato_regs || [];
+        setListaContatos(listaContatos)
+        setNomeContato(data.nome_completo)
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
@@ -733,7 +747,7 @@ function PFCadastro () {
                                             <li className="descriContatos">{ct.descricao}</li>
                                             <li className="liBTNContatos">
                                                 <div className="divContatosBTNs">
-                                                    <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
+                                                    <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{editContato(ct.id)}}/>
                                                     <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{ExcluiContato(ct)}}/>
                                                 </div>
                                             </li>
@@ -823,7 +837,7 @@ function PFCadastro () {
                                     <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" />
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id)}}/>
                                             <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={() => edit(pf.id)} />
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={() => Exclui(pf)} />
                                         </div>
