@@ -13,6 +13,7 @@ import { NaciPesquisa } from "../functions/pf/nacionalidadePF"
 import { SalvarPF } from "../functions/pf/savePF"
 import { ContatosGet } from "../functions/pf/getAllContatos"
 import { SalvarContatoPF } from "../functions/pf/contatoSave"
+import { FichaPFcontato } from "../functions/pf/fichaContato"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -56,7 +57,10 @@ function PFCadastro () {
     //estados relacionados aos dados pessoais
     const [idValue, setidValue] = useState ('')
     const [idValueContato, setidValueContato] = useState ('')
+    const [idValueFicha, setidValueFicha] = useState ('')
     const [NomeContato, setNomeContato] = useState ('')
+    const [inc, setinc] = useState ('')
+    const [alt, setalt] = useState ('')
     const [nomeCompleto, setnomeCompleto] = useState ("")
     const [nomeReserva, setnomeReserva] = useState ("")
     const [nomeCracha, setnomeCracha] = useState ("")
@@ -125,8 +129,25 @@ function PFCadastro () {
 
     //relacionadas ao editar
 
-    async function editContato (){
+    async function editContato (id){
+        var data = await FichaPFcontato(id)
+        setidValueFicha(id)
+        setinc(data.inc_dhsis)
+        setalt(data.alt_dhsis)
 
+        contatosTipo.current.value = data.tipo
+        contatosEndere.current.value = data.endereco
+        contatosDescri.current.value = data.descricao
+
+        //aparecer
+        window.document.getElementById('Form-AddContatos').style.display="flex"
+        //desaparecer
+        window.document.getElementById('Form-DadosPessoais').style.display="none"
+        window.document.getElementById('FormFicha').style.display="none"
+        window.document.getElementById('Form-FilterPF').style.display="none"
+
+        //configs de tamanho
+        window.document.getElementById('ContatoListPF').style.height="20rem"
     }
 
     async function edit (id) {
@@ -260,6 +281,7 @@ function PFCadastro () {
 
     async function add () {
 
+        setidValue('')
         refNomeCompleto.current.value = ""
         refNomeCracha.current.value = ""
         refNomeReserva.current.value = ""
@@ -455,6 +477,7 @@ function PFCadastro () {
     //relacionada aos contatos em geral, tabela, forms etc..
 
     function showContatosAdd () {
+        setidValueFicha('')
         //aparecer
         window.document.getElementById('Form-AddContatos').style.display="flex"
         //desaparecer
@@ -487,12 +510,38 @@ function PFCadastro () {
             "alt_dhsis": "2024-07-17T12:00:00.000Z"
         }
 
-        var save = await SalvarContatoPF(data)
+        var data2 = {
+            "id": idValueFicha,
+            "id_pfisica": idValueContato,
+            "id_pjuridica": 0,
+            "nome": NomeContato,
+            "tipo": contatosTipo.current.value,
+            "endereco": contatosEndere.current.value,
+            "descricao": contatosDescri.current.value,
+            "pad_comercial": true,
+            "pad_financeiro": true,
+            "inc_usuario": 0,
+            "inc_dusuario": "ADMINISTRADOR",
+            "inc_dhsis": inc,
+            "alt_usuario": 0,
+            "alt_dusuario": "ADMINISTRADOR",
+            "alt_dhsis": alt
+        }
 
-        if (save.msgerro===""){
-            setMsgsucess(true)
+        if (idValueFicha===''){
+            var save = await SalvarContatoPF(data)
+            if (save.msgerro===""){
+                setMsgsucess(true)
+            }else{
+                setMsgerro(save.msgerro)
+            }
         }else{
-            setMsgerro(save.msgerro)
+            var save2 = await SalvarContatoPF(data2)
+            if (save2.msgerro===""){
+                setMsgsucess(true)
+            }else{
+                setMsgerro(save2.msgerro)
+            }
         }
         
     }
