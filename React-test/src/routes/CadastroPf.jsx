@@ -422,6 +422,10 @@ function PFCadastro () {
         window.document.getElementById('Form-DadosPessoais').style.display="none"
         window.document.getElementById('FormFicha').style.display="none"
         window.document.getElementById('Form-FilterPF').style.display="none"
+
+        //configs de tamanho
+        window.document.getElementById('ContatoListPF').style.height="20rem"
+
     }
 
     return(
