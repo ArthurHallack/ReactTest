@@ -60,22 +60,12 @@ function PFCadastro () {
     const [idValueFicha, setidValueFicha] = useState ('')
     const [NomeContato, setNomeContato] = useState ('')
     const [inc, setinc] = useState ('')
+    const [incEdit, setincEdit] = useState ('')
     const [alt, setalt] = useState ('')
-    const [nomeCompleto, setnomeCompleto] = useState ("")
-    const [nomeReserva, setnomeReserva] = useState ("")
-    const [nomeCracha, setnomeCracha] = useState ("")
-    const [RG, setRG] = useState ("")
-    const [CPF, setCPF] = useState ("")
-    const [Nacionalidade, setNacionalidade] = useState ("")
-    const [DataNascimento, setDataNascimento] = useState ("")
-    const [estadoCivil, setestadoCivil] = useState ("")
-    const [Genero, setGenero] = useState ("")
-    const [Fornecedor, setFornecedor] = useState (false)
-    const [Estrangeira, setEstrangeira] = useState (false)
-    const [Notificação, setNotificação] = useState (false)
-    const [Situacao, setSituacao] = useState(false)
+    const [altEdit, setaltEdit] = useState ('')
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
+    const [ListaPFatualizada, setListaPFatualizada] = useState (false)//lista principal precisa ser atualizada ? 
     const [ListaPFfiltro, setListaPFfiltro] = useState ([])//lista do filtro sendo renderizada
     const [ListaContatos, setListaContatos] = useState ([])//lista de contatos do cliente sendo renderizada
     const [ListaNacionalidade, setListaNacionalidade] = useState ([])//lista de nacionalidades cadastradas
@@ -89,6 +79,15 @@ function PFCadastro () {
         }
         fetchData()
     },[])
+
+    useEffect(()=>{
+        async function fetchData () {
+            const data = await GetAllPF()
+            setListaPF(data)
+            setListaPFatualizada(false)
+        }
+        fetchData()
+    },[ListaPFatualizada])
 
     //functions
 
@@ -115,6 +114,16 @@ function PFCadastro () {
         window.document.getElementById('DivListNaci').style.display='none'
     }
 
+    function formatDateForInput(dateStr) {
+        // Divida a string da data no formato DD/MM/YYYY
+        const [day, month, year] = dateStr.split('/');
+    
+        // Construa o formato YYYY-MM-DD
+        const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    
+        return formattedDate;
+    }
+
     //fechar interno do form dados pessoais
     function fechar (e) {
         e.preventDefault()
@@ -125,6 +134,8 @@ function PFCadastro () {
         //desaparecer
         window.document.getElementById('InfoAreaPF').style.display="none"       
         window.document.getElementById('Form-DadosPessoais').style.display="none" 
+        //configurações
+        window.document.getElementById('Form-DadosPessoais').style.marginBottom=""
     }
 
     //relacionadas ao editar
@@ -155,6 +166,7 @@ function PFCadastro () {
         const data = await FichaPF(id)
         setidValue(id)
         setidValueContato(id)
+        var dataNasci = formatDateForInput(data.dt_nascimento)
 
         refNomeCompleto.current.value = data.nome_completo
         refNomeCracha.current.value = data.nome_cracha
@@ -163,7 +175,7 @@ function PFCadastro () {
         refCPF.current.value = data.cpf
         refNacionalidade.current.value = data.nacionalidade
 
-        refDataNascimento.current.value = data.dt_nascimento
+        refDataNascimento.current.value = dataNasci
 
         refEstadoCivil.current.value = data.estado_civil
         refGenero.current.value = data.genero
@@ -181,10 +193,13 @@ function PFCadastro () {
         const listaContatos = dadosjson.rcontato_regs || [];
         setListaContatos(listaContatos)
         setNomeContato(data.nome_completo)
+        setincEdit(data.inc_dhsis)
+        setaltEdit(data.alt_dhsis)
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
         window.document.getElementById('Form-DadosPessoais').style.display="flex"
+        window.document.getElementById('ContatoListPF').style.display="flex"
         //desaparecer
         window.document.getElementById('ContedeuListPF').style.display="none"
         window.document.getElementById('BTNsTopPF').style.display="none"
@@ -209,7 +224,8 @@ function PFCadastro () {
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
-        window.document.getElementById('FormFicha').style.display="flex"        
+        window.document.getElementById('FormFicha').style.display="flex"
+        window.document.getElementById('ContatoListPF').style.display="flex"        
         //desaparecer
         window.document.getElementById('ContedeuListPF').style.display="none"
         window.document.getElementById('BTNsTopPF').style.display="none"
@@ -306,6 +322,9 @@ function PFCadastro () {
         window.document.getElementById('ContedeuListPF').style.display="none"
         window.document.getElementById('BTNsTopPF').style.display="none" 
         window.document.getElementById('FormFicha').style.display="none" 
+        window.document.getElementById('ContatoListPF').style.display="none" 
+        //configurações
+        window.document.getElementById('Form-DadosPessoais').style.marginBottom="19rem"
     }
 
     async function confirm (e) {
@@ -317,6 +336,9 @@ function PFCadastro () {
         
         const dataSelecionada = refDataNascimento.current.value
         const dataFormatada = formatarData(dataSelecionada);
+
+        var AtualData = new Date();
+        var FormDataAtual = AtualData.toISOString().split('T')[0];
 
         var data = {
             "id": 0,
@@ -337,7 +359,7 @@ function PFCadastro () {
             "estrangeira": refEstrangeira.current.checked,            
             "inc_usuario": 1,
             "alt_usuario": 0,
-            "alt_dhsis": "2024-07-17T11:00:00.000Z"
+            "alt_dhsis": FormDataAtual
         }
 
         var dataUpdate = {
@@ -347,7 +369,7 @@ function PFCadastro () {
             "nome_cracha": refNomeCracha.current.value,
             "genero": refGenero.current.value,
             "estado_civil": refEstadoCivil.current.value,
-            "dt_nascimento": refDataNascimento.current.value,
+            "dt_nascimento": dataFormatada,
             "nac_id_pais": idCorrespondente,
             "nacionalidade": refNacionalidade.current.value,
             "estrangeira": refEstrangeira.current.checked,
@@ -357,21 +379,45 @@ function PFCadastro () {
             "notificacao": false,
             "situacao": true,
             "inc_usuario": 1,
+            "inc_dhsis": incEdit,
             "alt_usuario": 0,
-            "alt_dhsis": "2024-07-17T11:00:00.000Z"
+            "alt_dhsis": altEdit
         }
 
-        if (idValue==''){
+        if (idValue===''){
             const Salvando = await SalvarPF(data)
-            if(Salvando.retorno===0){
+            if(Salvando.msgerro==="Classe    - EMSSQLNativeException\rDescrição - [FireDAC][Phys][ODBC][Microsoft][SQL Server Native Client 11.0][SQL Server]Nome de objeto 'PROSERVICO' inválido."){
                 setMsgsucess(true)
+                setListaPFatualizada(true)
+                //aparecer
+                window.document.getElementById('ContedeuListPF').style.display='flex'
+                window.document.getElementById('BTNsTopPF').style.display='flex'
+                //desaparecer
+                window.document.getElementById('FormFicha').style.display='none'
+                window.document.getElementById('Form-AddContatos').style.display='none'
+                window.document.getElementById('InfoAreaPF').style.display='none'
+                window.document.getElementById('Form-DadosPessoais').style.display='none'
+                //configurações
+                window.document.getElementById('Form-DadosPessoais').style.marginBottom=""
+
             }else{
                 setMsgerro(Salvando.msgerro)
             }
         }else{
             const SalvandoUp = await SalvarPF(dataUpdate)
-            if(SalvandoUp.retorno===0){
+            if(SalvandoUp.msgerro==="Classe    - EMSSQLNativeException\rDescrição - [FireDAC][Phys][ODBC][Microsoft][SQL Server Native Client 11.0][SQL Server]Nome de objeto 'PROSERVICO' inválido."){
                 setMsgsucess(true)
+                setListaPFatualizada(true)
+                //aparecer
+                window.document.getElementById('ContedeuListPF').style.display='flex'
+                window.document.getElementById('BTNsTopPF').style.display='flex'
+                //desaparecer
+                window.document.getElementById('FormFicha').style.display='none'
+                window.document.getElementById('Form-AddContatos').style.display='none'
+                window.document.getElementById('InfoAreaPF').style.display='none'
+                window.document.getElementById('Form-DadosPessoais').style.display='none'
+                //configurações
+                window.document.getElementById('Form-DadosPessoais').style.marginBottom=""
             }else{
                 setMsgerro(SalvandoUp.msgerro)
             }
@@ -532,6 +578,15 @@ function PFCadastro () {
             var save = await SalvarContatoPF(data)
             if (save.msgerro===""){
                 setMsgsucess(true)
+                //aparecer
+                window.document.getElementById('ContedeuListPF').style.display='flex'
+                window.document.getElementById('BTNsTopPF').style.display='flex'
+                //desaparecer
+                window.document.getElementById('FormFicha').style.display='none'
+                window.document.getElementById('Form-AddContatos').style.display='none'
+                window.document.getElementById('InfoAreaPF').style.display='none'
+                //configs de tamanho
+                window.document.getElementById('ContatoListPF').style.height="15rem"
             }else{
                 setMsgerro(save.msgerro)
             }
@@ -539,11 +594,31 @@ function PFCadastro () {
             var save2 = await SalvarContatoPF(data2)
             if (save2.msgerro===""){
                 setMsgsucess(true)
+                //aparecer
+                window.document.getElementById('ContedeuListPF').style.display='flex'
+                window.document.getElementById('BTNsTopPF').style.display='flex'
+                //desaparecer
+                window.document.getElementById('FormFicha').style.display='none'
+                window.document.getElementById('Form-AddContatos').style.display='none'
+                window.document.getElementById('InfoAreaPF').style.display='none'
+                //configs de tamanho
+                window.document.getElementById('ContatoListPF').style.height="15rem"
             }else{
                 setMsgerro(save2.msgerro)
             }
         }
-        
+    }
+
+    function FecharContatoForm (e) {
+        e.preventDefault()
+        //aparecer   
+        window.document.getElementById('ContedeuListPF').style.display="flex"
+        window.document.getElementById('BTNsTopPF').style.display="flex"    
+        //desaparecer
+        window.document.getElementById('Form-AddContatos').style.display="none" 
+        window.document.getElementById('InfoAreaPF').style.display='none'
+        //configs de tamanho
+        window.document.getElementById('ContatoListPF').style.height="15rem"
     }
 
     return(
@@ -742,7 +817,7 @@ function PFCadastro () {
                         </div>
                         <div id="BTNsDadosPessoais">
                             <button onClick={fecharFicha}><FontAwesomeIcon icon={faCheck} /></button>
-                            <button><FontAwesomeIcon icon={faXmark}/></button>
+                            <button onClick={fecharFicha}><FontAwesomeIcon icon={faXmark}/></button>
                         </div>
                     </form>
                     <form id="Form-AddContatos">
@@ -773,7 +848,7 @@ function PFCadastro () {
                             </div>
                             <div id="BTNsContatosPF">
                                 <button onClick={saveContato}><FontAwesomeIcon icon={faCheck} /></button>
-                                <button><FontAwesomeIcon icon={faXmark} /></button>
+                                <button onClick={FecharContatoForm}><FontAwesomeIcon icon={faXmark} /></button>
                             </div>
                         </div>
                     </form>
