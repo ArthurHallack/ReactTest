@@ -51,6 +51,8 @@ function PFCadastro () {
 
     //estados relacionados aos dados pessoais
     const [idValue, setidValue] = useState ('')
+    const [idValueContato, setidValueContato] = useState ('')
+    const [NomeContato, setNomeContato] = useState ('')
     const [nomeCompleto, setnomeCompleto] = useState ("")
     const [nomeReserva, setnomeReserva] = useState ("")
     const [nomeCracha, setnomeCracha] = useState ("")
@@ -123,6 +125,7 @@ function PFCadastro () {
 
         const data = await FichaPF(id)
         setidValue(id)
+        setidValueContato(id)
 
         refNomeCompleto.current.value = data.nome_completo
         refNomeCracha.current.value = data.nome_cracha
@@ -148,6 +151,7 @@ function PFCadastro () {
         const dadosjson = await data2.json()
         const listaContatos = dadosjson.rcontato_regs || [];
         setListaContatos(listaContatos)
+        setNomeContato(data.nome_completo)
 
         //aparecer
         window.document.getElementById('InfoAreaPF').style.display="flex"
@@ -428,6 +432,28 @@ function PFCadastro () {
 
     }
 
+    async function saveContato (e) {
+        e.preventDefault()
+        var data = {
+            "id": 0,
+            "id_pfisica": idValueContato,
+            "id_pjuridica": 0,
+            "nome": NomeContato,
+            "tipo": contatosTipo.current.value,
+            "endereco": contatosEndere.current.value,
+            "descricao": contatosDescri.current.value,
+            "pad_comercial": true,
+            "pad_financeiro": true,
+            "inc_usuario": 0,
+            "inc_dusuario": "ADMINISTRADOR",
+            "inc_dhsis": "2024-07-17T12:00:00.000Z",
+            "alt_usuario": 0,
+            "alt_dusuario": "ADMINISTRADOR",
+            "alt_dhsis": "2024-07-17T12:00:00.000Z"
+        }
+        
+    }
+
     return(
         <div id="Tela-PFCadaastro">
             <NavBar/>
@@ -653,7 +679,7 @@ function PFCadastro () {
                                 </fieldset>                              
                             </div>
                             <div id="BTNsContatosPF">
-                                <button><FontAwesomeIcon icon={faCheck} /></button>
+                                <button onClick={saveContato}><FontAwesomeIcon icon={faCheck} /></button>
                                 <button><FontAwesomeIcon icon={faXmark} /></button>
                             </div>
                         </div>
