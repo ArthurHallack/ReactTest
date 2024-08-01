@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faBroom, faPlus, faCheck, faTrash, faPenToSquare, faFolderOpen, faXmark, faUpload} from "@fortawesome/free-solid-svg-icons"
 import NavBar from "../components/Nav"
 import MsgConfirmPF from "../components/confirmPF "
+import MsgConfirmPFcontato from "../components/confirmPFcontato"
 import { AlertS, AlertE } from "../components/Msg";
 import { GetAllPF } from "../functions/pf/getAllPF";
 import { FichaPF } from "../functions/pf/fichaPF";
@@ -46,7 +47,9 @@ function PFCadastro () {
     //estados
     const [fichaData, setfichaData] = useState ([])
     const [confirmVisivel, setconfirmVisivel] = useState (false)
+    const [confirmVisivelContato, setconfirmVisivelContato] = useState (false)
     const [arrayConfirm, setarrayConfirm] = useState ([])
+    const [arrayConfirmContato, setarrayConfirmContato] = useState ([])
     const [msgerro, setMsgerro] = useState (null)
     const [msgsucess, setMsgsucess] = useState (null)
 
@@ -405,16 +408,33 @@ function PFCadastro () {
         setarrayConfirm(element)
     }
 
+    const ExcluiContato = async (element) => {
+        setconfirmVisivelContato(true)
+        setarrayConfirmContato(element)
+    }
+
     function excluir (element){
         setListaPF(prevPaises => prevPaises.filter(pais => pais.id !== element.id))
         setListaPFfiltro(prevarrayFiltro => prevarrayFiltro.filter(pais => pais.id !== element.id))
+    }
+
+    function excluirContato (element){
+        setListaContatos(prevPaises => prevPaises.filter(pais => pais.id !== element.id))    
     }
 
     function fecharConfirm () {
         setconfirmVisivel(false)
     }
 
+    function fecharConfirmContato () {
+        setconfirmVisivelContato(false)
+    }
+
     function mensagemErro (element) {
+        setMsgerro(element.msgerro)
+    }
+
+    function mensagemErroContato (element) {
         setMsgerro(element.msgerro)
     }
 
@@ -469,6 +489,7 @@ function PFCadastro () {
             <AlertE error ={msgerro} handleError={handleError}/>
             <AlertS success={msgsucess} handleSuccess={handleSuccess}/>
             <MsgConfirmPF estado ={confirmVisivel} estadoF ={fecharConfirm} element={arrayConfirm} error = {mensagemErro} excluir ={excluir}/>
+            <MsgConfirmPFcontato estado={confirmVisivelContato} estadoF={fecharConfirmContato} element={arrayConfirmContato} error={mensagemErroContato} excluir={excluirContato}/>
             <div id="SecTop-PF">
                 <h1>Pessoa Fisica</h1>
                 <div id="BTNsTopPF">
@@ -713,7 +734,7 @@ function PFCadastro () {
                                             <li className="liBTNContatos">
                                                 <div className="divContatosBTNs">
                                                     <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais"/>
-                                                    <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais"/>
+                                                    <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{ExcluiContato(ct)}}/>
                                                 </div>
                                             </li>
                                         </ul>
