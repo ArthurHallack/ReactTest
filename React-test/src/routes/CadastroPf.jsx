@@ -11,6 +11,7 @@ import { FiltroGetPF } from "../functions/pf/filtroPF"
 import { NaciPesquisa } from "../functions/pf/nacionalidadePF"
 import { SalvarPF } from "../functions/pf/savePF"
 import { ContatosGet } from "../functions/pf/getAllContatos"
+import { SalvarContatoPF } from "../functions/pf/contatoSave"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -450,6 +451,14 @@ function PFCadastro () {
             "alt_usuario": 0,
             "alt_dusuario": "ADMINISTRADOR",
             "alt_dhsis": "2024-07-17T12:00:00.000Z"
+        }
+
+        var save = await SalvarContatoPF(data)
+
+        if (save.msgerro===""){
+            setMsgsucess(true)
+        }else{
+            setMsgerro(save.msgerro)
         }
         
     }
