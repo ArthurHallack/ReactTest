@@ -63,6 +63,7 @@ function PFCadastro () {
     const [incEdit, setincEdit] = useState ('')
     const [alt, setalt] = useState ('')
     const [altEdit, setaltEdit] = useState ('')
+    const [imageBase64, setImageBase64] = useState('')
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFatualizada, setListaPFatualizada] = useState (false)//lista principal precisa ser atualizada ? 
@@ -88,6 +89,10 @@ function PFCadastro () {
         }
         fetchData()
     },[ListaPFatualizada])
+
+    useEffect(()=>{
+        console.log(imageBase64)
+    },[imageBase64])
 
     //functions
 
@@ -122,6 +127,20 @@ function PFCadastro () {
         const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     
         return formattedDate;
+    }
+
+    //relacionadas a foto do perfil em base64
+
+    function handleFileChange (event) {
+        const file = event.target.files[0]
+        if (file){
+            const reader = new FileReader()
+
+            reader.onloadend = ()=>{
+                setImageBase64(reader.result)
+            }
+            reader.readAsDataURL(file)
+        }
     }
 
     //fechar interno do form dados pessoais
@@ -886,7 +905,7 @@ function PFCadastro () {
                 </div>
                 <div id="AreaImgPF">
                     <img src="" alt="" />
-                    <input type="file" id="uploadBtn"/>
+                    <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange}/>
                     <label htmlFor="uploadBtn" id="LabelUpload"><FontAwesomeIcon icon={faUpload} />Upload File</label>
                 </div>
             </div>
