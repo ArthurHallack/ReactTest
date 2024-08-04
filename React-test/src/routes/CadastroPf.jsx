@@ -67,6 +67,7 @@ function PFCadastro () {
     const [alt, setalt] = useState ('')
     const [altEdit, setaltEdit] = useState ('')
     const [imageBase64, setImageBase64] = useState("")
+    const [addnew, setaddnew] = useState(false)
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFatualizada, setListaPFatualizada] = useState (false)//lista principal precisa ser atualizada ? 
@@ -111,6 +112,30 @@ function PFCadastro () {
             window.document.getElementById('AreaImgPF').style.justifyContent="center"
         }
     },[imageBase64])
+
+    useEffect(()=>{
+        if(addnew===true){
+            async function fetchData() {
+                var arraypagina = await GetAllPF()
+                var id = findObjectWithHighestId(arraypagina)
+                var Getalt = await FichaPF(id.id)
+                var alt = Getalt.alt_dhsis
+                var data = {
+                    "id": id.id,
+                    "foto":  imageBase64,
+                    "alt_dhsis": alt
+                }
+                var dados = await SaveImgPF(data)
+                if(dados.msgerro===''){
+                    setaddnew(false)
+                }else{
+                    setaddnew(false)
+                    setMsgerro(dados.msgerro)
+                }
+            }
+            fetchData()
+        }
+    },[addnew])
 
     //functions
 
@@ -167,6 +192,10 @@ function PFCadastro () {
             fileInputRef.current.value = ''; // Reseta o valor do input de arquivo
           }
     }
+
+    const findObjectWithHighestId = (arr) => {
+        return arr.reduce((max, obj) => (obj.id > max.id ? obj : max), arr[0]);
+      }
 
     //fechar interno do form dados pessoais
     function fechar (e) {
@@ -433,6 +462,7 @@ function PFCadastro () {
             if(Salvando.msgerro==="Classe    - EMSSQLNativeException\rDescrição - [FireDAC][Phys][ODBC][Microsoft][SQL Server Native Client 11.0][SQL Server]Nome de objeto 'PROSERVICO' inválido."){
                 setMsgsucess(true)
                 setListaPFatualizada(true)
+                setaddnew(true)
                 //aparecer
                 window.document.getElementById('ContedeuListPF').style.display='flex'
                 window.document.getElementById('BTNsTopPF').style.display='flex'
@@ -443,7 +473,6 @@ function PFCadastro () {
                 window.document.getElementById('Form-DadosPessoais').style.display='none'
                 //configurações
                 window.document.getElementById('Form-DadosPessoais').style.marginBottom=""
-
             }else{
                 setMsgerro(Salvando.msgerro)
             }

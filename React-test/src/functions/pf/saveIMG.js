@@ -8,12 +8,12 @@ export async function SaveImgPF(img) {
         var dados = await fetch(URL, {
             method: 'PUT',
             headers: {
-                'content-type': 'aplication/json',
+                'content-type': 'application/json',
                 'Authorization': BasicAuth
             },
             body: JSON.stringify(img)
         })
-        
+
         const dadosJson = await dados.json();
         return dadosJson
 
