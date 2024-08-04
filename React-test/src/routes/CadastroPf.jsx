@@ -64,7 +64,7 @@ function PFCadastro () {
     const [incEdit, setincEdit] = useState ('')
     const [alt, setalt] = useState ('')
     const [altEdit, setaltEdit] = useState ('')
-    const [imageBase64, setImageBase64] = useState('')
+    const [imageBase64, setImageBase64] = useState("")
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFatualizada, setListaPFatualizada] = useState (false)//lista principal precisa ser atualizada ? 
@@ -92,7 +92,22 @@ function PFCadastro () {
     },[ListaPFatualizada])
 
     useEffect(()=>{
-        console.log(imageBase64)
+        if(imageBase64 != ""){
+            //deve aparecer
+            window.document.getElementById('BtnsImgPerfil').style.display="flex"
+            //deve desaparecer
+            window.document.getElementById('uploadBtn').style.display="none"
+            window.document.getElementById('LabelUpload').style.display="none"
+            //configs
+            window.document.getElementById('AreaImgPF').style.justifyContent="space-between"
+        }else {
+            //deve aparecer
+            window.document.getElementById('LabelUpload').style.display="flex"
+            //deve desaparecer
+            window.document.getElementById('BtnsImgPerfil').style.display="none"
+            //configs
+            window.document.getElementById('AreaImgPF').style.justifyContent="center"
+        }
     },[imageBase64])
 
     //functions
@@ -908,6 +923,7 @@ function PFCadastro () {
                     {imageBase64 && (
                         <div id="secImg">
                             <img src={imageBase64} alt="Imagem de perfil" id="ImgPerfil"/>
+                            <p><b>Perfil</b></p>
                         </div>
                     )}
                     <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange}/>

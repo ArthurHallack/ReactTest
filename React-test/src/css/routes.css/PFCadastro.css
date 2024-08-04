@@ -559,7 +559,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 input[type="file"]{
@@ -579,14 +579,23 @@ input[type="file"]{
     letter-spacing: 1.5px;
 }
 
+#secImg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
 #ImgPerfil{
     width: 8rem;
     height: 8rem;
     border-radius: 50%;
+    margin-top: 3rem;
 }
 
 #BtnsImgPerfil{
     display: none;
     flex-direction: row;
+    margin-bottom: 1.4rem;
     gap: 1rem;
 }
