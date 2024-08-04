@@ -14,6 +14,7 @@ import { SalvarPF } from "../functions/pf/savePF"
 import { ContatosGet } from "../functions/pf/getAllContatos"
 import { SalvarContatoPF } from "../functions/pf/contatoSave"
 import { FichaPFcontato } from "../functions/pf/fichaContato"
+import { SaveImgPF } from "../functions/pf/saveIMG"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -904,7 +905,11 @@ function PFCadastro () {
                     </div>
                 </div>
                 <div id="AreaImgPF">
-                    <img src="" alt="" />
+                    {imageBase64 && (
+                        <div id="secImg">
+                            <img src={imageBase64} alt="Imagem de perfil" id="ImgPerfil"/>
+                        </div>
+                    )}
                     <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange}/>
                     <label htmlFor="uploadBtn" id="LabelUpload"><FontAwesomeIcon icon={faUpload} />Upload File</label>
                 </div>
