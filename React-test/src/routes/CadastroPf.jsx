@@ -912,6 +912,10 @@ function PFCadastro () {
                     )}
                     <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange}/>
                     <label htmlFor="uploadBtn" id="LabelUpload"><FontAwesomeIcon icon={faUpload} />Upload File</label>
+                    <div id="BtnsImgPerfil">
+                        <button><FontAwesomeIcon icon={faUpload} /></button>
+                        <button><FontAwesomeIcon icon={faTrash} /></button>
+                    </div>
                 </div>
             </div>
             <form id="Form-FilterPF">
