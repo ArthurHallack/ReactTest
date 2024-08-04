@@ -46,6 +46,8 @@ function PFCadastro () {
     const contatosEndere = useRef()
     const contatosDescri = useRef()
 
+    const fileInputRef = useRef(null)
+
     //estados
     const [fichaData, setfichaData] = useState ([])
     const [confirmVisivel, setconfirmVisivel] = useState (false)
@@ -157,6 +159,13 @@ function PFCadastro () {
             }
             reader.readAsDataURL(file)
         }
+    }
+
+    function limparFoto () {
+        setImageBase64("")
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // Reseta o valor do input de arquivo
+          }
     }
 
     //fechar interno do form dados pessoais
@@ -926,11 +935,10 @@ function PFCadastro () {
                             <p><b>Perfil</b></p>
                         </div>
                     )}
-                    <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange}/>
+                    <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange} ref={fileInputRef}/>
                     <label htmlFor="uploadBtn" id="LabelUpload"><FontAwesomeIcon icon={faUpload} />Upload File</label>
                     <div id="BtnsImgPerfil">
-                        <button><FontAwesomeIcon icon={faUpload} /></button>
-                        <button><FontAwesomeIcon icon={faTrash} /></button>
+                        <button onClick={limparFoto}><FontAwesomeIcon icon={faTrash} /></button>
                     </div>
                 </div>
             </div>
