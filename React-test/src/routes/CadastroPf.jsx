@@ -15,6 +15,7 @@ import { ContatosGet } from "../functions/pf/getAllContatos"
 import { SalvarContatoPF } from "../functions/pf/contatoSave"
 import { FichaPFcontato } from "../functions/pf/fichaContato"
 import { SaveImgPF } from "../functions/pf/saveIMG"
+import { FichaIMG } from "../functions/pf/fichaIMG"
 
 import '../css/routes.css/PFCadastro.css'
 
@@ -67,7 +68,10 @@ function PFCadastro () {
     const [alt, setalt] = useState ('')
     const [altEdit, setaltEdit] = useState ('')
     const [imageBase64, setImageBase64] = useState("")
+    const [imageBase64Save, setImageBase64Save] = useState("")
     const [addnew, setaddnew] = useState(false)
+    const [addup, setaddup] = useState(false)
+    const [imagEdit, setimagEdit] = useState(false)
 
     const [ListaPF, setListaPF] = useState ([])//lista principal sendo renderizada
     const [ListaPFatualizada, setListaPFatualizada] = useState (false)//lista principal precisa ser atualizada ? 
@@ -122,7 +126,7 @@ function PFCadastro () {
                 var alt = Getalt.alt_dhsis
                 var data = {
                     "id": id.id,
-                    "foto":  imageBase64,
+                    "foto":  imageBase64Save,
                     "alt_dhsis": alt
                 }
                 var dados = await SaveImgPF(data)
@@ -136,6 +140,39 @@ function PFCadastro () {
             fetchData()
         }
     },[addnew])
+
+    useEffect(()=>{
+        if(addup===true){
+            async function fetchData() {
+                var Getalt = await FichaPF(idValue)
+                var alt = Getalt.alt_dhsis
+                var data = {
+                    "id": idValue,
+                    "foto":  imageBase64Save,
+                    "alt_dhsis": alt
+                }
+                var dados = await SaveImgPF(data)
+                if(dados.msgerro===''){
+                    setaddup(false)
+                }else{
+                    setaddup(false)
+                    setMsgerro(dados.msgerro)
+                }
+            }
+            fetchData()
+        }
+    },[addup])
+
+    useEffect(()=>{
+        if (imageBase64Save) {
+            // Adiciona o prefixo ao valor de imagebase64save
+            const formattedBase64 = `data:image/jpeg;base64,${imageBase64Save}`;
+            
+            // Atualiza o estado imagebase64 com o valor formatado
+            setImageBase64(formattedBase64);
+            setimagEdit(false)
+        }
+    },[imagEdit])
 
     //functions
 
@@ -174,17 +211,36 @@ function PFCadastro () {
 
     //relacionadas a foto do perfil em base64
 
-    function handleFileChange (event) {
-        const file = event.target.files[0]
-        if (file){
-            const reader = new FileReader()
-
-            reader.onloadend = ()=>{
-                setImageBase64(reader.result)
+    function handleFileChange(event) {
+        const file = event.target.files[0];
+    
+        if (file) {
+            // Verifica se o tipo de arquivo é JPEG
+            if (file.type === 'image/jpeg') {
+                const reader = new FileReader();
+                
+                reader.onloadend = () => {
+                    const base64String = reader.result;
+                    
+                    // Atualiza o estado com a base64 completa
+                    setImageBase64(base64String);
+                    
+                    // Remove o prefixo `data:image/jpeg;base64,`
+                    const base64Data = base64String.split(',')[1];
+                    
+                    // Atualiza o estado com a base64 formatada
+                    setImageBase64Save(base64Data);
+                };
+                
+                reader.readAsDataURL(file);
+            } else {
+                // Exibe uma mensagem de alerta se o arquivo não for JPEG
+                alert('Por favor, selecione um arquivo JPG.');
             }
-            reader.readAsDataURL(file)
         }
     }
+    
+    
 
     function limparFoto () {
         setImageBase64("")
@@ -234,11 +290,18 @@ function PFCadastro () {
         window.document.getElementById('ContatoListPF').style.height="20rem"
     }
 
+    async function editIMG(id) {
+        var imagem = await FichaIMG(id)
+        setImageBase64Save(imagem.foto)
+        setimagEdit(true)
+    }
+
     async function edit (id) {
 
         const data = await FichaPF(id)
         setidValue(id)
         setidValueContato(id)
+    
         var dataNasci = formatDateForInput(data.dt_nascimento)
 
         refNomeCompleto.current.value = data.nome_completo
@@ -481,6 +544,7 @@ function PFCadastro () {
             if(SalvandoUp.msgerro==="Classe    - EMSSQLNativeException\rDescrição - [FireDAC][Phys][ODBC][Microsoft][SQL Server Native Client 11.0][SQL Server]Nome de objeto 'PROSERVICO' inválido."){
                 setMsgsucess(true)
                 setListaPFatualizada(true)
+                setaddup(true)
                 //aparecer
                 window.document.getElementById('ContedeuListPF').style.display='flex'
                 window.document.getElementById('BTNsTopPF').style.display='flex'
@@ -960,12 +1024,14 @@ function PFCadastro () {
                 <div id="AreaImgPF">
                     {imageBase64 && (
                         <div id="secImg">
-                            <img src={imageBase64} alt="Imagem de perfil" id="ImgPerfil"/>
+                            <img src={imageBase64} alt="Imagem de perfil" id="ImgPerfil" />
                             <p><b>Perfil</b></p>
                         </div>
                     )}
-                    <input type="file" id="uploadBtn" accept="image/*" onChange={handleFileChange} ref={fileInputRef}/>
-                    <label htmlFor="uploadBtn" id="LabelUpload"><FontAwesomeIcon icon={faUpload} />Upload File</label>
+                    <input type="file" id="uploadBtn" accept="image/jpeg" onChange={handleFileChange} ref={fileInputRef} />
+                    <label htmlFor="uploadBtn" id="LabelUpload">
+                        <FontAwesomeIcon icon={faUpload} /> Upload File
+                    </label>
                     <div id="BtnsImgPerfil">
                         <button onClick={limparFoto}><FontAwesomeIcon icon={faTrash} /></button>
                     </div>
@@ -1026,8 +1092,8 @@ function PFCadastro () {
                                     <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id)}}/>
-                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={()=>{edit(pf.id)}}/>
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id); editIMG(pf.id);}}/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={() => {edit(pf.id); editIMG(pf.id);}}/>
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={()=>{Exclui(pf)}}/>
                                         </div>
                                     </li>
@@ -1042,8 +1108,8 @@ function PFCadastro () {
                                     <li className="Todo-List-li NR-tdListPF">{pf.nome_reserva}</li>
                                     <li className="li-td-btn">
                                         <div className="BTNs-tdList">
-                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id)}}/>
-                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={() => edit(pf.id)} />
+                                            <FontAwesomeIcon icon={faFolderOpen} className="BTN-ReadPais BTNtd-Pais" onClick={()=>{ficha(pf.id); editIMG(pf.id);}}/>
+                                            <FontAwesomeIcon icon={faPenToSquare} className="BTN-EditPais BTNtd-Pais" onClick={() => {edit(pf.id); editIMG(pf.id);}}/>
                                             <FontAwesomeIcon icon={faTrash} className="BTN-ExcluiPais BTNtd-Pais" onClick={() => Exclui(pf)} />
                                         </div>
                                     </li>
