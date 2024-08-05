@@ -151,13 +151,29 @@ function PFCadastro () {
                     "foto":  imageBase64Save,
                     "alt_dhsis": alt
                 }
-                var dados = await SaveImgPF(data)
-                if(dados.msgerro===''){
-                    setaddup(false)
-                }else{
-                    setaddup(false)
-                    setMsgerro(dados.msgerro)
+                var data2 = {
+                    "id": idValue,
+                    "foto":  "",
+                    "alt_dhsis": alt
                 }
+                if(imageBase64===""){
+                    var dados = await SaveImgPF(data2)
+                    if(dados.msgerro===''){
+                        setaddup(false)
+                    }else{
+                        setaddup(false)
+                        setMsgerro(dados.msgerro)
+                    }
+                }else {
+                    var dados = await SaveImgPF(data)
+                    if(dados.msgerro===''){
+                        setaddup(false)
+                    }else{
+                        setaddup(false)
+                        setMsgerro(dados.msgerro)
+                    }
+                }
+                
             }
             fetchData()
         }
@@ -172,7 +188,7 @@ function PFCadastro () {
             setImageBase64(formattedBase64);
             setimagEdit(false)
         }
-    },[imagEdit])
+    },[imageBase64Save, imagEdit])
 
     //functions
 
@@ -293,6 +309,7 @@ function PFCadastro () {
     async function editIMG(id) {
         var imagem = await FichaIMG(id)
         setImageBase64Save(imagem.foto)
+        setImageBase64("")
         setimagEdit(true)
     }
 
@@ -347,6 +364,7 @@ function PFCadastro () {
     async function ficha (id) {
         const data = await FichaPF(id)
         setfichaData(data)
+        setidValue('')
 
         var corpo ={
             "id_pfisica": id,
